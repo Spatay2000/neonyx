@@ -14,7 +14,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return NeoScaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50),
+        preferredSize: const Size.fromHeight(50),
         child: AppBar(
           elevation: 0,
           centerTitle: true,
@@ -80,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                       topRight: Radius.circular(24.r),
                       topLeft: Radius.circular(24.r),
                     )),
-                    builder: (context) => LoginBottomSheet()),
+                    builder: (context) => const LoginBottomSheet()),
                 title: 'In-app authorization',
                 subtitle: 'Create or import a software wallet',
                 backgroundStatus: true,

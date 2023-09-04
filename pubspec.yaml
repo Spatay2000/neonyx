@@ -32,7 +32,7 @@ dependencies:
     sdk: flutter
 
   # local cache (all platforms)
-  shared_preferences: ^2.2.0
+  shared_preferences: ^2.0.15
   # state manager (all platforms)
   flutter_bloc: ^8.1.3
   # dependency injection (all platforms)
@@ -61,7 +61,9 @@ dependencies:
   #gradient border side
   gradient_borders: ^1.0.0
   #qr scanner 
-  mobile_scanner: ^3.4.1
+  mobile_scanner: ^2.0.0
+  #mnemonic phrase
+  bip39: ^1.0.6
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2

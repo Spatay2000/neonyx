@@ -59,7 +59,7 @@ class _MobilScannerState extends State<MobilScanner> {
         children: [
           MobileScanner(
               controller: MobileScannerController(),
-              onDetect: (barcode) async {
+              onDetect: (barcode, index) async {
                 log("sake");
               }),
           QRScannerOverlay(overlayColour: Colors.black.withOpacity(0.5)),

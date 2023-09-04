@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,12 +6,28 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/features/auth/screen/qr_scanner.dart';
 import 'package:neonyx/features/common/neo_button.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
+import 'package:bip39/bip39.dart' as bip39;
 
 import '../../common/neo_colors.dart';
 
-class MnematicOrPrivateScreen extends StatelessWidget {
+class MnematicOrPrivateScreen extends StatefulWidget {
   final bool statusPage;
   const MnematicOrPrivateScreen({super.key, required this.statusPage});
+
+  @override
+  State<MnematicOrPrivateScreen> createState() =>
+      _MnematicOrPrivateScreenState();
+}
+
+class _MnematicOrPrivateScreenState extends State<MnematicOrPrivateScreen> {
+  TextEditingController mnemonicPhraseController = TextEditingController();
+
+  void validateMnemonic(String mnemonic) {
+    String randomMnemonic = bip39.generateMnemonic();
+    print(randomMnemonic);
+    var isValid = bip39.validateMnemonic(mnemonic);
+    print(isValid);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +43,7 @@ class MnematicOrPrivateScreen extends StatelessWidget {
               fontSize: 16.sp,
               fontWeight: FontWeight.w400,
               color: NeoColors.primaryColor),
-          title: statusPage == true
+          title: widget.statusPage == true
               ? const Text('Mnemonic phrase')
               : const Text('Private key'),
           backgroundColor: Colors.transparent,
@@ -39,7 +56,7 @@ class MnematicOrPrivateScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              statusPage == true
+              widget.statusPage == true
                   ? SvgPicture.asset('assets/svg/mnemotic_image.svg')
                   : SvgPicture.asset('assets/svg/private_image.svg'),
               SizedBox(
@@ -56,6 +73,7 @@ class MnematicOrPrivateScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: mnemonicPhraseController,
                       autofocus: true,
                       maxLines: 3,
                       style: GoogleFonts.urbanist(
@@ -63,7 +81,7 @@ class MnematicOrPrivateScreen extends StatelessWidget {
                           fontWeight: FontWeight.w400,
                           color: NeoColors.primaryColor),
                       decoration: InputDecoration(
-                        hintText: statusPage == true
+                        hintText: widget.statusPage == true
                             ? 'A mnemonic phrase could have 12, 15, 18, 21 or 24 words. Please enter and separate them with spaces.'
                             : 'A private key is an alphanumeric code used in cryptography, similar to a password. In cryptocurrency.',
                         border: InputBorder.none,
@@ -89,7 +107,7 @@ class MnematicOrPrivateScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            statusPage == true
+                            widget.statusPage == true
                                 ? 'Scan QR-code with\na mnemonic phrase'
                                 : 'Scan QR-code\nwith a private key',
                             style: GoogleFonts.urbanist(
@@ -109,8 +127,11 @@ class MnematicOrPrivateScreen extends StatelessWidget {
               ),
               SizedBox(height: 11.h),
               CustomButton(
+                onPressed: () async {
+                  validateMnemonic(mnemonicPhraseController.text);
+                },
                 backgroundStatus: false,
-                title: statusPage == true
+                title: widget.statusPage == true
                     ? "Import by mnemonic phrase"
                     : "Import by private key",
               ),

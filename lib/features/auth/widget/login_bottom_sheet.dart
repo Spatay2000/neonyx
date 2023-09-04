@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/features/auth/screen/mnemotic_private.dart';
+import 'package:neonyx/features/auth/screen/register.dart';
 import 'package:neonyx/features/common/neo_button.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 
@@ -94,7 +95,12 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
             ),
             CustomButton(
               backgroundStatus: true,
-              onPressed: () => null,
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const RegisterScreen(),
+                ),
+              ),
               title: 'Issue a decentralized identity ',
             ),
           ],
