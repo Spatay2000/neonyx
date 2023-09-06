@@ -41,8 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             image: AssetImage('assets/png/bg_register.png'), fit: BoxFit.cover),
       ),
       body: Padding(
-        padding:
-            EdgeInsets.only(left: 16.w, right: 16.w, bottom: 42.h, top: 134.h),
+        padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 134.h),
         child: Center(
           child: Column(
             children: [

@@ -49,8 +49,7 @@ class LoginScreen extends StatelessWidget {
             image: AssetImage('assets/png/bg_login.png'), fit: BoxFit.cover),
       ),
       body: Padding(
-        padding:
-            EdgeInsets.only(left: 16.w, right: 16.w, bottom: 42.h, top: 338.h),
+        padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 338.h),
         child: Center(
           child: Column(
             children: [
