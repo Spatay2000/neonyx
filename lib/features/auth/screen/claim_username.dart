@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/features/common/neo_button.dart';
+import 'package:neonyx/features/index/index.dart';
 
 import '../../common/neo_colors.dart';
 import '../../common/neo_scaffold.dart';
@@ -136,8 +135,14 @@ class _ClaimUsernameState extends State<ClaimUsername> {
               Opacity(
                 opacity: isButtonEnabled == true ? 1 : 0.3,
                 child: CustomButton(
-                  onPressed: () =>
-                      isButtonEnabled == true ? log('ketti') : null,
+                  onPressed: () => isButtonEnabled == true
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => IndexNeo(
+                                    screenIndex: 0,
+                                  )))
+                      : null,
                   backgroundStatus: false,
                   title: 'Claim this username',
                 ),
