@@ -1,10 +1,13 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:neonyx/features/auth/screen/verify.dart';
 import 'package:neonyx/features/common/neo_button.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
 import 'package:bip39/bip39.dart' as bip39;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/neo_colors.dart';
 
@@ -17,23 +20,30 @@ class SeedGenerate extends StatefulWidget {
 
 class _SeedGenerateState extends State<SeedGenerate> {
   List<String> mnemonic = [];
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   @override
   void initState() {
     seedGenerate();
     super.initState();
   }
 
-  seedGenerate() {
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  seedGenerate() async {
+    final SharedPreferences prefs = await _prefs;
+    String randomMnemonic = bip39.generateMnemonic();
+    mnemonic = randomMnemonic.split(" ");
+    await prefs.setStringList('mnemonic_phrase', mnemonic);
     setState(() {
-      String randomMnemonic = bip39.generateMnemonic();
-      mnemonic = randomMnemonic.split(" ");
-      print(mnemonic); // This will print the list of strings
+      print(mnemonic);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    print(mnemonic.length + 1); // This will print the list of strings
     return NeoScaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
@@ -72,8 +82,7 @@ class _SeedGenerateState extends State<SeedGenerate> {
             image: AssetImage('assets/png/bg_identity.png'), fit: BoxFit.cover),
       ),
       body: Padding(
-        padding:
-            EdgeInsets.only(left: 16.w, right: 16.w, bottom: 42.h, top: 268.h),
+        padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 268.h),
         child: Center(
           child: Column(
             children: [
@@ -121,7 +130,7 @@ class _SeedGenerateState extends State<SeedGenerate> {
                 padding: EdgeInsets.zero,
                 physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
-                childAspectRatio: 2.8,
+                childAspectRatio: 2.8.w,
                 mainAxisSpacing: 8.h,
                 crossAxisSpacing: 8.w,
                 crossAxisCount: 3,
@@ -153,10 +162,13 @@ class _SeedGenerateState extends State<SeedGenerate> {
                           ),
                         )),
               ),
-              SizedBox(height: 17.h),
+              SizedBox(height: 16.h),
               CustomButton(
                 backgroundStatus: true,
-                onPressed: () => null,
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const VerifyScreen())),
                 title: 'Next step',
               ),
             ],

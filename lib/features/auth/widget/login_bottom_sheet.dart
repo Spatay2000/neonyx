@@ -19,7 +19,7 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
     return SafeArea(
       child: Container(
         padding: EdgeInsets.only(top: 10.h, left: 16.w, right: 16.w),
-        height: 400.h,
+        height: 410.h,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.r),
             gradient: const LinearGradient(
