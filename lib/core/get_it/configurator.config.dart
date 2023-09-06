@@ -13,9 +13,10 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:neonyx/core/shared/cache.dart' as _i3;
 import 'package:neonyx/core/shared/cache_impl.dart' as _i4;
-import 'package:neonyx/core/shared/http.dart' as _i6;
-import 'package:neonyx/core/shared/http_client_impl.dart' as _i7;
-import 'package:neonyx/core/utils/navigation_service.dart' as _i5;
+import 'package:neonyx/core/shared/http.dart' as _i7;
+import 'package:neonyx/core/shared/http_client_impl.dart' as _i8;
+import 'package:neonyx/core/utils/navigation_service.dart' as _i6;
+import 'package:neonyx/features/index/bloc/bloc/index_bloc.dart' as _i5;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -29,10 +30,11 @@ extension GetItInjectableX on _i1.GetIt {
       environmentFilter,
     );
     gh.factory<_i3.Cache>(() => _i4.CacheImpl());
-    gh.lazySingleton<_i5.NavigationService>(() => _i5.NavigationService());
-    gh.factory<_i6.Http>(() => _i7.HttpImpl(
+    gh.factory<_i5.IndexNavBloc>(() => _i5.IndexNavBloc());
+    gh.lazySingleton<_i6.NavigationService>(() => _i6.NavigationService());
+    gh.factory<_i7.Http>(() => _i8.HttpImpl(
           cache: gh<_i3.Cache>(),
-          navigationService: gh<_i5.NavigationService>(),
+          navigationService: gh<_i6.NavigationService>(),
         ));
     return this;
   }

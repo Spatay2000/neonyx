@@ -43,7 +43,7 @@ class _MobilScannerState extends State<MobilScanner> {
             ],
           ),
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.black,
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
