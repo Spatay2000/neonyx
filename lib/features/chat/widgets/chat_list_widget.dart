@@ -100,8 +100,8 @@ class _ChatListWidgetState extends State<ChatListWidget> {
             );
           },
           separatorBuilder: ((context, index) {
-            return const Divider(
-              color: NeoColors.soonColor,
+            return Divider(
+              color: NeoColors.soonColor.withOpacity(0.1),
               thickness: 1.0,
             );
           }),
@@ -122,45 +122,6 @@ class _ChatListWidgetState extends State<ChatListWidget> {
       startActionPane: ActionPane(
         motion: const ScrollMotion(),
         children: [
-          // CustomSlidableAction(
-          //   onPressed: (context) {},
-          //   foregroundColor: NeoColors.primaryColor,
-          //   backgroundColor: NeoColors.primaryColor.withOpacity(0),
-          //   padding: const EdgeInsets.symmetric(horizontal: 6),
-          //   child: Container(
-          //     padding: const EdgeInsets.all(1),
-          //     alignment: Alignment.center,
-          //     width: double.infinity,
-          //     decoration: BoxDecoration(
-          //       // color: const Color(0xFF0f2221),
-          //       borderRadius: BorderRadius.circular(6),
-          //       gradient: const LinearGradient(
-          //         colors: [
-          //           Color.fromRGBO(47, 145, 151, 0.20),
-          //           Color.fromRGBO(47, 145, 151, 0.10),
-          //         ],
-          //       ),
-          //     ),
-          //     child: Column(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         SvgPicture.asset(
-          //           "assets/svg/unread_icon.svg",
-          //           height: 26,
-          //           width: 26,
-          //         ),
-          //         const SizedBox(height: 2),
-          //         const Text(
-          //           "Unread",
-          //           style: TextStyle(
-          //             fontSize: 12,
-          //             fontWeight: FontWeight.w400,
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
           _buildSlidableWidget("assets/svg/unread_icon.svg", "Unread", false),
           _buildSlidableWidget("assets/svg/pin_icon.svg", "Pin", false),
         ],
