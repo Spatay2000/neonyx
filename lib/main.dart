@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:neonyx/features/home/screen/home_screen.dart';
 
 import 'core/get_it/configurator.dart';
 import 'features/auth/screen/login.dart';
@@ -36,9 +37,9 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       useInheritedMediaQuery: true,
       designSize: const Size(360, 800),
-      builder: (context, child) => MaterialApp(
+      builder: (context, child) => const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: LoginScreen(),
+        home: HomeScreen(),
       ),
     );
   }
