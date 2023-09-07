@@ -58,18 +58,5 @@ class UserSpaceBloc extends Bloc<UserSpaceEvent, UserSpaceState> {
         }
       },
     );
-
-    // on<AddTopic>(
-    //   (event, emit) async {
-    //     add(const AddTopic(isAdded: true));
-    //     emit(const TopicAdded());
-    //   },
-    // );
-
-    // on<DeleteTopic>(
-    //   (event, emit) {
-    //     emit(const TopicDeleted());
-    //   },
-    // );
   }
 }
