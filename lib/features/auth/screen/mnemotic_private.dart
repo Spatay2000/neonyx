@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,9 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/features/auth/screen/qr_scanner.dart';
 import 'package:neonyx/features/common/neo_button.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
-import 'package:bip39/bip39.dart' as bip39;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/neo_colors.dart';
+import '../../common/neo_snackbar.dart';
+import 'claim_username.dart';
 
 class MnematicOrPrivateScreen extends StatefulWidget {
   final bool statusPage;
@@ -21,12 +22,67 @@ class MnematicOrPrivateScreen extends StatefulWidget {
 
 class _MnematicOrPrivateScreenState extends State<MnematicOrPrivateScreen> {
   TextEditingController mnemonicPhraseController = TextEditingController();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  List<String>? mnemonic = [];
 
-  void validateMnemonic(String mnemonic) {
-    String randomMnemonic = bip39.generateMnemonic();
-    print(randomMnemonic);
-    var isValid = bip39.validateMnemonic(mnemonic);
-    print(isValid);
+  validateCeed() async {
+    final SharedPreferences prefs = await _prefs;
+    mnemonic = prefs.getStringList('mnemonic_phrase');
+    var stringList = mnemonicPhraseController.text.split(' ');
+    print(stringList);
+    bool areListsEqual = mnemonic!.length == stringList.length;
+    print(mnemonic);
+    if (areListsEqual) {
+      for (int i = 0; i < mnemonic!.length; i++) {
+        if (mnemonic![i] != stringList[i]) {
+          areListsEqual = false;
+          break;
+        }
+      }
+    }
+
+    if (areListsEqual) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const ClaimUsername()));
+    } else {
+      final snackBar = SnackBar(
+          backgroundColor: Colors.transparent,
+          margin: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height - 240.h),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          content: Container(
+              color: Colors.black,
+              child: NeoSnackbar(
+                widget: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/svg/warning.svg',
+                      color: Color.fromRGBO(193, 21, 52, 1),
+                    ),
+                    Text(
+                      'Phrase is incorrect, please try again!',
+                      style: GoogleFonts.urbanist(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white),
+                    ),
+                    IconButton(
+                      onPressed: () =>
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+                      icon: const Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
+              )));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
   @override
@@ -128,7 +184,7 @@ class _MnematicOrPrivateScreenState extends State<MnematicOrPrivateScreen> {
               SizedBox(height: 11.h),
               CustomButton(
                 onPressed: () async {
-                  validateMnemonic(mnemonicPhraseController.text);
+                  validateCeed();
                 },
                 backgroundStatus: false,
                 title: widget.statusPage == true

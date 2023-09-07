@@ -9,6 +9,8 @@ class CustomButton extends StatelessWidget {
   final String? title;
   final String? subtitle;
   final bool backgroundStatus;
+  final double? height;
+  final double? width;
 
   const CustomButton({
     super.key,
@@ -16,11 +18,15 @@ class CustomButton extends StatelessWidget {
     this.title,
     this.subtitle,
     required this.backgroundStatus,
+    this.height,
+    this.width,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: height,
+      width: width,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14.0.r),
           border: const GradientBoxBorder(

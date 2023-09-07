@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
 class NeoScaffold extends StatefulWidget {
-  const NeoScaffold(
-      {super.key,
-      required this.body,
-      this.floatingActionButton,
-      this.drawer,
-      this.appBar,
-      this.floatingActionButtonLocation,
-      this.resizeToAvoidBottomInset,
-      this.padding,
-      this.title,
-      this.actions,
-      this.decoration});
+  const NeoScaffold({
+    super.key,
+    required this.body,
+    this.floatingActionButton,
+    this.drawer,
+    this.appBar,
+    this.floatingActionButtonLocation,
+    this.resizeToAvoidBottomInset,
+    this.padding,
+    this.title,
+    this.actions,
+    this.decoration,
+    this.bottomNavigationBar,
+  });
   final Widget body;
   final Widget? floatingActionButton;
   final Drawer? drawer;
@@ -23,6 +25,7 @@ class NeoScaffold extends StatefulWidget {
   final FloatingActionButtonLocation? floatingActionButtonLocation;
   final bool? resizeToAvoidBottomInset;
   final Decoration? decoration;
+  final Widget? bottomNavigationBar;
 
   @override
   State<NeoScaffold> createState() => _NeoScaffoldState();
@@ -37,20 +40,18 @@ class _NeoScaffoldState extends State<NeoScaffold> {
       appBar: widget.appBar,
       drawer: widget.drawer,
       resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
-      body: Stack(
-        children: [
-          Container(
-            padding: widget.padding,
-            decoration: widget.decoration ??
-                const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/png/bg.png'),
-                      fit: BoxFit.cover),
-                ),
-          ),
-          widget.body
-        ],
+      body: Container(
+        padding: widget.padding,
+        decoration: widget.decoration ??
+            const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/png/bg.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+        child: widget.body,
       ),
+      bottomNavigationBar: widget.bottomNavigationBar,
     );
   }
 }

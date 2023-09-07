@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:neonyx/features/home/screen/home_screen.dart';
+import 'package:neonyx/features/auth/screen/login.dart';
+
 import 'core/get_it/configurator.dart';
-import 'features/auth/screen/login.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   FlutterNativeSplash.remove();
+
   // dependency injection entry point
   await configureDependencies();
 
@@ -35,9 +36,9 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       useInheritedMediaQuery: true,
       designSize: const Size(360, 800),
-      builder: (context, child) => const MaterialApp(
+      builder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomeScreen(),
+        home: LoginScreen(),
       ),
     );
   }
