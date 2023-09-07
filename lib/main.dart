@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:neonyx/features/auth/screen/login.dart';
 
 import 'core/get_it/configurator.dart';
+import 'features/auth/screen/claim_username.dart';
+import 'features/user_space/user_space_screen.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 800),
       builder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: LoginScreen(),
+        home: UserSpaceScreen(),
       ),
     );
   }

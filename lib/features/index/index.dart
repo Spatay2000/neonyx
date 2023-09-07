@@ -62,7 +62,7 @@ class _IndexNeoState extends State<IndexNeo> {
         inactiveColorPrimary: NeoColors.navBarInActiveColor,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(MyFlutterApp.vector),
+        icon: const Icon(MyFlutterApp.try5),
         title: "Home",
         textStyle: GoogleFonts.urbanist(
             fontSize: 12.sp,
