@@ -43,7 +43,7 @@ class _IndexNeoState extends State<IndexNeo> {
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(MyFlutterApp.feed),
-        title: "Search",
+        title: "Feed",
         textStyle: GoogleFonts.urbanist(
             fontSize: 12.sp,
             fontWeight: FontWeight.w500,
@@ -53,7 +53,7 @@ class _IndexNeoState extends State<IndexNeo> {
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(MyFlutterApp.chat),
-        title: "Home",
+        title: "Chats",
         textStyle: GoogleFonts.urbanist(
             fontSize: 12.sp,
             fontWeight: FontWeight.w500,
@@ -63,7 +63,7 @@ class _IndexNeoState extends State<IndexNeo> {
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(MyFlutterApp.try5),
-        title: "Home",
+        title: "Profile",
         textStyle: GoogleFonts.urbanist(
             fontSize: 12.sp,
             fontWeight: FontWeight.w500,
