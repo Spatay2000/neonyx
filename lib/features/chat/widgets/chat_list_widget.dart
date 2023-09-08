@@ -5,8 +5,7 @@ import 'package:neonyx/domain/entity/chat_entity.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 
 class ChatListWidget extends StatefulWidget {
-  final String title;
-  const ChatListWidget({super.key, required this.title});
+  const ChatListWidget({super.key});
 
   @override
   State<ChatListWidget> createState() => _ChatListWidgetState();
@@ -176,7 +175,8 @@ class _ChatListWidgetState extends State<ChatListWidget> {
                           ? Row(
                               children: [
                                 SvgPicture.asset(
-                                    "assets/svg/read_msg_icon.svg"),
+                                  "assets/svg/read_msg_icon.svg",
+                                ),
                                 const SizedBox(width: 4),
                               ],
                             )
