@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:neonyx/domain/entity/chat_entity.dart';
 import 'package:neonyx/features/chat/chat_details_screen.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 class ChatListWidget extends StatefulWidget {
   const ChatListWidget({super.key});
@@ -85,6 +86,7 @@ class _ChatListWidgetState extends State<ChatListWidget> {
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: ListView.separated(
+          padding: EdgeInsets.zero,
           itemCount: chats.length,
           shrinkWrap: true,
           physics: const BouncingScrollPhysics(),
@@ -120,8 +122,8 @@ class _ChatListWidgetState extends State<ChatListWidget> {
       bool isPinned) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ChatDetailsScreen()));
+        pushNewScreen(context,
+            screen: const ChatDetailsScreen(), withNavBar: false);
       },
       child: Slidable(
         startActionPane: ActionPane(

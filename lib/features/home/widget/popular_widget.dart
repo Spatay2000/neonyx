@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/home/data/models/banner_local_model.dart';
-import 'package:neonyx/features/home/widget/feed_show_modal_widget.dart';
 
 import 'popular_show_modal_widget.dart';
 

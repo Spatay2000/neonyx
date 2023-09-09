@@ -6,8 +6,6 @@ import 'package:gradient_borders/gradient_borders.dart';
 import 'package:neonyx/features/common/neo_button.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
-import 'package:neonyx/features/home/widget/my_apps_widget.dart';
-import 'package:neonyx/features/home/widget/popular_widget.dart';
 
 class FeedShowModalWidget extends StatefulWidget {
   const FeedShowModalWidget({
@@ -153,13 +151,20 @@ class _FeedShowModalWidgetState extends State<FeedShowModalWidget> {
                         SizedBox(
                           width: 10.w,
                         ),
-                        CustomButton(
-                          width: 139.w,
-                          height: 40.h,
-                          backgroundStatus: false,
-                          title: '@satoshiseeker',
-                          onPressed: () {},
-                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 12.h, horizontal: 12.w),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.r),
+                              color: const Color.fromRGBO(47, 145, 151, 0.1)),
+                          child: Text(
+                            '@satoshiseeker',
+                            style: GoogleFonts.urbanist(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                                color: NeoColors.primaryColor),
+                          ),
+                        )
                       ],
                     ),
                     Padding(

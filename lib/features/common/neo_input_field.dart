@@ -27,7 +27,7 @@ class NeoInputField extends StatelessWidget {
   final bool isChoosedAddress;
   final bool isNeedBorder;
   final bool isWithSearchIcon;
-  final int maxLines;
+  final int? maxLines;
   final bool autofocus;
   final Color? fillColor;
 
@@ -58,7 +58,8 @@ class NeoInputField extends StatelessWidget {
         fontSize: 14.0,
         fontWeight: FontWeight.w500,
         color: Colors.grey,
-      ), required this.isWithSearchIcon, required this.maxLines, required this.autofocus})
+      ),
+      this.autofocus = false})
       : super(key: key);
 
   @override
@@ -66,8 +67,6 @@ class NeoInputField extends StatelessWidget {
     return SizedBox(
       width: width,
       child: TextFormField(
-        maxLines: maxLines,
-        minLines: 1,
         autocorrect: false,
         autofocus: autofocus,
         readOnly: readOnly,

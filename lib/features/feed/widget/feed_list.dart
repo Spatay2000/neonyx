@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:neonyx/domain/entity/feed_entity.dart';
 import 'package:neonyx/features/feed/widget/feed_strory.dart';
-import 'package:neonyx/features/feed/widget/story.dart';
-import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
+
+import '../../home/widget/feed_show_modal_widget.dart';
 
 class FeedListWidget extends StatefulWidget {
   const FeedListWidget({super.key});
@@ -82,10 +82,19 @@ class _FeedListWidgetState extends State<FeedListWidget> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
+      padding: EdgeInsets.zero,
       children: [
         FeedStoryWidget(
           feedStory: feedList,
+        ),
+        ListView.builder(
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          itemCount: 3,
+          itemBuilder: (context, index) {
+            return const PostWidget();
+          },
         ),
       ],
     );

@@ -6,7 +6,7 @@ import 'package:neonyx/features/common/neo_scaffold.dart';
 import 'package:neonyx/features/feed/widget/feed_list.dart';
 
 import '../common/custom_tab_bar.dart';
-import '../common/neo_colors.dart';
+import '../home/widget/feed_show_modal_widget.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});
@@ -41,10 +41,23 @@ class _FeedScreenState extends State<FeedScreen> with TickerProviderStateMixin {
           children: [
             AppBarInNavBar(
               title: 'Feed',
-              actions: Image.asset(
-                'assets/png/primary_icon.png',
-                width: 36.w,
-                height: 36.w,
+              actions: InkWell(
+                onTap: () => showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    useRootNavigator: true,
+                    isDismissible: true,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    builder: (context) {
+                      return const FeedShowModalWidget();
+                    }),
+                child: Image.asset(
+                  'assets/png/primary_icon.png',
+                  width: 36.w,
+                  height: 36.w,
+                ),
               ),
               iconNearTitle: SvgPicture.asset('assets/svg/story.svg'),
             ),
