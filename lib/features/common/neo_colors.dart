@@ -12,5 +12,6 @@ class NeoColors {
 
   static const white = Colors.white;
   static const black = Colors.black;
+  static const darkRed = Color(0XFFC11534);
   static const navBarInActiveColor = Color(0xFF2F9197);
 }
