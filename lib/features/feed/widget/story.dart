@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:neonyx/features/common/neo_input_field.dart';
 
 import '../../../domain/entity/feed_entity.dart';
 import '../../common/neo_colors.dart';
@@ -51,6 +54,9 @@ class _StoryWidgetState extends State<StoryWidget>
             _currentIndex += 1;
             _loadStory(story: stories[_currentIndex]);
           } else {
+            Navigator.pop(context);
+            // _animController.dispose();
+            log("fkjhf");
             // Navigator.pushNamedAndRemoveUntil(
             //   context,
             //   Routes.home,
@@ -73,7 +79,40 @@ class _StoryWidgetState extends State<StoryWidget>
   Widget build(BuildContext context) {
     final Story story = stories[_currentIndex];
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: const Color(0xFFD9DEE8),
+      floatingActionButton: Container(
+          margin: const EdgeInsets.symmetric(
+            horizontal: 12,
+          ),
+          padding: const EdgeInsets.only(right: 12),
+          decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: NeoInputField(
+                  hint: 'Send message',
+                  hintStyle: GoogleFonts.notoSans(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400),
+                  autofocus: false,
+                  maxLines: 3,
+                  isWithSearchIcon: false,
+                  type: NeoInputType.text,
+                  controller: sendController,
+                ),
+              ),
+              Icon(
+                Icons.more_horiz,
+                color: const Color.fromRGBO(255, 255, 255, 1).withOpacity(0.4),
+              ),
+            ],
+          )),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: GestureDetector(
         onTapDown: (details) => _onTapDown(details, story),
         child: Stack(
@@ -86,7 +125,7 @@ class _StoryWidgetState extends State<StoryWidget>
                 final Story story = stories[i];
                 return Image.asset(
                   story.url,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                 );
               },
             ),
@@ -167,18 +206,39 @@ class _StoryWidgetState extends State<StoryWidget>
                 ],
               ),
             ),
-            Positioned(
-                bottom: 20.0,
-                left: 16.0,
-                right: 16.0,
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(12)),
-                  child: TextFormField(
-                    controller: sendController,
-                  ),
-                ))
+            // Positioned(
+            //     bottom: 20.0,
+            //     left: 16.0,
+            //     right: 16.0,
+            //     child: Container(
+            //         padding: EdgeInsets.only(right: 12),
+            //         decoration: BoxDecoration(
+            //             color: Colors.white.withOpacity(0.1),
+            //             borderRadius: BorderRadius.circular(12)),
+            //         child: Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: [
+            //             Expanded(
+            //               child: NeoInputField(
+            //                 hint: 'Send message',
+            //                 hintStyle: GoogleFonts.notoSans(
+            //                     color: Colors.white,
+            //                     fontSize: 12,
+            //                     fontWeight: FontWeight.w400),
+            //                 autofocus: false,
+            //                 maxLines: 3,
+            //                 isWithSearchIcon: false,
+            //                 type: NeoInputType.text,
+            //                 controller: sendController,
+            //               ),
+            //             ),
+            //             Icon(
+            //               Icons.more_horiz,
+            //               color: const Color.fromRGBO(255, 255, 255, 1)
+            //                   .withOpacity(0.4),
+            //             ),
+            //           ],
+            //         )))
           ],
         ),
       ),

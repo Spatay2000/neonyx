@@ -26,6 +26,9 @@ class NeoInputField extends StatelessWidget {
   final TextStyle hintStyle;
   final bool isChoosedAddress;
   final bool isNeedBorder;
+  final bool isWithSearchIcon;
+  final int maxLines;
+  final bool autofocus;
 
   const NeoInputField(
       {Key? key,
@@ -51,7 +54,7 @@ class NeoInputField extends StatelessWidget {
         fontSize: 14.0,
         fontWeight: FontWeight.w500,
         color: Colors.grey,
-      )})
+      ), required this.isWithSearchIcon, required this.maxLines, required this.autofocus})
       : super(key: key);
 
   @override
@@ -59,8 +62,10 @@ class NeoInputField extends StatelessWidget {
     return SizedBox(
       width: width,
       child: TextFormField(
+        maxLines: maxLines,
+        minLines: 1,
         autocorrect: false,
-        autofocus: true,
+        autofocus: autofocus,
         readOnly: readOnly,
         focusNode: focusNode,
         keyboardType: keyboardType,
@@ -102,17 +107,19 @@ class NeoInputField extends StatelessWidget {
                   minWidth: 24,
                 ),
           prefixIcon: type == NeoInputType.text
-              ? Container(
-                  height: 5,
-                  width: 5,
-                  color: Colors.transparent,
-                  child: SvgPicture.asset(
-                    'assets/svg/search.svg',
-                    height: 4,
-                    width: 4,
-                    fit: BoxFit.scaleDown,
-                  ),
-                )
+              ? isWithSearchIcon
+                  ? Container(
+                      height: 5,
+                      width: 5,
+                      color: Colors.transparent,
+                      child: SvgPicture.asset(
+                        'assets/svg/search.svg',
+                        height: 4,
+                        width: 4,
+                        fit: BoxFit.scaleDown,
+                      ),
+                    )
+                  : null
               : const Padding(
                   padding: EdgeInsets.only(bottom: 0),
                   child: Text(

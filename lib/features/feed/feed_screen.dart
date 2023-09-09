@@ -41,6 +41,11 @@ class _FeedScreenState extends State<FeedScreen> with TickerProviderStateMixin {
           children: [
             AppBarInNavBar(
               title: 'Feed',
+              actions: Image.asset(
+                'assets/png/primary_icon.png',
+                width: 36.w,
+                height: 36.w,
+              ),
               iconNearTitle: SvgPicture.asset('assets/svg/story.svg'),
             ),
             CustomTabBar(tabs: data!, controller: tabController),
@@ -58,5 +63,14 @@ class _FeedScreenState extends State<FeedScreen> with TickerProviderStateMixin {
         ),
       ),
     );
+  }
+}
+
+class PostImage extends StatelessWidget {
+  const PostImage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
