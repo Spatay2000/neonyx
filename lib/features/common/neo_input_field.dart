@@ -29,6 +29,7 @@ class NeoInputField extends StatelessWidget {
   final bool isWithSearchIcon;
   final int maxLines;
   final bool autofocus;
+  final Color? fillColor;
 
   const NeoInputField(
       {Key? key,
@@ -50,6 +51,9 @@ class NeoInputField extends StatelessWidget {
       this.autovalidateMode = AutovalidateMode.always,
       this.isChoosedAddress = true,
       this.isNeedBorder = false,
+      this.fillColor,
+      this.maxLines,
+      this.isWithSearchIcon = false,
       this.hintStyle = const TextStyle(
         fontSize: 14.0,
         fontWeight: FontWeight.w500,
@@ -79,6 +83,8 @@ class NeoInputField extends StatelessWidget {
         onChanged: onChanged,
         onTap: onTap,
         enableInteractiveSelection: true,
+        maxLines: maxLines,
+        minLines: 1,
         // ignore: deprecated_member_use
         toolbarOptions: const ToolbarOptions(
           copy: true,
@@ -164,6 +170,7 @@ class NeoInputField extends StatelessWidget {
               : const OutlineInputBorder(borderSide: BorderSide.none),
           errorBorder: const OutlineInputBorder(borderSide: BorderSide.none),
           isDense: isDense,
+          fillColor: fillColor,
         ),
       ),
     );

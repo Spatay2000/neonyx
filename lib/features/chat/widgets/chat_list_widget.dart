@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:neonyx/domain/entity/chat_entity.dart';
+import 'package:neonyx/features/chat/chat_details_screen.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 
 class ChatListWidget extends StatefulWidget {
@@ -117,120 +118,126 @@ class _ChatListWidgetState extends State<ChatListWidget> {
       String lastMessage,
       String lastMessageTime,
       bool isPinned) {
-    return Slidable(
-      startActionPane: ActionPane(
-        motion: const ScrollMotion(),
-        children: [
-          _buildSlidableWidget("assets/svg/unread_icon.svg", "Unread", false),
-          _buildSlidableWidget("assets/svg/pin_icon.svg", "Pin", false),
-        ],
-      ),
-      endActionPane: ActionPane(
-        motion: const ScrollMotion(),
-        children: [
-          _buildSlidableWidget("assets/svg/mute_icon.svg", "Mute", false),
-          _buildSlidableWidget("assets/svg/delete_icon.svg", "Delete", true),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Row(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ChatDetailsScreen()));
+      },
+      child: Slidable(
+        startActionPane: ActionPane(
+          motion: const ScrollMotion(),
           children: [
-            ClipOval(
-              child: Container(
-                color: NeoColors.grayColor,
-                child: Image.asset(
-                  avatar,
-                  width: 44,
-                  height: 44,
-                  fit: BoxFit.cover,
+            _buildSlidableWidget("assets/svg/unread_icon.svg", "Unread", false),
+            _buildSlidableWidget("assets/svg/pin_icon.svg", "Pin", false),
+          ],
+        ),
+        endActionPane: ActionPane(
+          motion: const ScrollMotion(),
+          children: [
+            _buildSlidableWidget("assets/svg/mute_icon.svg", "Mute", false),
+            _buildSlidableWidget("assets/svg/delete_icon.svg", "Delete", true),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Row(
+            children: [
+              ClipOval(
+                child: Container(
+                  color: NeoColors.grayColor,
+                  child: Image.asset(
+                    avatar,
+                    width: 44,
+                    height: 44,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        isGroupChat ? groupName : userName,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: NeoColors.primaryColor,
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          isGroupChat ? groupName : userName,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: NeoColors.primaryColor,
+                          ),
                         ),
-                      ),
-                      isPinned
-                          ? SvgPicture.asset(
-                              "assets/svg/pinned_icon.svg",
-                              height: 15,
-                              width: 15,
-                            )
-                          : const SizedBox(),
-                      const SizedBox(width: 4),
-                      const Spacer(),
-                      !isGroupChat
-                          ? Row(
-                              children: [
-                                SvgPicture.asset(
-                                  "assets/svg/read_msg_icon.svg",
-                                ),
-                                const SizedBox(width: 4),
-                              ],
-                            )
-                          : const SizedBox(),
-                      Text(
-                        lastMessageTime,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: NeoColors.primaryColor,
-                        ),
-                      ),
-                      isGroupChat
-                          ? Container(
-                              padding: const EdgeInsets.all(4),
-                              margin: const EdgeInsets.only(left: 4),
-                              decoration: const BoxDecoration(
-                                color: NeoColors.primaryColor,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Text(
-                                "1",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700,
-                                  color: NeoColors.white,
-                                ),
-                              ),
-                            )
-                          : const SizedBox(),
-                    ],
-                  ),
-                  isGroupChat
-                      ? Text(
-                          userName,
+                        isPinned
+                            ? SvgPicture.asset(
+                                "assets/svg/pinned_icon.svg",
+                                height: 15,
+                                width: 15,
+                              )
+                            : const SizedBox(),
+                        const SizedBox(width: 4),
+                        const Spacer(),
+                        !isGroupChat
+                            ? Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/svg/read_msg_icon.svg",
+                                  ),
+                                  const SizedBox(width: 4),
+                                ],
+                              )
+                            : const SizedBox(),
+                        Text(
+                          lastMessageTime,
                           style: const TextStyle(
                             fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: NeoColors.white,
+                            fontWeight: FontWeight.w400,
+                            color: NeoColors.primaryColor,
                           ),
-                        )
-                      : const SizedBox(),
-                  Text(
-                    lastMessage,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: NeoColors.white,
+                        ),
+                        isGroupChat
+                            ? Container(
+                                padding: const EdgeInsets.all(4),
+                                margin: const EdgeInsets.only(left: 4),
+                                decoration: const BoxDecoration(
+                                  color: NeoColors.primaryColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Text(
+                                  "1",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: NeoColors.white,
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                      ],
                     ),
-                  ),
-                ],
+                    isGroupChat
+                        ? Text(
+                            userName,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: NeoColors.white,
+                            ),
+                          )
+                        : const SizedBox(),
+                    Text(
+                      lastMessage,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: NeoColors.white,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
