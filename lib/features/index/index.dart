@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/features/common/my_flutter_app_icons.dart';
+import 'package:neonyx/features/home/screen/home_screen.dart';
 import 'package:neonyx/features/index/first.dart';
 import 'package:neonyx/features/index/second.dart';
 import 'package:neonyx/features/index/third.dart';
@@ -96,7 +97,7 @@ class _IndexNeoState extends State<IndexNeo> {
                   context,
                   controller: controller,
                   screens: const [
-                    FirstScreen(),
+                    HomeScreen(),
                     SecondScreen(),
                     ThirdScreen(),
                     FirstScreen(),
