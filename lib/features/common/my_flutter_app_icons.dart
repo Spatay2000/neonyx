@@ -24,5 +24,5 @@ class MyFlutterApp {
   static const IconData hub = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData feed = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData chat = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData vector = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData try5 = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

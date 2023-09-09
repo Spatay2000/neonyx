@@ -9,6 +9,7 @@ import 'package:neonyx/domain/entity/user_entity.dart';
 import 'package:neonyx/features/common/neo_button.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
+import 'package:neonyx/features/index/index.dart';
 import 'package:neonyx/features/user_space/bloc/user_space_bloc.dart';
 import 'package:neonyx/features/user_space/bloc/user_space_event.dart';
 import 'package:neonyx/features/user_space/bloc/user_space_state.dart';
@@ -56,104 +57,103 @@ class _UserSpaceScreenState extends State<UserSpaceScreen> {
     return BlocProvider.value(
       value: _userSpaceBloc,
       child: NeoScaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(50),
-          child: AppBar(
-            elevation: 0,
-            centerTitle: true,
-            title: Row(
-              children: [
-                const Spacer(),
-                SizedBox(
-                  width: 20.w,
-                ),
-                Text(
-                  'Create your space',
-                  style: GoogleFonts.urbanist(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400,
-                      color: NeoColors.primaryColor),
-                ),
-                const Spacer(),
-                Text(
-                  'Skip',
-                  style: GoogleFonts.urbanist(
-                      color: Colors.white,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400),
-                )
-              ],
-            ),
-            backgroundColor: Colors.transparent,
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(
-              // left: 16.w,
-              // right: 16.w,
-              bottom: 42.h,
-              top: 88.h,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: const Column(
-                    children: [
-                      Divider(
-                        color: NeoColors.soonColor,
-                        thickness: 1.0,
-                      ),
-                      SizedBox(height: 35),
-                      Text(
-                        "What are you interested in?",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: NeoColors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      SizedBox(height: 15),
-                      Text(
-                        "Select some topics you’re interested in to help personalize your feed & starting with finding people to follow!",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: NeoColors.primaryColor,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      SizedBox(height: 35),
-                      Divider(
-                        color: NeoColors.soonColor,
-                        thickness: 1.0,
-                      ),
-                      SizedBox(height: 26),
-                    ],
+        body: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverAppBar(
+              elevation: 0,
+              forceElevated: true,
+              centerTitle: true,
+              title: Row(
+                children: [
+                  const Spacer(),
+                  SizedBox(
+                    width: 20.w,
                   ),
-                ),
-                TopicsWidget(
-                  onTap: (id) {
-                    _userSpaceBloc.add(AddTopic(id: id));
-                  },
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Column(
-                    children: [
-                      const Divider(
-                        color: NeoColors.soonColor,
-                        thickness: 1.0,
-                      ),
-                      const SizedBox(height: 26),
-                      PeoplesWidget(users: users),
-                    ],
+                  Text(
+                    'Create your space',
+                    style: GoogleFonts.urbanist(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
+                        color: NeoColors.primaryColor),
                   ),
-                ),
-              ],
+                  const Spacer(),
+                  Text(
+                    'Skip',
+                    style: GoogleFonts.urbanist(
+                        color: Colors.white,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400),
+                  )
+                ],
+              ),
+              backgroundColor: Colors.transparent,
+            )
+          ],
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: 42.h,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: const Column(
+                      children: [
+                        Divider(
+                          color: NeoColors.soonColor,
+                          thickness: 1.0,
+                        ),
+                        SizedBox(height: 35),
+                        Text(
+                          "What are you interested in?",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: NeoColors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          "Select some topics you’re interested in to help personalize your feed & starting with finding people to follow!",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: NeoColors.primaryColor,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        SizedBox(height: 35),
+                        Divider(
+                          color: NeoColors.soonColor,
+                          thickness: 1.0,
+                        ),
+                        SizedBox(height: 26),
+                      ],
+                    ),
+                  ),
+                  TopicsWidget(
+                    onTap: (id) {
+                      _userSpaceBloc.add(AddTopic(id: id));
+                    },
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: Column(
+                      children: [
+                        const Divider(
+                          color: NeoColors.soonColor,
+                          thickness: 1.0,
+                        ),
+                        const SizedBox(height: 26),
+                        PeoplesWidget(users: users),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -171,11 +171,15 @@ class _UserSpaceScreenState extends State<UserSpaceScreen> {
               ),
             ],
           ),
-          child: const Padding(
+          child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: 16,
             ),
             child: CustomButton(
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => IndexNeo(screenIndex: 1))),
               height: 60,
               width: double.infinity,
               title: "Begin Exploration",

@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/features/common/my_flutter_app_icons.dart';
+import 'package:neonyx/features/feed/feed_screen.dart';
 import 'package:neonyx/features/home/screen/home_screen.dart';
 import 'package:neonyx/features/index/first.dart';
-import 'package:neonyx/features/index/second.dart';
 import 'package:neonyx/features/index/third.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
@@ -44,7 +44,7 @@ class _IndexNeoState extends State<IndexNeo> {
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(MyFlutterApp.feed),
-        title: "Search",
+        title: "Feed",
         textStyle: GoogleFonts.urbanist(
             fontSize: 12.sp,
             fontWeight: FontWeight.w500,
@@ -54,7 +54,7 @@ class _IndexNeoState extends State<IndexNeo> {
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(MyFlutterApp.chat),
-        title: "Home",
+        title: "Chats",
         textStyle: GoogleFonts.urbanist(
             fontSize: 12.sp,
             fontWeight: FontWeight.w500,
@@ -63,8 +63,8 @@ class _IndexNeoState extends State<IndexNeo> {
         inactiveColorPrimary: NeoColors.navBarInActiveColor,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(MyFlutterApp.vector),
-        title: "Home",
+        icon: const Icon(MyFlutterApp.try5),
+        title: "Profile",
         textStyle: GoogleFonts.urbanist(
             fontSize: 12.sp,
             fontWeight: FontWeight.w500,
@@ -98,7 +98,7 @@ class _IndexNeoState extends State<IndexNeo> {
                   controller: controller,
                   screens: const [
                     HomeScreen(),
-                    SecondScreen(),
+                    FeedScreen(),
                     ThirdScreen(),
                     FirstScreen(),
                   ],

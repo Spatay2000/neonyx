@@ -35,12 +35,14 @@ class _NeoScaffoldState extends State<NeoScaffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       floatingActionButton: widget.floatingActionButton,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: widget.appBar,
       drawer: widget.drawer,
       resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
       body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         padding: widget.padding,
         decoration: widget.decoration ??
             const BoxDecoration(
