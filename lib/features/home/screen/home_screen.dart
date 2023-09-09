@@ -58,9 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   TabBar(
                       isScrollable: true,
-                      onTap: (int index) {
-                        
-                      },
+                      onTap: (int index) {},
                       controller: _tabController,
                       indicatorColor: Colors.transparent,
                       indicator: const UnderlineTabIndicator(

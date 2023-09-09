@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -65,7 +63,7 @@ class _MyAppsWidgetState extends State<MyAppsWidget> {
         url: 'assets/png/goverment.png',
       ),
       BannerLocalModel(
-        title: 'P2P\nExchange',
+        title: 'P2P Exchange',
         url: 'assets/png/p2p.png',
       ),
     ];
@@ -283,9 +281,9 @@ class _MyAppsWidgetState extends State<MyAppsWidget> {
               return InkWell(
                   // onTap: () {},
                   onLongPress: () {
-                    log('delete');
-                    delete = true;
-                    setState(() {});
+                    setState(() {
+                      delete = !delete;
+                    });
                   },
                   child: Container(
                     padding:
@@ -303,16 +301,19 @@ class _MyAppsWidgetState extends State<MyAppsWidget> {
                               list[index].url,
                               fit: BoxFit.cover,
                             ),
-                            Positioned(
-                                top: -10,
-                                left: 35,
-                                child: Image.asset('assets/png/delete.png'))
+                            !delete
+                                ? const SizedBox()
+                                : Positioned(
+                                    top: -10,
+                                    left: 35,
+                                    child: Image.asset('assets/png/delete.png'))
                           ],
                         ),
                         const SizedBox(height: 10),
                         Text(
                           list[index].title,
                           textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.urbanist(
                             color: Colors.white,
                             fontSize: 14,

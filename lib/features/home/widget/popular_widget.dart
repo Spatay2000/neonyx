@@ -5,6 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/home/data/models/banner_local_model.dart';
+import 'package:neonyx/features/home/widget/feed_show_modal_widget.dart';
+
+import 'popular_show_modal_widget.dart';
 
 class PopularWidget extends StatefulWidget {
   const PopularWidget({
@@ -61,99 +64,101 @@ class _PopularWidgetState extends State<PopularWidget> {
           top: 24,
         ),
         child: ListView(
+          padding: EdgeInsets.zero,
           children: [
-            CarouselSlider(
-              options: CarouselOptions(
-                viewportFraction: 1,
-                autoPlay: scroll,
-                enlargeCenterPage: true,
-                autoPlayInterval: const Duration(seconds: 3),
-                aspectRatio: 52 / 12,
-                onPageChanged: (index, _) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
-              ),
-              items: imgList.map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Stack(
-                      clipBehavior: Clip.none,
-                      alignment: AlignmentDirectional.bottomCenter,
-                      children: [
-                        Container(
-                          width: 1.sw,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF090F0B),
-                            // color: Colors.red,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                          padding: const EdgeInsets.only(
-                            left: 16,
-                            top: 27,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Marketplace',
-                                style: GoogleFonts.urbanist(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.40,
-                                ),
+            SizedBox(
+              height: 100.h,
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  viewportFraction: 1,
+                  autoPlay: scroll,
+                  enlargeCenterPage: true,
+                  autoPlayInterval: const Duration(seconds: 3),
+                  aspectRatio: 62 / 12,
+                  onPageChanged: (index, _) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                ),
+                items: imgList.map((i) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Stack(
+                        clipBehavior: Clip.none,
+                        alignment: AlignmentDirectional.bottomCenter,
+                        children: [
+                          Container(
+                            width: 1.sw,
+                            decoration: ShapeDecoration(
+                              color: const Color(0xFF090F0B),
+                              // color: Colors.red,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
                               ),
-                              Opacity(
-                                opacity: 0.80,
-                                child: Text(
-                                  'Buy any goods directly with your crypto',
-                                  textAlign: TextAlign.center,
+                            ),
+                            padding: const EdgeInsets.only(
+                              left: 16,
+                              top: 27,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Marketplace',
                                   style: GoogleFonts.urbanist(
-                                    color: NeoColors.primaryColor,
-                                    fontSize: 12,
+                                    color: Colors.white,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w400,
                                     height: 1.40,
                                   ),
                                 ),
-                              ),
-                            ],
+                                Opacity(
+                                  opacity: 0.80,
+                                  child: Text(
+                                    'Buy any goods directly with your crypto',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.urbanist(
+                                      color: NeoColors.primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.40,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Positioned(
-                            left: 250,
-                            top: -10,
-                            child: Image.asset(
-                              'assets/png/330.png',
-                            )),
-                      ],
-                    );
-                  },
-                );
-              }).toList(),
+                          Positioned(
+                              left: 250,
+                              top: -10,
+                              child: Image.asset(
+                                'assets/png/330.png',
+                                fit: BoxFit.cover,
+                              )),
+                        ],
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
             ),
             SizedBox(
               height: 8.h,
             ),
             imgList == []
                 ? const SizedBox()
-                : Positioned.fill(
-                    top: 215.r,
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: DotsIndicator(
-                        dotsCount: imgList.length,
-                        position: _currentIndex,
-                        decorator: const DotsDecorator(
-                          color: Color.fromARGB(255, 24, 107, 112),
-                          activeSize: Size.square(
-                              14), // Color of non-selected indicators
-                          activeColor:
-                              Color(0xFF2F9096), // Color of selected indicator
-                        ),
+                : Align(
+                    alignment: Alignment.topCenter,
+                    child: DotsIndicator(
+                      dotsCount: imgList.length ?? 0,
+                      position: _currentIndex,
+                      decorator: const DotsDecorator(
+                        color: Color.fromARGB(255, 24, 107, 112),
+                        activeSize:
+                            Size.square(14), // Color of non-selected indicators
+                        activeColor:
+                            Color(0xFF2F9096), // Color of selected indicator
                       ),
                     ),
                   ),
@@ -168,22 +173,43 @@ class _PopularWidgetState extends State<PopularWidget> {
                     borderRadius: BorderRadius.circular(14),
                   ),
                 ),
-                child: SizedBox(
-                  height: 348.h,
-                  child: ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: list.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
+                child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: list.length,
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            useRootNavigator: true,
+                            isDismissible: true,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            builder: (context) {
+                              // return const FeedShowModalWidget();
+                              return FractionallySizedBox(
+                                heightFactor: 0.87,
+                                child: PopularShowModalWidget(
+                                  url: list[index].url,
+                                  title: list[index].title,
+                                ),
+                              );
+                            });
+                      },
+                      child: Padding(
                         padding: const EdgeInsets.only(top: 8.0, bottom: 8),
                         child: BlackContainerWidget(
                           image: list[index].url,
                           title: list[index].title,
                           subTitle: list[index].subtitle ?? '',
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 )),
             SizedBox(
               height: 26.h,
