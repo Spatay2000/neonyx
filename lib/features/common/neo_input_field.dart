@@ -26,6 +26,9 @@ class NeoInputField extends StatelessWidget {
   final TextStyle hintStyle;
   final bool isChoosedAddress;
   final bool isNeedBorder;
+  final Color? fillColor;
+  final int? maxLines;
+  final bool isWithSearchIcon;
 
   const NeoInputField(
       {Key? key,
@@ -47,6 +50,9 @@ class NeoInputField extends StatelessWidget {
       this.autovalidateMode = AutovalidateMode.always,
       this.isChoosedAddress = true,
       this.isNeedBorder = false,
+      this.fillColor,
+      this.maxLines,
+      this.isWithSearchIcon = false,
       this.hintStyle = const TextStyle(
         fontSize: 14.0,
         fontWeight: FontWeight.w500,
@@ -74,6 +80,8 @@ class NeoInputField extends StatelessWidget {
         onChanged: onChanged,
         onTap: onTap,
         enableInteractiveSelection: true,
+        maxLines: maxLines,
+        minLines: 1,
         // ignore: deprecated_member_use
         toolbarOptions: const ToolbarOptions(
           copy: true,
@@ -102,17 +110,19 @@ class NeoInputField extends StatelessWidget {
                   minWidth: 24,
                 ),
           prefixIcon: type == NeoInputType.text
-              ? Container(
-                  height: 5,
-                  width: 5,
-                  color: Colors.transparent,
-                  child: SvgPicture.asset(
-                    'assets/svg/search.svg',
-                    height: 4,
-                    width: 4,
-                    fit: BoxFit.scaleDown,
-                  ),
-                )
+              ? isWithSearchIcon
+                  ? Container(
+                      height: 5,
+                      width: 5,
+                      color: Colors.transparent,
+                      child: SvgPicture.asset(
+                        'assets/svg/search.svg',
+                        height: 4,
+                        width: 4,
+                        fit: BoxFit.scaleDown,
+                      ),
+                    )
+                  : null
               : const Padding(
                   padding: EdgeInsets.only(bottom: 0),
                   child: Text(
@@ -157,6 +167,7 @@ class NeoInputField extends StatelessWidget {
               : const OutlineInputBorder(borderSide: BorderSide.none),
           errorBorder: const OutlineInputBorder(borderSide: BorderSide.none),
           isDense: isDense,
+          fillColor: fillColor,
         ),
       ),
     );

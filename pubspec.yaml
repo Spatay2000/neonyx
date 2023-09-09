@@ -81,6 +81,8 @@ dependencies:
   flutter_slidable: ^3.0.0
   # input formatter (all platforms)
   mask_text_input_formatter: ^2.3.0
+  # jumping dots
+  jumping_dot: ^0.0.6
 
   
 
