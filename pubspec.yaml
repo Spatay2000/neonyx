@@ -77,7 +77,8 @@ dependencies:
   carousel_slider: ^4.2.1
   #dots widget
   dots_indicator: ^3.0.0
-
+  # story helper
+  story_view: ^0.15.0
   
 
 flutter_native_splash:
