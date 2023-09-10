@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jumping_dot/jumping_dot.dart';
 import 'package:neonyx/domain/entity/message_entity.dart';
+import 'package:neonyx/features/chat/chat_menu_screen.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/common/neo_input_field.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
@@ -101,12 +102,20 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
               ],
             ),
             actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: Image.asset(
-                  "assets/png/group_avatar_1_4x.png",
-                  height: 32,
-                  width: 32,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ChatMenuScreen()));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: Image.asset(
+                    "assets/png/group_avatar_1_4x.png",
+                    height: 32,
+                    width: 32,
+                  ),
                 ),
               ),
             ],
@@ -246,8 +255,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                         child: Container(
                           color: NeoColors.grayColor,
                           child: Image.asset(
-                            message.icon ??
-                                "assets/png/avatar_1_4x_icon.png",
+                            message.icon ?? "assets/png/avatar_1_4x_icon.png",
                             width: 28,
                             height: 28,
                             fit: BoxFit.cover,
