@@ -82,9 +82,7 @@ class _StoryWidgetState extends State<StoryWidget>
       resizeToAvoidBottomInset: true,
       backgroundColor: const Color(0xFFD9DEE8),
       floatingActionButton: Container(
-          margin: const EdgeInsets.symmetric(
-            horizontal: 12,
-          ),
+          margin: EdgeInsets.symmetric(horizontal: 12, vertical: 2.h),
           padding: const EdgeInsets.only(right: 12),
           decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.1),

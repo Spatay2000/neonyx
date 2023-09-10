@@ -82,19 +82,20 @@ class _FeedListWidgetState extends State<FeedListWidget> {
   ];
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.zero,
+    return Column(
       children: [
         FeedStoryWidget(
           feedStory: feedList,
         ),
-        ListView.builder(
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          itemCount: 3,
-          itemBuilder: (context, index) {
-            return const PostWidget();
-          },
+        Expanded(
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            itemCount: 3,
+            itemBuilder: (context, index) {
+              return const PostWidget();
+            },
+          ),
         ),
       ],
     );
