@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:neonyx/domain/entity/feed_entity.dart';
 import 'package:neonyx/features/feed/widget/feed_strory.dart';
 
-import '../../home/widget/feed_show_modal_widget.dart';
+import 'feed_show_modal_widget.dart';
 
 class FeedListWidget extends StatefulWidget {
   const FeedListWidget({super.key});

@@ -185,6 +185,7 @@ class _PopularWidgetState extends State<PopularWidget> {
                             isScrollControlled: true,
                             useRootNavigator: true,
                             isDismissible: true,
+                            backgroundColor: const Color(0xFF090F0B),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),

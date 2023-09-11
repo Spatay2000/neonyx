@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:neonyx/features/common/neo_colors.dart';
+import 'package:neonyx/features/common/custom_tab_bar.dart';
+
 import 'package:neonyx/features/common/neo_scaffold.dart';
 import 'package:neonyx/features/home/widget/my_apps_widget.dart';
 
@@ -15,17 +16,29 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   TabController? _tabController;
+  List<String> data = [
+    'My apps',
+    'Popular',
+    'Neonyx',
+    'My apps',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: data.length, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<String> data = [
-      'My apps',
-      'Popular',
-      'Neonyx',
-      'My apps',
-    ];
-
     return DefaultTabController(
       length: data.length,
       child: NeoScaffold(
@@ -52,65 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16).r,
-              child: Column(
-                children: [
-                  TabBar(
-                      isScrollable: true,
-                      onTap: (int index) {},
-                      controller: _tabController,
-                      indicatorColor: Colors.transparent,
-                      indicator: const UnderlineTabIndicator(
-                          borderSide: BorderSide.none),
-                      labelPadding: EdgeInsets.zero,
-                      tabs: [
-                        for (int i = 0; i < data.length; i++)
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Container(
-                              padding: const EdgeInsets.all(12),
-                              decoration: ShapeDecoration(
-                                color: const Color(0x192F9096),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    data[i],
-                                    style: GoogleFonts.urbanist(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.40,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Opacity(
-                                    opacity: 0.40,
-                                    child: Text(
-                                      '2',
-                                      style: GoogleFonts.urbanist(
-                                        color: NeoColors.primaryColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        height: 1.40,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                      ]),
-                ],
-              ),
-            ),
+            CustomTabBar(tabs: data, controller: _tabController),
             Expanded(
               child: TabBarView(
                 physics: const NeverScrollableScrollPhysics(),

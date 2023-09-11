@@ -6,8 +6,9 @@ import 'neo_colors.dart';
 class CustomTabBar extends StatefulWidget {
   final List<String>? tabs;
   final TabController? controller;
-
-  const CustomTabBar({super.key, required this.tabs, required this.controller});
+  final bool? type;
+  const CustomTabBar(
+      {super.key, required this.tabs, required this.controller, this.type});
 
   @override
   _CustomTabBarState createState() => _CustomTabBarState();
@@ -55,35 +56,45 @@ class _CustomTabBarState extends State<CustomTabBar> {
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.tabs![i],
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            height: 1.40.h,
-                          ),
-                        ),
-                        SizedBox(width: 4.w),
-                        Opacity(
-                          opacity: 0.40,
-                          child: Text(
-                            '2',
+                    child: widget.type == false
+                        ? Text(
+                            widget.tabs![i],
                             style: TextStyle(
-                              color: NeoColors.primaryColor,
+                              color: Colors.white,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w400,
                               height: 1.40.h,
                             ),
+                          )
+                        : Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.tabs![i],
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.40.h,
+                                ),
+                              ),
+                              SizedBox(width: 4.w),
+                              Opacity(
+                                opacity: 0.40,
+                                child: Text(
+                                  '2',
+                                  style: TextStyle(
+                                    color: NeoColors.primaryColor,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.40.h,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
                   ),
                 )
             ],
