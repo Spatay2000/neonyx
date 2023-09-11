@@ -26,6 +26,7 @@ class _FeedListWidgetState extends State<FeedListWidget> {
     FeedEntity(
         id: 2,
         avatar: "assets/png/avatar_2_4x_icon.png",
+        storyImage: 'assets/png/story.png',
         username: 'Team General Chat',
         postTime: 8,
         commentTotal: 10,

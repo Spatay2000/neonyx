@@ -78,12 +78,15 @@ dependencies:
   #dots widget
   dots_indicator: ^3.0.0
   # story helper
-  story_view: ^0.15.0  #swipe chat
+  story: ^1.1.0  
+  #swipe chat
   flutter_slidable: ^3.0.0
   # input formatter (all platforms)
   mask_text_input_formatter: ^2.3.0
   # jumping dots
   jumping_dot: ^0.0.6
+  #swipe story
+  cube_transition_plus: ^2.0.1
 
   
 
