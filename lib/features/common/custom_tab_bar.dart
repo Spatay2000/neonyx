@@ -6,8 +6,15 @@ import 'neo_colors.dart';
 class CustomTabBar extends StatefulWidget {
   final List<String>? tabs;
   final TabController? controller;
+  final bool secondText;
+  final EdgeInsetsGeometry padding;
 
-  const CustomTabBar({super.key, required this.tabs, required this.controller});
+  const CustomTabBar(
+      {super.key,
+      required this.tabs,
+      required this.controller,
+      required this.padding,
+      required this.secondText});
 
   @override
   _CustomTabBarState createState() => _CustomTabBarState();
@@ -29,7 +36,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 16.0.w, right: 16.w),
+      padding: widget.padding,
       child: Column(
         children: [
           TabBar(
@@ -69,7 +76,9 @@ class _CustomTabBarState extends State<CustomTabBar> {
                             height: 1.40.h,
                           ),
                         ),
-                        SizedBox(width: 4.w),
+                        widget.secondText == true ?
+                        SizedBox(width: 4.w) : const SizedBox(),
+                         widget.secondText == true ?
                         Opacity(
                           opacity: 0.40,
                           child: Text(
@@ -81,7 +90,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
                               height: 1.40.h,
                             ),
                           ),
-                        ),
+                        ) : const SizedBox(),
                       ],
                     ),
                   ),

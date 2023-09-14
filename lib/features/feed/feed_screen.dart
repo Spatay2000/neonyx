@@ -61,7 +61,12 @@ class _FeedScreenState extends State<FeedScreen> with TickerProviderStateMixin {
               ),
               iconNearTitle: SvgPicture.asset('assets/svg/story.svg'),
             ),
-            CustomTabBar(tabs: data!, controller: tabController),
+            CustomTabBar(
+              secondText: true,
+              tabs: data!,
+              controller: tabController,
+              padding: EdgeInsets.only(left: 16.0.w, right: 16.w),
+            ),
             Expanded(
               child: TabBarView(
                 physics: const NeverScrollableScrollPhysics(),

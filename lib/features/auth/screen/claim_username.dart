@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/features/common/neo_button.dart';
-import 'package:neonyx/features/index/index.dart';
 
 import '../../common/neo_colors.dart';
 import '../../common/neo_scaffold.dart';
+import '../../user_space/user_space_screen.dart';
 
 class ClaimUsername extends StatefulWidget {
   const ClaimUsername({super.key});
@@ -40,6 +40,8 @@ class _ClaimUsernameState extends State<ClaimUsername> {
   @override
   Widget build(BuildContext context) {
     return NeoScaffold(
+      extendBodyBehindAppBar: true,
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
         child: AppBar(
@@ -139,9 +141,7 @@ class _ClaimUsernameState extends State<ClaimUsername> {
                       ? Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => IndexNeo(
-                                    screenIndex: 0,
-                                  )))
+                              builder: (context) => const UserSpaceScreen()))
                       : null,
                   backgroundStatus: false,
                   title: 'Claim this username',

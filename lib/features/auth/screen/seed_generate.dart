@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -45,6 +44,7 @@ class _SeedGenerateState extends State<SeedGenerate> {
   @override
   Widget build(BuildContext context) {
     return NeoScaffold(
+      extendBodyBehindAppBar: true,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
         child: AppBar(
