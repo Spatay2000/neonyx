@@ -142,6 +142,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
   @override
   Widget build(BuildContext context) {
     return NeoScaffold(
+      extendBodyBehindAppBar: true,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
         child: AppBar(

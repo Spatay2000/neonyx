@@ -91,6 +91,7 @@ dependencies:
   path_provider: ^2.0.5
   #swipe story
   cube_transition_plus: ^2.0.1
+  convex_bottom_bar: ^3.2.0
 
 
 dependency_overrides:
@@ -101,6 +102,7 @@ flutter_native_splash:
   ios: true
   web: false
   background_image: assets/png/splash.png
+  color: #0000000
 
 dev_dependencies:
   flutter_test:

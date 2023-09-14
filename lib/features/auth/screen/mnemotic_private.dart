@@ -88,6 +88,7 @@ class _MnematicOrPrivateScreenState extends State<MnematicOrPrivateScreen> {
   @override
   Widget build(BuildContext context) {
     return NeoScaffold(
+      extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: true,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
