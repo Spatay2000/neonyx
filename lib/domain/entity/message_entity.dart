@@ -3,6 +3,7 @@ class MessageEntity {
   final String? icon;
   final int? from;
   final String? message;
+  final String? audioPath;
   final DateTime? createdAt;
   // temporary field
   final String? name;
@@ -14,6 +15,7 @@ class MessageEntity {
     this.icon,
     this.from,
     this.message,
+    this.audioPath,
     this.createdAt,
     this.name,
     this.isChatMan = false,
@@ -23,12 +25,14 @@ class MessageEntity {
     int? id,
     int? from,
     String? message,
+    String? audioPath,
     DateTime? createdAt,
   }) =>
       MessageEntity(
         id: id ?? this.id,
         from: from ?? this.from,
         message: message ?? this.message,
+        audioPath: audioPath ?? this.audioPath,
         createdAt: createdAt ?? this.createdAt,
       );
 }

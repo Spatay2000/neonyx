@@ -65,7 +65,7 @@ dependencies:
   #mnemonic phrase
   bip39: ^1.0.6
   #permission handler
-  permission_handler: ^10.4.3
+  permission_handler: ^11.0.0
   #equatable
   equatable: ^2.0.5
   #nav bar
@@ -85,11 +85,17 @@ dependencies:
   mask_text_input_formatter: ^2.3.0
   # jumping dots
   jumping_dot: ^0.0.6
+  # audio messages
+  record: ^4.4.4
+  just_audio: ^0.9.35
+  path_provider: ^2.0.5
   #swipe story
   cube_transition_plus: ^2.0.1
   convex_bottom_bar: ^3.2.0
 
-  
+
+dependency_overrides:
+  intl: any
 
 flutter_native_splash:
   android: true
