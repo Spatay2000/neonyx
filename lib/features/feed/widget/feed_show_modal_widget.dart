@@ -8,7 +8,7 @@ import 'package:neonyx/features/common/neo_button.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
 import 'package:neonyx/features/feed/data/models/media_item.dart';
-import 'package:neonyx/features/feed/widget/test_screen.dart';
+import 'package:neonyx/features/feed/posts_screen.dart';
 
 class FeedShowModalWidget extends StatefulWidget {
   const FeedShowModalWidget({
@@ -153,10 +153,9 @@ class _FeedShowModalWidgetState extends State<FeedShowModalWidget>
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(16.0),
-                                child: Container(
-                                  width: 1.sw,
-                                  height: 1.h,
-                                  color: NeoColors.primaryColor,
+                                child: Divider(
+                                  color: NeoColors.soonColor.withOpacity(0.1),
+                                  thickness: 1.0,
                                 ),
                               ),
                               CustomTabBar(
@@ -290,10 +289,9 @@ class _FeedShowModalWidgetState extends State<FeedShowModalWidget>
                             ),
                             Padding(
                               padding: const EdgeInsets.all(16.0),
-                              child: Container(
-                                width: 1.sw,
-                                height: 1.h,
-                                color: NeoColors.primaryColor,
+                              child: Divider(
+                                color: NeoColors.soonColor.withOpacity(0.1),
+                                thickness: 1.0,
                               ),
                             ),
                             CustomTabBar(
@@ -377,7 +375,7 @@ class MediaWidget extends StatelessWidget {
                 : Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => TestScreen(
+                        builder: (context) => PostsScreen(
                               media: _items[index],
                             )),
                   );

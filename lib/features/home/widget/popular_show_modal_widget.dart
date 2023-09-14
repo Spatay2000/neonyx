@@ -121,10 +121,9 @@ class PopularShowModalWidget extends StatelessWidget {
               SizedBox(
                 height: 19.h,
               ),
-              Container(
-                width: 1.sw,
-                height: 1.h,
-                color: Colors.black,
+              Divider(
+                color: NeoColors.soonColor.withOpacity(0.1),
+                thickness: 1.0,
               ),
               SizedBox(
                 height: 19.h,
