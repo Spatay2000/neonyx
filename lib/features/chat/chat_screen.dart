@@ -77,7 +77,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         Text(
                           "Search",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: GoogleFonts.urbanist(
                             color: NeoColors.primaryColor.withOpacity(.8),
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
@@ -126,9 +126,9 @@ class _ChatScreenState extends State<ChatScreen> {
                         onTap: () {
                           _searchController.clear();
                         },
-                        child: const Text(
+                        child: Text(
                           "Clear",
-                          style: TextStyle(
+                          style: GoogleFonts.urbanist(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
                             color: NeoColors.soonColor,
@@ -223,10 +223,10 @@ class SearchResultsNotFoundWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Text(
         'Not Found',
-        style: TextStyle(
+        style: GoogleFonts.urbanist(
           fontSize: 14.0,
           fontWeight: FontWeight.w400,
           color: NeoColors.grayColor,

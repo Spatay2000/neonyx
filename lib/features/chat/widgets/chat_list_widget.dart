@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/domain/entity/chat_entity.dart';
 import 'package:neonyx/features/chat/chat_details_screen.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
@@ -122,8 +123,15 @@ class _ChatListWidgetState extends State<ChatListWidget> {
       bool isPinned) {
     return GestureDetector(
       onTap: () {
-        pushNewScreen(context,
-            screen: const ChatDetailsScreen(), withNavBar: false);
+        pushNewScreen(
+          context,
+          screen: ChatDetailsScreen(
+            icon: avatar,
+            groupName: groupName,
+            userName: userName,
+          ),
+          withNavBar: false,
+        );
       },
       child: Slidable(
         startActionPane: ActionPane(
@@ -164,7 +172,7 @@ class _ChatListWidgetState extends State<ChatListWidget> {
                       children: [
                         Text(
                           isGroupChat ? groupName : userName,
-                          style: const TextStyle(
+                          style: GoogleFonts.urbanist(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                             color: NeoColors.primaryColor,
@@ -191,7 +199,7 @@ class _ChatListWidgetState extends State<ChatListWidget> {
                             : const SizedBox(),
                         Text(
                           lastMessageTime,
-                          style: const TextStyle(
+                          style: GoogleFonts.urbanist(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
                             color: NeoColors.primaryColor,
@@ -205,9 +213,9 @@ class _ChatListWidgetState extends State<ChatListWidget> {
                                   color: NeoColors.primaryColor,
                                   shape: BoxShape.circle,
                                 ),
-                                child: const Text(
+                                child: Text(
                                   "1",
-                                  style: TextStyle(
+                                  style: GoogleFonts.urbanist(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w700,
                                     color: NeoColors.white,
@@ -220,7 +228,7 @@ class _ChatListWidgetState extends State<ChatListWidget> {
                     isGroupChat
                         ? Text(
                             userName,
-                            style: const TextStyle(
+                            style: GoogleFonts.urbanist(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
                               color: NeoColors.white,
@@ -229,7 +237,7 @@ class _ChatListWidgetState extends State<ChatListWidget> {
                         : const SizedBox(),
                     Text(
                       lastMessage,
-                      style: const TextStyle(
+                      style: GoogleFonts.urbanist(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: NeoColors.white,
@@ -285,7 +293,7 @@ class _ChatListWidgetState extends State<ChatListWidget> {
             const SizedBox(height: 2),
             Text(
               text,
-              style: const TextStyle(
+              style: GoogleFonts.urbanist(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
               ),

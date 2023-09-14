@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
@@ -83,17 +84,17 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
                       ),
                     ],
                   ),
-                  const Text(
+                  Text(
                     "MemeStream",
-                    style: TextStyle(
+                    style: GoogleFonts.urbanist(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       color: NeoColors.white,
                     ),
                   ),
-                  const Text(
+                  Text(
                     "You are member",
-                    style: TextStyle(
+                    style: GoogleFonts.urbanist(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                       color: NeoColors.primaryColor,
@@ -124,7 +125,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
                       Text(
                         "Messages in this room are \nend-to-end encrypted",
                         maxLines: 2,
-                        style: TextStyle(
+                        style: GoogleFonts.urbanist(
                           fontSize: 12,
                           height: 1.4,
                           fontWeight: FontWeight.w400,
@@ -164,11 +165,11 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
                     ),
                   ),
                   const SizedBox(height: 22),
-                  const Align(
+                  Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Moderators",
-                      style: TextStyle(
+                      style: GoogleFonts.urbanist(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
                         color: NeoColors.primaryColor,
@@ -228,7 +229,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
               topText != null
                   ? Text(
                       topText,
-                      style: TextStyle(
+                      style: GoogleFonts.urbanist(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                         color: NeoColors.primaryColor.withOpacity(.4),
@@ -237,7 +238,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
                   : const SizedBox(),
               Text(
                 text,
-                style: const TextStyle(
+                style: GoogleFonts.urbanist(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                   color: NeoColors.white,
@@ -285,7 +286,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
         const SizedBox(width: 16),
         Text(
           text,
-          style: TextStyle(
+          style: GoogleFonts.urbanist(
             color: isInactive
                 ? NeoColors.primaryColor.withOpacity(.2)
                 : NeoColors.white,
@@ -324,7 +325,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
           children: [
             Text(
               name,
-              style: TextStyle(
+              style: GoogleFonts.urbanist(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
                 color: NeoColors.primaryColor.withOpacity(.8),
@@ -332,7 +333,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
             ),
             Text(
               role,
-              style: const TextStyle(
+              style: GoogleFonts.urbanist(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
                 color: NeoColors.white,
