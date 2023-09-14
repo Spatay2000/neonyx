@@ -99,38 +99,38 @@ class _UserSpaceScreenState extends State<UserSpaceScreen> {
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: const Column(
+                    child: Column(
                       children: [
-                        Divider(
+                        const Divider(
                           color: NeoColors.soonColor,
                           thickness: 1.0,
                         ),
-                        SizedBox(height: 35),
+                        const SizedBox(height: 35),
                         Text(
                           "What are you interested in?",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: GoogleFonts.urbanist(
                             color: NeoColors.white,
                             fontSize: 24,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                        SizedBox(height: 15),
+                        const SizedBox(height: 15),
                         Text(
                           "Select some topics you’re interested in to help personalize your feed & starting with finding people to follow!",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: GoogleFonts.urbanist(
                             color: NeoColors.primaryColor,
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                        SizedBox(height: 35),
-                        Divider(
+                        const SizedBox(height: 35),
+                        const Divider(
                           color: NeoColors.soonColor,
                           thickness: 1.0,
                         ),
-                        SizedBox(height: 26),
+                        const SizedBox(height: 26),
                       ],
                     ),
                   ),
@@ -210,10 +210,10 @@ class TopicsWidget extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: const Text(
+                child: Text(
                   "Topics",
                   textAlign: TextAlign.start,
-                  style: TextStyle(
+                  style: GoogleFonts.urbanist(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                     color: NeoColors.white,
@@ -265,7 +265,7 @@ class TopicsWidget extends StatelessWidget {
                               children: [
                                 Text(
                                   topics[index][i].topic,
-                                  style: const TextStyle(
+                                  style: GoogleFonts.urbanist(
                                     color: NeoColors.white,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
@@ -311,10 +311,10 @@ class PeoplesWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           "Peoples",
           textAlign: TextAlign.start,
-          style: TextStyle(
+          style: GoogleFonts.urbanist(
             fontSize: 16,
             fontWeight: FontWeight.w400,
             color: NeoColors.white,
@@ -366,7 +366,7 @@ class PeoplesWidget extends StatelessWidget {
           children: [
             Text(
               name,
-              style: const TextStyle(
+              style: GoogleFonts.urbanist(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
                 color: NeoColors.primaryColor,
@@ -374,7 +374,7 @@ class PeoplesWidget extends StatelessWidget {
             ),
             Text(
               description,
-              style: const TextStyle(
+              style: GoogleFonts.urbanist(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
                 color: NeoColors.white,
