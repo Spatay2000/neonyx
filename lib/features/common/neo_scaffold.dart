@@ -85,7 +85,7 @@ class _NeoScaffoldState extends State<NeoScaffold> {
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: const Color.fromRGBO(124, 213, 162, 0.02),
-                      width: 0.001,
+                      width: 0.1,
                     ),
                   ),
                 ),

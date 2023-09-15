@@ -37,53 +37,57 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return NeoScaffold(
       extendBodyBehindAppBar: true,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/png/bg_register.png'), fit: BoxFit.cover),
-      ),
-      body: Padding(
-        padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 134.h),
-        child: Center(
-          child: Column(
-            children: [
-              timeToNext == false
-                  ? GradientProgressIndicator(
-                      radius: 58.r,
-                      strokeWidth: 8,
-                      gradientStops: const [
-                        0.05,
-                        0.95,
-                      ],
-                      gradientColors: const [
-                        Color.fromRGBO(47, 145, 151, 0),
-                        Color(0xFF2F9197)
-                      ],
-                      child: SvgPicture.asset('assets/svg/profile.svg'),
-                    )
-                  : SvgPicture.asset('assets/svg/profile_after.svg'),
-              SizedBox(
-                height: 74.h,
-              ),
-              Text(
-                'Setting up new identity',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.urbanist(
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white),
-              ),
-              SizedBox(height: 2.h),
-              Text(
-                'Please don’t close app until it will be done',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.urbanist(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w400,
-                    color: NeoColors.primaryColor),
-              ),
-            ],
+      body: Stack(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 65.w, top: 260.h),
+            child: SvgPicture.asset('assets/svg/bg_iden.svg'),
           ),
-        ),
+          Padding(
+            padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 134.h),
+            child: Center(
+              child: Column(
+                children: [
+                  timeToNext == false
+                      ? GradientProgressIndicator(
+                          radius: 58.r,
+                          strokeWidth: 8,
+                          gradientStops: const [
+                            0.05,
+                            0.95,
+                          ],
+                          gradientColors: const [
+                            Color.fromRGBO(47, 145, 151, 0),
+                            Color(0xFF2F9197)
+                          ],
+                          child: SvgPicture.asset('assets/svg/profile.svg'),
+                        )
+                      : SvgPicture.asset('assets/svg/profile_after.svg'),
+                  SizedBox(
+                    height: 74.h,
+                  ),
+                  Text(
+                    'Setting up new identity',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.urbanist(
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white),
+                  ),
+                  SizedBox(height: 2.h),
+                  Text(
+                    'Please don’t close app until it will be done',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.urbanist(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
+                        color: NeoColors.primaryColor),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

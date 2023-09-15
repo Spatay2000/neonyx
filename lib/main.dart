@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       useInheritedMediaQuery: true,
       designSize: const Size(360, 800),
       builder: (context, child) =>
-          const MaterialApp(debugShowCheckedModeBanner: false, home: LoginScreen()),
+          const MaterialApp(debugShowCheckedModeBanner: false, home: ClaimUsername()),
     );
   }
 }
