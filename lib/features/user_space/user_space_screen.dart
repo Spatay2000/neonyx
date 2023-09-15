@@ -63,6 +63,7 @@ class _UserSpaceScreenState extends State<UserSpaceScreen> {
               elevation: 0,
               forceElevated: true,
               centerTitle: true,
+              automaticallyImplyLeading: false,
               title: Row(
                 children: [
                   const Spacer(),
@@ -158,6 +159,7 @@ class _UserSpaceScreenState extends State<UserSpaceScreen> {
           ),
         ),
         bottomNavigationBar: Container(
+          margin: EdgeInsets.only(bottom: 20.h),
           decoration: const BoxDecoration(
             color: NeoColors.black,
             boxShadow: [

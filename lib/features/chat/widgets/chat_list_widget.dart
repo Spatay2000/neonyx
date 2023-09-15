@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/domain/entity/chat_entity.dart';
 import 'package:neonyx/features/chat/chat_details_screen.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
-import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+
+import '../../../core/get_it/configurator.dart';
+import '../bloc/chat_details_bloc/chat_details_bloc.dart';
+import '../bloc/chat_details_bloc/chat_details_event.dart';
+import '../bloc/chat_details_bloc/chat_details_state.dart';
 
 class ChatListWidget extends StatefulWidget {
   const ChatListWidget({super.key});
@@ -15,11 +21,18 @@ class ChatListWidget extends StatefulWidget {
 }
 
 class _ChatListWidgetState extends State<ChatListWidget> {
+  final _chatDetailsBloc = getIt<ChatDetailsBloc>()..add(LoadChat());
+  @override
+  void initState() {
+    super.initState();
+  }
+
   List<ChatEntity> chats = [
     const ChatEntity(
         id: 1,
         isGroupChat: true,
-        avatar: "assets/png/group_avatar_1_4x.png",
+        avatar: "assets/png/Avatar_group.png",
+        groupAva: 'assets/png/group_ava.png',
         groupName: "MemeStream",
         userName: "EdNorton",
         lastMessage: "Yeah! But I think you’ll need a pretty advanc",
@@ -28,7 +41,8 @@ class _ChatListWidgetState extends State<ChatListWidget> {
     const ChatEntity(
         id: 2,
         isGroupChat: true,
-        avatar: "assets/png/group_avatar_2_4x.png",
+        avatar: "assets/png/Avatar_group.png",
+        groupAva: 'assets/png/group_ava.png',
         groupName: "Team General Chat",
         userName: "Coacheller",
         lastMessage: "Yeah! But I think you’ll need a pretty advanced wallet",
@@ -82,57 +96,76 @@ class _ChatListWidgetState extends State<ChatListWidget> {
   ];
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: ListView.separated(
-          padding: EdgeInsets.zero,
-          itemCount: chats.length,
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          itemBuilder: (context, index) {
-            return _buildChats(
-              chats[index].isGroupChat!,
-              chats[index].avatar!,
-              chats[index].groupName!,
-              chats[index].userName!,
-              chats[index].lastMessage!,
-              chats[index].lastMessageTime!,
-              chats[index].isPinned!,
+    return BlocProvider.value(
+        value: _chatDetailsBloc,
+        child: BlocBuilder<ChatDetailsBloc, ChatDetailsState>(
+          builder: (context, state) {
+            if (state is ChatLoaded) {
+              return SingleChildScrollView(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: ListView.separated(
+                    padding: EdgeInsets.zero,
+                    itemCount: chats.length,
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final lastMessage = state.chat.last;
+                      return _buildChats(
+                          chats[index].isGroupChat!,
+                          chats[index].avatar!,
+                          chats[index].groupAva,
+                          chats[index].groupName!,
+                          chats[index].userName!,
+                          lastMessage.audioPath != null
+                              ? 'Голосовое сообщение'
+                              : lastMessage.message,
+                          // chats[index].lastMessage!,
+                          chats[index].lastMessageTime!,
+                          chats[index].isPinned!, onTap: () {
+                        PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: ChatDetailsScreen(
+                            icon: chats[index].avatar!,
+                            groupName: chats[index].groupName!,
+                            groupAva: chats[index].groupAva,
+                          ),
+                          withNavBar: false, // OPTIONAL VALUE. True by default.
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.cupertino,
+                        ).then((value) => _chatDetailsBloc.add(LoadChat()));
+                      });
+                    },
+                    separatorBuilder: ((context, index) {
+                      return Divider(
+                        color: NeoColors.soonColor.withOpacity(0.1),
+                        thickness: 1.0,
+                      );
+                    }),
+                  ),
+                ),
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
             );
           },
-          separatorBuilder: ((context, index) {
-            return Divider(
-              color: NeoColors.soonColor.withOpacity(0.1),
-              thickness: 1.0,
-            );
-          }),
-        ),
-      ),
-    );
+        ));
   }
 
   _buildChats(
       bool isGroupChat,
       String avatar,
+      String? groupAva,
       String groupName,
       String userName,
-      String lastMessage,
+      String? lastMessage,
       String lastMessageTime,
-      bool isPinned) {
+      bool isPinned,
+      {Function()? onTap}) {
     return GestureDetector(
-      onTap: () {
-        pushNewScreen(
-          context,
-          screen: ChatDetailsScreen(
-            icon: avatar,
-            groupName: groupName,
-            userName: userName,
-          ),
-          withNavBar: false,
-        );
-      },
+      onTap: onTap,
       child: Slidable(
         startActionPane: ActionPane(
           motion: const ScrollMotion(),
@@ -152,16 +185,40 @@ class _ChatListWidgetState extends State<ChatListWidget> {
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Row(
             children: [
-              ClipOval(
-                child: Container(
-                  color: NeoColors.grayColor,
-                  child: Image.asset(
-                    avatar,
-                    width: 44,
-                    height: 44,
-                    fit: BoxFit.cover,
+              Stack(
+                // alignment: Alignment.topLeft,
+                children: [
+                  groupAva != null
+                      ? ClipOval(
+                          child: Container(
+                            color: NeoColors.grayColor,
+                            child: Image.asset(
+                              groupAva,
+                              width: 20,
+                              height: 20,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
+                  Positioned(
+                    // right: 0.w,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 4, left: 4),
+                      child: ClipOval(
+                        child: Container(
+                          color: NeoColors.grayColor,
+                          child: Image.asset(
+                            avatar,
+                            width: groupAva == null ? 44 : 40,
+                            height: groupAva == null ? 44 : 40,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -236,7 +293,7 @@ class _ChatListWidgetState extends State<ChatListWidget> {
                           )
                         : const SizedBox(),
                     Text(
-                      lastMessage,
+                      lastMessage!,
                       style: GoogleFonts.urbanist(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,

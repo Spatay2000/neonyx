@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:neonyx/domain/entity/feed_entity.dart';
 import 'package:neonyx/features/feed/widget/story.dart';
-import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import '../../common/neo_colors.dart';
 
@@ -35,7 +35,7 @@ class FeedStoryWidget extends StatelessWidget {
             itemBuilder: (context, index) => feedStory![index].groupAva != null
                 ? InkWell(
                     onTap: () => feedStory![index].storyImage != null
-                        ? pushNewScreen(
+                        ? PersistentNavBarNavigator.pushNewScreen(
                             context,
                             screen: StoryWidget(
                               feedEntity: feedStory!,
@@ -84,7 +84,7 @@ class FeedStoryWidget extends StatelessWidget {
                   )
                 : InkWell(
                     onTap: () => feedStory![index].storyImage != null
-                        ? pushNewScreen(
+                        ? PersistentNavBarNavigator.pushNewScreen(
                             context,
                             screen: StoryWidget(
                               feedEntity: feedStory!,

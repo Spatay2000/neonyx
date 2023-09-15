@@ -19,9 +19,9 @@ class CustomNavigationBar extends StatelessWidget {
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-          color: const Color.fromRGBO(55, 124, 125, 0.05).withOpacity(0.5),
+          color: const Color.fromRGBO(47, 145, 151, 0.5),
           borderRadius: BorderRadius.circular(12)),
-      margin: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 40.0),
+      margin: const EdgeInsets.only(left: 16.0, right: 16.0),
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
