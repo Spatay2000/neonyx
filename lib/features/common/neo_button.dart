@@ -26,7 +26,6 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log('STATUSS${backgroundStatus.toString()}');
     return Container(
       height: height,
       width: width,

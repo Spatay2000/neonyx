@@ -19,13 +19,12 @@ class PopularShowModalWidget extends StatelessWidget {
     return Container(
       decoration: const ShapeDecoration(
         gradient: LinearGradient(
-          begin: Alignment(0.00, -1.00),
-          end: Alignment(3, 5),
-          colors: [
-            Color.fromARGB(255, 16, 77, 80),
-            Color.fromARGB(0, 47, 114, 70)
-          ],
-        ),
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromRGBO(47, 145, 151, 0.2),
+              Color.fromRGBO(121, 214, 152, 0),
+            ]),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
@@ -122,10 +121,9 @@ class PopularShowModalWidget extends StatelessWidget {
               SizedBox(
                 height: 19.h,
               ),
-              Container(
-                width: 1.sw,
-                height: 1.h,
-                color: Colors.black,
+              Divider(
+                color: NeoColors.soonColor.withOpacity(0.1),
+                thickness: 1.0,
               ),
               SizedBox(
                 height: 19.h,
@@ -137,11 +135,13 @@ class PopularShowModalWidget extends StatelessWidget {
                     backgroundStatus: true,
                     width: 150.w,
                     title: 'Launch app',
+                    onPressed: () {},
                   ),
                   CustomButton(
                     width: 150.w,
                     backgroundStatus: false,
                     title: 'Uninstall',
+                    onPressed: () {},
                   ),
                 ],
               ),

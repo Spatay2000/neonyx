@@ -19,53 +19,53 @@ class _MyAppsWidgetState extends State<MyAppsWidget> {
   Widget build(BuildContext context) {
     List<BannerLocalModel> list = [
       BannerLocalModel(
-        title: 'Contacts',
-        url: 'assets/png/Avatars.png',
-      ),
-      BannerLocalModel(
-        title: 'Wallet',
-        url: 'assets/png/wallet.png',
-      ),
-      BannerLocalModel(
         title: 'Multipass',
         url: 'assets/png/multipas.png',
       ),
       BannerLocalModel(
-        title: 'Files',
+        title: 'Contact',
+        url: 'assets/png/Avatars.png',
+      ),
+      BannerLocalModel(
+        title: 'Cloud',
         url: 'assets/png/files.png',
-      ),
-      BannerLocalModel(
-        title: 'Shopping',
-        url: 'assets/png/shopping.png',
-      ),
-      BannerLocalModel(
-        title: 'Calendar',
-        url: 'assets/png/calendar.png',
-      ),
-      BannerLocalModel(
-        title: 'Calculator',
-        url: 'assets/png/calc.png',
-      ),
-      BannerLocalModel(
-        title: 'Health',
-        url: 'assets/png/health.png',
       ),
       BannerLocalModel(
         title: 'Notes',
         url: 'assets/png/notes.png',
       ),
       BannerLocalModel(
-        title: 'Explorer',
-        url: 'assets/png/exploer.png',
+        title: 'Health',
+        url: 'assets/png/health.png',
+      ),
+      BannerLocalModel(
+        title: 'Wallet',
+        url: 'assets/png/wallet.png',
+      ),
+      BannerLocalModel(
+        title: 'P2P',
+        url: 'assets/png/p2p.png',
       ),
       BannerLocalModel(
         title: 'Goverment',
         url: 'assets/png/goverment.png',
       ),
-      BannerLocalModel(
-        title: 'P2P Exchange',
-        url: 'assets/png/p2p.png',
-      ),
+      // BannerLocalModel(
+      //   title: 'Shopping',
+      //   url: 'assets/png/shopping.png',
+      // ),
+      // BannerLocalModel(
+      //   title: 'Calendar',
+      //   url: 'assets/png/calendar.png',
+      // ),
+      // BannerLocalModel(
+      //   title: 'Calculator',
+      //   url: 'assets/png/calc.png',
+      // ),
+      // BannerLocalModel(
+      //   title: 'Explorer',
+      //   url: 'assets/png/exploer.png',
+      // ),
     ];
     return Padding(
       padding:

@@ -6,7 +6,7 @@ import 'package:neonyx/features/common/neo_scaffold.dart';
 import 'package:neonyx/features/feed/widget/feed_list.dart';
 
 import '../common/custom_tab_bar.dart';
-import '../home/widget/feed_show_modal_widget.dart';
+import 'widget/feed_show_modal_widget.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});
@@ -63,9 +63,12 @@ class _FeedScreenState extends State<FeedScreen> with TickerProviderStateMixin {
             ),
             CustomTabBar(
               secondText: true,
+              
               tabs: data!,
+             
               controller: tabController,
               padding: EdgeInsets.only(left: 16.0.w, right: 16.w),
+            
             ),
             Expanded(
               child: TabBarView(

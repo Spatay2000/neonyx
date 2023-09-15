@@ -8,13 +8,14 @@ class CustomTabBar extends StatefulWidget {
   final TabController? controller;
   final bool secondText;
   final EdgeInsetsGeometry padding;
-
+  final bool? type;
   const CustomTabBar(
+      
       {super.key,
       required this.tabs,
       required this.controller,
       required this.padding,
-      required this.secondText});
+      required this.secondText, this.type});
 
   @override
   _CustomTabBarState createState() => _CustomTabBarState();
@@ -62,37 +63,47 @@ class _CustomTabBarState extends State<CustomTabBar> {
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.tabs![i],
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            height: 1.40.h,
-                          ),
-                        ),
-                        widget.secondText == true ?
-                        SizedBox(width: 4.w) : const SizedBox(),
-                         widget.secondText == true ?
-                        Opacity(
-                          opacity: 0.40,
-                          child: Text(
-                            '2',
+                    child: widget.type == false
+                        ? Text(
+                            widget.tabs![i],
                             style: TextStyle(
-                              color: NeoColors.primaryColor,
+                              color: Colors.white,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w400,
                               height: 1.40.h,
                             ),
+                          )
+                        : Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.tabs![i],
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.40.h,
+                                ),
+                              ),
+                        widget.secondText == true ?
+                              SizedBox(width: 4.w) : const SizedBox(),
+                         widget.secondText == true ?
+                              Opacity(
+                                opacity: 0.40,
+                                child: Text(
+                                  '2',
+                                  style: TextStyle(
+                                    color: NeoColors.primaryColor,
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.40.h,
+                                  ),
+                                ),
+                              ) : const SizedBox(),
+                            ],
                           ),
-                        ) : const SizedBox(),
-                      ],
-                    ),
                   ),
                 )
             ],
