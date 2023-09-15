@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
 import 'package:neonyx/features/feed/data/models/media_item.dart';
+import 'package:neonyx/features/feed/widget/carousel_slider_widget.dart';
 import 'package:neonyx/features/feed/widget/feed_show_modal_widget.dart';
 import 'package:neonyx/features/feed/widget/video_item.dart';
 
@@ -21,6 +22,7 @@ class PostsScreen extends StatefulWidget {
 
 class _PostsScreenState extends State<PostsScreen> {
   int _currentIndex = 0;
+  final CarouselController _controller = CarouselController();
   final List<MediaItem> _itemsPhoto = [
     MediaItem(
         ['assets/png/grid.png', 'assets/png/grid2.png', 'assets/png/grid3.png'],
@@ -49,10 +51,9 @@ class _PostsScreenState extends State<PostsScreen> {
       'assets/mp4/insta.mp4',
     ], "Stephan Seeber"),
   ];
+  int _current = 0;
   @override
   Widget build(BuildContext context) {
-    bool scroll = true;
-    _items.length == 1 ? scroll = false : scroll = true;
     return NeoScaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(61),
@@ -138,49 +139,9 @@ class _PostsScreenState extends State<PostsScreen> {
                       ),
                     ),
                   ),
-                  CarouselSlider(
-                    options: CarouselOptions(
-                      viewportFraction: 1,
-                      autoPlay: scroll,
-                      enlargeCenterPage: true,
-                      autoPlayInterval: const Duration(seconds: 3),
-                      aspectRatio: 12 / 12,
-                      onPageChanged: (index, _) {
-                        setState(() {
-                          _currentIndex = index;
-                        });
-                      },
-                    ),
-                    items: _itemsPhoto[index].image.map((i) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return Image.asset(
-                            i,
-                            fit: BoxFit.cover,
-                          );
-                        },
-                      );
-                    }).toList(),
+                  CarouselSliderWidget(
+                    itemsPhoto: _itemsPhoto[index],
                   ),
-                  SizedBox(
-                    height: 22.h,
-                  ),
-                  _itemsPhoto[index].image == []
-                      ? const SizedBox()
-                      : Align(
-                          alignment: Alignment.topCenter,
-                          child: DotsIndicator(
-                            dotsCount: _itemsPhoto[index].image.length,
-                            position: _currentIndex,
-                            decorator: const DotsDecorator(
-                              color: Color.fromARGB(255, 24, 107, 112),
-                              activeSize: Size.square(
-                                  14), // Color of non-selected indicators
-                              activeColor: Color(
-                                  0xFF2F9096), // Color of selected indicator
-                            ),
-                          ),
-                        ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
