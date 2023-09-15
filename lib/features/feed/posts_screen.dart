@@ -170,7 +170,7 @@ class _PostsScreenState extends State<PostsScreen> {
                       : Align(
                           alignment: Alignment.topCenter,
                           child: DotsIndicator(
-                            dotsCount: _itemsPhoto[index].image.length ?? 0,
+                            dotsCount: _itemsPhoto[index].image.length,
                             position: _currentIndex,
                             decorator: const DotsDecorator(
                               color: Color.fromARGB(255, 24, 107, 112),
@@ -292,6 +292,7 @@ class _PostsScreenState extends State<PostsScreen> {
                     videoUrl: _items[videoIndex].image.first,
                     type: true,
                     auto: false,
+                    value: 20,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),

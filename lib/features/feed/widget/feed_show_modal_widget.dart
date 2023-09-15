@@ -439,6 +439,7 @@ class MediaWidget extends StatelessWidget {
                   videoUrl: _items[videoIndex].image.first,
                   type: false,
                   auto: true,
+                  value: 0,
                 ),
                 // Container(
                 //   decoration: BoxDecoration(

@@ -7,9 +7,12 @@ class VideoItem extends StatefulWidget {
   final String videoUrl;
   final bool type;
   final bool auto;
-
+  final int value;
   const VideoItem(
-      {required this.videoUrl, required this.type, required this.auto});
+      {required this.videoUrl,
+      required this.type,
+      required this.auto,
+      required this.value});
 
   @override
   _VideoItemState createState() => _VideoItemState();
@@ -22,12 +25,15 @@ class _VideoItemState extends State<VideoItem> {
   @override
   void initState() {
     super.initState();
+
     _videoController = VideoPlayerController.asset(widget.videoUrl);
+    _videoController.setVolume(widget.value.toDouble());
     _chewieController = ChewieController(
       videoPlayerController: _videoController,
+
       aspectRatio: 1,
       autoInitialize: false,
-      showControls: false,
+      showControls: widget.type,
       autoPlay: widget.auto, // Set to true for auto-play
       looping: false, // Set to true for loop
     );
@@ -35,8 +41,11 @@ class _VideoItemState extends State<VideoItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Chewie(
-      controller: _chewieController,
+    return SizedBox(
+      height: (MediaQuery.of(context).size.width) / 8 * 8,
+      child: Chewie(
+        controller: _chewieController,
+      ),
     );
   }
 
