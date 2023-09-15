@@ -26,6 +26,7 @@ class _FeedListWidgetState extends State<FeedListWidget> {
     FeedEntity(
         id: 2,
         avatar: "assets/png/avatar_2_4x_icon.png",
+        storyImage: 'assets/png/story.png',
         username: 'Team General Chat',
         postTime: 8,
         commentTotal: 10,
@@ -82,19 +83,20 @@ class _FeedListWidgetState extends State<FeedListWidget> {
   ];
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.zero,
+    return Column(
       children: [
         FeedStoryWidget(
           feedStory: feedList,
         ),
-        ListView.builder(
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          itemCount: 3,
-          itemBuilder: (context, index) {
-            return const PostWidget();
-          },
+        Expanded(
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            itemCount: 3,
+            itemBuilder: (context, index) {
+              return const PostWidget();
+            },
+          ),
         ),
       ],
     );

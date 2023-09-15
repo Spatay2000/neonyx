@@ -14,7 +14,9 @@ class NeoScaffold extends StatefulWidget {
     this.actions,
     this.decoration,
     this.bottomNavigationBar,
+    this.extendBodyBehindAppBar,
   });
+  final bool? extendBodyBehindAppBar;
   final Widget body;
   final Widget? floatingActionButton;
   final Drawer? drawer;
@@ -32,27 +34,80 @@ class NeoScaffold extends StatefulWidget {
 }
 
 class _NeoScaffoldState extends State<NeoScaffold> {
+  Size? size;
+  double? width;
+  double? height;
+  int count = 5000;
+
+  void initSize(BuildContext context) {
+    if (size == null) {
+      size = MediaQuery.of(context).size;
+      width = size!.width / 32;
+      height = size!.height / 80;
+      if (size!.height > 1000) {
+        count = 8000;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    initSize(context);
     return Scaffold(
+      backgroundColor: Colors.black,
+
+      extendBodyBehindAppBar: widget.extendBodyBehindAppBar ?? false,
       floatingActionButton: widget.floatingActionButton,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: widget.appBar,
       drawer: widget.drawer,
+
       resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
       body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        padding: widget.padding,
-        decoration: widget.decoration ??
-            const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/png/bg.png'),
-                fit: BoxFit.cover,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromRGBO(124, 213, 162, 0.14),
+              Color.fromRGBO(121, 214, 152, 0),
+            ],
+          ),
+        ),
+        child: Stack(
+          children: [
+            Wrap(
+              children: List.generate(
+                count,
+                (index) => Container(
+                  width: width,
+                  height: height,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: const Color.fromRGBO(124, 213, 162, 0.02),
+                      width: 0.001,
+                    ),
+                  ),
+                ),
               ),
             ),
-        child: widget.body,
+            widget.body,
+          ],
+        ),
       ),
+      // body: Container(
+      //   width: MediaQuery.of(context).size.width,
+      //   height: MediaQuery.of(context).size.height,
+      //   padding: widget.padding,
+      //   decoration: widget.decoration ??
+      //       const BoxDecoration(
+      //         image: DecorationImage(
+      //           image: AssetImage('assets/png/bg.png'),
+      //           fit: BoxFit.cover,
+      //         ),
+      //       ),
+      //   child: widget.body,
+      // ),
       bottomNavigationBar: widget.bottomNavigationBar,
     );
   }

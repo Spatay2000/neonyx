@@ -36,6 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return NeoScaffold(
+      extendBodyBehindAppBar: true,
       decoration: const BoxDecoration(
         image: DecorationImage(
             image: AssetImage('assets/png/bg_register.png'), fit: BoxFit.cover),

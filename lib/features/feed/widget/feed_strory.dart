@@ -34,67 +34,77 @@ class FeedStoryWidget extends StatelessWidget {
             itemCount: feedStory!.length,
             itemBuilder: (context, index) => feedStory![index].groupAva != null
                 ? InkWell(
-                    onTap: () => pushNewScreen(
-                      context,
-                      screen: StoryWidget(
-                        feedEntity: feedStory![index],
-                      ),
-                      withNavBar: false,
-                      pageTransitionAnimation:
-                          PageTransitionAnimation.cupertino,
-                    ),
-                    child: Stack(
-                      // alignment: Alignment.topLeft,
-                      children: [
-                        ClipOval(
-                          child: Container(
-                            color: NeoColors.grayColor,
-                            child: Image.asset(
-                              feedStory![index].groupAva!,
-                              width: 20.w,
-                              height: 20.h,
-                              fit: BoxFit.contain,
+                    onTap: () => feedStory![index].storyImage != null
+                        ? pushNewScreen(
+                            context,
+                            screen: StoryWidget(
+                              feedEntity: feedStory!,
+                            ),
+                            withNavBar: false,
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.cupertino,
+                          )
+                        : null,
+                    child: Opacity(
+                      opacity: feedStory![index].storyImage != null ? 1 : 0.2,
+                      child: Stack(
+                        // alignment: Alignment.topLeft,
+                        children: [
+                          ClipOval(
+                            child: Container(
+                              color: NeoColors.grayColor,
+                              child: Image.asset(
+                                feedStory![index].groupAva!,
+                                width: 20.w,
+                                height: 20.h,
+                                fit: BoxFit.contain,
+                              ),
                             ),
                           ),
-                        ),
-                        Positioned(
-                          // right: 0.w,
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 4, left: 4),
-                            child: ClipOval(
-                              child: Container(
-                                color: NeoColors.grayColor,
-                                child: Image.asset(
-                                  feedStory![index].avatar,
-                                  width: 40.w,
-                                  height: 40.h,
-                                  fit: BoxFit.contain,
+                          Positioned(
+                            // right: 0.w,
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 4, left: 4),
+                              child: ClipOval(
+                                child: Container(
+                                  color: NeoColors.grayColor,
+                                  child: Image.asset(
+                                    feedStory![index].avatar,
+                                    width: 40.w,
+                                    height: 40.h,
+                                    fit: BoxFit.contain,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   )
                 : InkWell(
-                    onTap: () => pushNewScreen(
-                      context,
-                      screen: StoryWidget(
-                        feedEntity: feedStory![index],
-                      ),
-                      withNavBar: false,
-                      pageTransitionAnimation:
-                          PageTransitionAnimation.cupertino,
-                    ),
-                    child: ClipOval(
-                      child: Container(
-                        color: NeoColors.grayColor,
-                        child: Image.asset(
-                          feedStory![index].avatar,
-                          width: 44.w,
-                          height: 44.h,
-                          fit: BoxFit.contain,
+                    onTap: () => feedStory![index].storyImage != null
+                        ? pushNewScreen(
+                            context,
+                            screen: StoryWidget(
+                              feedEntity: feedStory!,
+                            ),
+                            withNavBar: false,
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.cupertino,
+                          )
+                        : null,
+                    child: Opacity(
+                      opacity: feedStory![index].storyImage != null ? 1 : 0.2,
+                      child: ClipOval(
+                        child: Container(
+                          color: NeoColors.grayColor,
+                          child: Image.asset(
+                            feedStory![index].avatar,
+                            width: 44.w,
+                            height: 44.h,
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
                     ),
