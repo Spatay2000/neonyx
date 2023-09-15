@@ -65,7 +65,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 ],
               ),
             ),
-            CustomTabBar(tabs: data, controller: _tabController),
+            CustomTabBar(
+              tabs: data,
+              controller: _tabController,
+              padding: EdgeInsets.only(left: 16.0.w, right: 16.w),
+              secondText: false,
+            ),
             Expanded(
               child: TabBarView(
                 physics: const NeverScrollableScrollPhysics(),

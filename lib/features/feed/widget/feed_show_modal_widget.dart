@@ -140,6 +140,9 @@ class _FeedShowModalWidgetState extends State<FeedShowModalWidget>
                                 tabs: data,
                                 controller: _tabController,
                                 type: false,
+                                padding:
+                                    EdgeInsets.only(left: 16.0.w, right: 16.w),
+                                secondText: true,
                               ),
                             ],
                           ),
@@ -276,6 +279,9 @@ class _FeedShowModalWidgetState extends State<FeedShowModalWidget>
                               tabs: data,
                               controller: _tabController,
                               type: false,
+                              padding:
+                                  EdgeInsets.only(left: 16.0.w, right: 16.w),
+                              secondText: false,
                             ),
                           ],
                         ),

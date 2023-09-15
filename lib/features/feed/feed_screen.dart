@@ -68,7 +68,7 @@ class _FeedScreenState extends State<FeedScreen> with TickerProviderStateMixin {
              
               controller: tabController,
               padding: EdgeInsets.only(left: 16.0.w, right: 16.w),
-            ,
+            
             ),
             Expanded(
               child: TabBarView(
