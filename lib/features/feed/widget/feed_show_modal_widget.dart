@@ -90,6 +90,7 @@ class _FeedShowModalWidgetState extends State<FeedShowModalWidget>
               expandedHeight: height,
               collapsedHeight: 200.h,
               flexibleSpace: FlexibleSpaceBar(
+                titlePadding: EdgeInsets.zero,
                 title: _isShrink
                     ? Stack(
                         children: [

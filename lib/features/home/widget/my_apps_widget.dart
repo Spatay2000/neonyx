@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/home/data/models/banner_local_model.dart';
@@ -72,68 +73,63 @@ class _MyAppsWidgetState extends State<MyAppsWidget> {
           const EdgeInsets.only(left: 16.0, right: 16, top: 24, bottom: 44),
       child: ListView(
         padding: EdgeInsets.zero,
+        physics: const BouncingScrollPhysics(),
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                width: 156,
-                height: 80,
-                child: Stack(
+              Container(
+                decoration: ShapeDecoration(
+                  color: const Color(0xFF090F0B),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                padding: const EdgeInsets.only(
+                    left: 12, right: 15, top: 16, bottom: 19),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      child: Container(
-                        width: 156,
-                        height: 80,
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFF090F0B),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Opacity(
+                          opacity: 0.80,
+                          child: Text(
+                            'Your area',
+                            style: GoogleFonts.urbanist(
+                              color: NeoColors.primaryColor,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400,
+                              height: 1.40,
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    Positioned(
-                        left: 95,
-                        top: 19,
-                        child: Image.asset('assets/png/cloud sun.png')),
-                    Positioned(
-                      left: 13,
-                      top: 44,
-                      child: Text(
-                        '24°C',
-                        style: GoogleFonts.urbanist(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          height: 1.40,
+                        const SizedBox(
+                          height: 6,
                         ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 12,
-                      top: 21,
-                      child: Opacity(
-                        opacity: 0.80,
-                        child: Text(
-                          'Your area',
+                        Text(
+                          '24°C',
                           style: GoogleFonts.urbanist(
-                            color: NeoColors.primaryColor,
-                            fontSize: 12,
+                            color: Colors.white,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w400,
                             height: 1.40,
                           ),
                         ),
-                      ),
+                      ],
                     ),
+                    SizedBox(
+                      width: 48.w,
+                    ),
+                    Image.asset('assets/png/cloud sun.png')
                   ],
                 ),
               ),
               SizedBox(
-                width: 156,
+                width: 156.w,
                 height: 80,
                 child: Stack(
                   children: [
@@ -141,7 +137,7 @@ class _MyAppsWidgetState extends State<MyAppsWidget> {
                       left: 0,
                       top: 0,
                       child: Container(
-                        width: 156,
+                        width: 166,
                         height: 80,
                         decoration: ShapeDecoration(
                           color: const Color(0xFF090F0B),
@@ -153,7 +149,7 @@ class _MyAppsWidgetState extends State<MyAppsWidget> {
                     ),
                     Positioned(
                       left: 96,
-                      top: 37,
+                      top: 42,
                       child: SizedBox(
                         width: 48,
                         height: 20,
@@ -187,7 +183,7 @@ class _MyAppsWidgetState extends State<MyAppsWidget> {
                                 '+145.6',
                                 style: GoogleFonts.urbanist(
                                   color: Colors.white,
-                                  fontSize: 12,
+                                  fontSize: 12.sp,
                                   fontWeight: FontWeight.w400,
                                   height: 1.40,
                                 ),
@@ -204,7 +200,7 @@ class _MyAppsWidgetState extends State<MyAppsWidget> {
                         '\$2,203,468',
                         style: GoogleFonts.urbanist(
                           color: Colors.white,
-                          fontSize: 16,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w400,
                           height: 1.40,
                         ),
@@ -225,17 +221,7 @@ class _MyAppsWidgetState extends State<MyAppsWidget> {
                             Positioned(
                               left: 0,
                               top: 3,
-                              child: Container(
-                                width: 12,
-                                height: 12,
-                                decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        "https://via.placeholder.com/12x12"),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
+                              child: Image.asset('assets/png/bit.png'),
                             ),
                             Positioned(
                               left: 15,
@@ -246,7 +232,7 @@ class _MyAppsWidgetState extends State<MyAppsWidget> {
                                   'Bitcoin',
                                   style: GoogleFonts.urbanist(
                                     color: Colors.white,
-                                    fontSize: 12,
+                                    fontSize: 12.sp,
                                     fontWeight: FontWeight.w400,
                                     height: 1.40,
                                   ),
