@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'neo_colors.dart';
 
@@ -66,7 +67,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
                     child: widget.type == false
                         ? Text(
                             widget.tabs![i],
-                            style: TextStyle(
+                            style: GoogleFonts.urbanist(
                               color: Colors.white,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w400,

@@ -34,7 +34,7 @@ class _IndexNeoState extends State<IndexNeo> {
     return [
       PersistentBottomNavBarItem(
         icon: const Icon(MyFlutterApp.hub),
-        title: "Home",
+        title: "Hub",
         textStyle: GoogleFonts.urbanist(
           fontSize: 12.sp,
           fontWeight: FontWeight.w500,

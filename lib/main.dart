@@ -7,8 +7,10 @@ import 'package:neonyx/features/auth/screen/login.dart';
 import 'package:neonyx/features/cloud/cloud.dart';
 import 'package:neonyx/features/index/index.dart';
 import 'package:neonyx/core/shared/hive_initializer.dart' as hive;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/get_it/configurator.dart';
+import 'features/auth/screen/account_details.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -41,8 +43,42 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       useInheritedMediaQuery: true,
       designSize: const Size(360, 800),
-      builder: (context, child) =>
-          const MaterialApp(debugShowCheckedModeBanner: false, home: ClaimUsername()),
+      builder: (context, child) => MaterialApp(
+          debugShowCheckedModeBanner: false, home: SessionManager()),
     );
+  }
+}
+
+class SessionManager extends StatefulWidget {
+  const SessionManager({super.key});
+
+  @override
+  _SessionManagerState createState() => _SessionManagerState();
+}
+
+class _SessionManagerState extends State<SessionManager> {
+  bool isLoggedIn = false;
+
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
+  }
+
+  Future<void> checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool loggedIn = prefs.getBool('logged') ?? false;
+    setState(() {
+      isLoggedIn = loggedIn;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (isLoggedIn) {
+      return const AccountDetails(); // Если пользователь вошел, показываем главный экран.
+    } else {
+      return const LoginScreen(); // Если пользователь не вошел, показываем экран входа.
+    }
   }
 }

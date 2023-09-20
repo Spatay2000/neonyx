@@ -41,17 +41,26 @@ class _CloudState extends State<Cloud> {
 
   final List<NavigationBarItem> navItems = [
     NavigationBarItem(
-      icon: Icons.home,
+      icon: 'assets/svg/first.svg',
     ),
     NavigationBarItem(
-      icon: Icons.search,
+      icon: 'assets/svg/sec.svg',
     ),
     NavigationBarItem(
-      icon: Icons.favorite,
+      icon: 'assets/svg/third.svg',
     ),
     NavigationBarItem(
-      icon: Icons.person,
+      icon: 'assets/svg/four.svg',
     ),
+    // NavigationBarItem(
+    //   icon: Icons.search,
+    // ),
+    // NavigationBarItem(
+    //   icon: Icons.favorite,
+    // ),
+    // NavigationBarItem(
+    //   icon: Icons.person,
+    // ),
   ];
 
   final List<Widget> screens = const [
@@ -69,10 +78,10 @@ class _CloudState extends State<Cloud> {
             builder: (context, state) {
               return Scaffold(
                 appBar: PreferredSize(
-                  preferredSize: const Size.fromHeight(50),
+                  preferredSize: Size.fromHeight(60.h),
                   child: Container(
                     padding: EdgeInsets.only(
-                        top: 55.h, bottom: 12.h, left: 16.w, right: 10.w),
+                        top: 40.h, bottom: 10.h, left: 16.w, right: 10.w),
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
@@ -105,10 +114,13 @@ class _CloudState extends State<Cloud> {
                             ),
                           ],
                         ),
-                        Icon(
-                          Icons.close,
-                          size: 30.h,
-                          color: NeoColors.primaryColor,
+                        InkWell(
+                          onTap: () => Navigator.pop(context),
+                          child: Icon(
+                            Icons.close,
+                            size: 30.h,
+                            color: NeoColors.primaryColor,
+                          ),
                         )
                       ],
                     ),

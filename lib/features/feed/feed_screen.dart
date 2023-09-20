@@ -44,9 +44,10 @@ class _FeedScreenState extends State<FeedScreen> with TickerProviderStateMixin {
               actions: InkWell(
                 onTap: () => showModalBottomSheet(
                     context: context,
-                    isScrollControlled: true,
+                    isScrollControlled: false,
                     useRootNavigator: true,
                     isDismissible: true,
+                    
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),

@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/domain/entity/chat_entity.dart';
+import 'package:neonyx/domain/entity/message_entity.dart';
 import 'package:neonyx/features/chat/chat_details_screen.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -22,6 +25,7 @@ class ChatListWidget extends StatefulWidget {
 
 class _ChatListWidgetState extends State<ChatListWidget> {
   final _chatDetailsBloc = getIt<ChatDetailsBloc>()..add(LoadChat());
+  MessageEntity? lastMessage;
   @override
   void initState() {
     super.initState();
@@ -111,16 +115,22 @@ class _ChatListWidgetState extends State<ChatListWidget> {
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
-                      final lastMessage = state.chat.last;
+                      if (state.chat.isNotEmpty) {
+                        lastMessage = state.chat.last;
+                      }
                       return _buildChats(
                           chats[index].isGroupChat!,
                           chats[index].avatar!,
                           chats[index].groupAva,
                           chats[index].groupName!,
                           chats[index].userName!,
-                          lastMessage.audioPath != null
-                              ? 'Голосовое сообщение'
-                              : lastMessage.message,
+
+                          // ignore: unnecessary_null_comparison
+                          lastMessage != null
+                              ? lastMessage!.audioPath != null
+                                  ? 'Голосовое сообщение'
+                                  : lastMessage!.message ?? ' '
+                              : chats[index].lastMessage ?? " ",
                           // chats[index].lastMessage!,
                           chats[index].lastMessageTime!,
                           chats[index].isPinned!, onTap: () {

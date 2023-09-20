@@ -36,6 +36,7 @@ class _ClaimUsernameState extends State<ClaimUsername> {
   saveUsername() async {
     final SharedPreferences prefs = await _prefs;
     await prefs.setString('username', usernameController.text);
+    await prefs.setBool('logged', true);
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => const UserSpaceScreen()));
   }
@@ -57,28 +58,28 @@ class _ClaimUsernameState extends State<ClaimUsername> {
           elevation: 0,
           automaticallyImplyLeading: false,
           centerTitle: true,
-          title: Row(
-            children: [
-              const Spacer(),
-              SizedBox(
-                width: 20.w,
-              ),
-              const Spacer(),
-              InkWell(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const UserSpaceScreen())),
-                child: Text(
-                  'Skip',
-                  style: GoogleFonts.urbanist(
-                      color: Colors.white,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400),
-                ),
-              )
-            ],
-          ),
+          // title: Row(
+          //   children: [
+          //     const Spacer(),
+          //     SizedBox(
+          //       width: 20.w,
+          //     ),
+          //     const Spacer(),
+          //     InkWell(
+          //       onTap: () => Navigator.push(
+          //           context,
+          //           MaterialPageRoute(
+          //               builder: (context) => const UserSpaceScreen())),
+          //       child: Text(
+          //         'Skip',
+          //         style: GoogleFonts.urbanist(
+          //             color: Colors.white,
+          //             fontSize: 16.sp,
+          //             fontWeight: FontWeight.w400),
+          //       ),
+          //     )
+          //   ],
+          // ),
           backgroundColor: Colors.transparent,
         ),
       ),
@@ -108,7 +109,7 @@ class _ClaimUsernameState extends State<ClaimUsername> {
                     height: 24.h,
                   ),
                   Text(
-                    'Claim your username',
+                    'Own your username',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.urbanist(
                         fontSize: 24.sp,
@@ -118,64 +119,30 @@ class _ClaimUsernameState extends State<ClaimUsername> {
                   SizedBox(
                     height: 28.h,
                   ),
-                  Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
-                    height: 60.h,
-                    width: 328.w,
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(13, 23, 22, 1),
-                      borderRadius: BorderRadius.circular(14.r),
-                    ),
-                    child: TextFormField(
-                      autofocus: true,
-                      controller: usernameController,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.urbanist(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: NeoColors.primaryColor),
-                      decoration: InputDecoration(
-                        hintText: 'Insert your username',
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                        hintStyle: GoogleFonts.urbanist(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            color: NeoColors.primaryColor),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 17.h,
-                  ),
-                  Opacity(
-                    opacity: isButtonEnabled == true ? 1 : 0.3,
-                    child: CustomButton(
-                      onPressed: () =>
-                          isButtonEnabled == true ? saveUsername() : null,
-                      backgroundStatus: false,
-                      title: 'Claim this username',
-                    ),
-                  ),
-                  SizedBox(
-                    height: 43.h,
-                  ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 57.w),
+                    padding: EdgeInsets.symmetric(horizontal: 50.w),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'What’s the difference between in-app and hardware authorisation?',
+                        RichText(
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.urbanist(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                              color: NeoColors.primaryColor),
+                          text: TextSpan(children: [
+                            TextSpan(
+                              text:
+                                  'You can register and own your username, you only need to pay only ',
+                              style: GoogleFonts.urbanist(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: NeoColors.primaryColor),
+                            ),
+                            TextSpan(
+                              text: 'transaction commission',
+                              style: GoogleFonts.urbanist(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: NeoColors.primaryColor),
+                            )
+                          ]),
                         ),
                         SizedBox(
                           height: 19.h,
@@ -184,16 +151,37 @@ class _ClaimUsernameState extends State<ClaimUsername> {
                           'Check out our docs',
                           textAlign: TextAlign.center,
                           style: GoogleFonts.urbanist(
-                              fontSize: 12.sp,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w400,
                               color: NeoColors.primaryColor),
                         ),
                         Container(
-                          margin: EdgeInsets.symmetric(horizontal: 55.w),
-                          height: 1.h,
+                          margin: EdgeInsets.symmetric(horizontal: 45.w),
+                          height: 1,
                           color: NeoColors.primaryColor,
                         )
                       ],
+                    ),
+                  ),
+                  const Spacer(),
+                  CustomButton(
+                    onPressed: () => Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const UserSpaceScreen()),
+                        (route) => false),
+                    backgroundStatus: false,
+                    title: 'Register username via transaction',
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 31.h, horizontal: 50.w),
+                    child: Text(
+                      'Don’t use blockchain username',
+                      style: GoogleFonts.urbanist(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white),
                     ),
                   ),
                 ],
