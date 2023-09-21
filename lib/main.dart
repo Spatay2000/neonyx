@@ -75,10 +75,10 @@ class _SessionManagerState extends State<SessionManager> {
 
   @override
   Widget build(BuildContext context) {
-    // if (isLoggedIn) {
-      return const AccountDetails(); // Если пользователь вошел, показываем главный экран.
-    // } else {
-    //   return const LoginScreen(); // Если пользователь не вошел, показываем экран входа.
-    // }
+    if (isLoggedIn) {
+      return const IndexNeo(screenIndex: 0,); // Если пользователь вошел, показываем главный экран.
+    } else {
+      return const LoginScreen(); // Если пользователь не вошел, показываем экран входа.
+    }
   }
 }

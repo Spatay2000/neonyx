@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/home/data/models/banner_local_model.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 import '../../cloud/cloud.dart';
 
@@ -284,7 +284,7 @@ class _MyAppsWidgetState extends State<MyAppsWidget> {
               return InkWell(
                   onTap: () {
                     index == 2 ?
-                    PersistentNavBarNavigator.pushNewScreen(
+                    pushNewScreen(
                       context,
                       screen: const Cloud(),
                       withNavBar: false, // OPTIONAL VALUE. True by default.

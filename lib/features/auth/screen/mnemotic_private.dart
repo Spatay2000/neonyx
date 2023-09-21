@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:neonyx/features/auth/screen/account_details.dart';
 import 'package:neonyx/features/auth/screen/qr_scanner.dart';
 import 'package:neonyx/features/common/neo_button.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
@@ -9,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/neo_colors.dart';
 import '../../common/neo_snackbar.dart';
-import 'claim_username.dart';
 
 class MnematicOrPrivateScreen extends StatefulWidget {
   final bool statusPage;
@@ -43,7 +43,7 @@ class _MnematicOrPrivateScreenState extends State<MnematicOrPrivateScreen> {
 
     if (areListsEqual) {
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const ClaimUsername()));
+          MaterialPageRoute(builder: (context) => const AccountDetails()));
     } else {
       final snackBar = SnackBar(
           backgroundColor: Colors.transparent,

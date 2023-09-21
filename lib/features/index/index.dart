@@ -9,7 +9,7 @@ import 'package:neonyx/features/common/my_flutter_app_icons.dart';
 import 'package:neonyx/features/feed/feed_screen.dart';
 import 'package:neonyx/features/home/screen/home_screen.dart';
 import 'package:neonyx/features/index/first.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 import '../../core/get_it/configurator.dart';
 import '../common/neo_colors.dart';
@@ -113,7 +113,7 @@ class _IndexNeoState extends State<IndexNeo> {
                   handleAndroidBackButtonPress: true, // Default is true.
                   resizeToAvoidBottomInset:
                       true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-                  stateManagement: false,
+                  stateManagement: true,
                   hideNavigationBar: false,
                   hideNavigationBarWhenKeyboardShows:
                       true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
@@ -133,7 +133,7 @@ class _IndexNeoState extends State<IndexNeo> {
                     curve: Curves.ease,
                   ),
                   screenTransitionAnimation: const ScreenTransitionAnimation(
-                    animateTabTransition: true,
+                    animateTabTransition: true, 
                     curve: Curves.ease,
                     duration: Duration(milliseconds: 200),
                   ),
