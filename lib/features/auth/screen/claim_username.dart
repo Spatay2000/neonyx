@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../common/neo_colors.dart';
 import '../../common/neo_scaffold.dart';
 import '../../user_space/user_space_screen.dart';
+import 'claim_username_search.dart';
 
 class ClaimUsername extends StatefulWidget {
   const ClaimUsername({super.key});
@@ -168,7 +169,7 @@ class _ClaimUsernameState extends State<ClaimUsername> {
                     onPressed: () => Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const UserSpaceScreen()),
+                            builder: (context) => const ClaimUsernameAccept()),
                         (route) => false),
                     backgroundStatus: false,
                     title: 'Register username via transaction',

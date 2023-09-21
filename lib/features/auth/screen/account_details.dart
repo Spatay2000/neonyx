@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -23,6 +25,7 @@ class _AccountDetailsState extends State<AccountDetails> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   bool isButtonEnabled = false;
   XFile? image;
+  File? imageAva;
 
   @override
   void initState() {
@@ -221,6 +224,11 @@ class _AccountDetailsState extends State<AccountDetails> {
                                                   .pickImage(
                                                       source:
                                                           ImageSource.camera);
+                                              if (image != null) {
+                                                setState(() {
+                                                  imageAva = File(image!.path);
+                                                });
+                                              }
                                               // Use the selected image (image.path) as needed.
                                             },
                                             child: _buildRow('Take a photo'),
@@ -251,6 +259,11 @@ class _AccountDetailsState extends State<AccountDetails> {
                                                   .pickImage(
                                                       source:
                                                           ImageSource.gallery);
+                                              if (image != null) {
+                                                setState(() {
+                                                  imageAva = File(image!.path);
+                                                });
+                                              }
                                               // Use the selected image (image.path) as needed.
                                             },
                                           ),
@@ -297,7 +310,14 @@ class _AccountDetailsState extends State<AccountDetails> {
                           width: 5,
                           color: const Color.fromRGBO(47, 145, 151, 1),
                         )),
-                    child: Image.asset('assets/png/default.png'),
+                    child: ClipOval(
+                      child: imageAva != null
+                          ? Image.file(
+                              imageAva!,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset('assets/png/default.png'),
+                    ),
                   ),
                 ),
               ],
