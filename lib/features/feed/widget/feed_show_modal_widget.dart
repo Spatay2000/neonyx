@@ -35,7 +35,7 @@ class _FeedShowModalWidgetState extends State<FeedShowModalWidget>
 
   late ScrollController _scrollController;
   bool lastStatus = true;
-  double height = 500.h;
+  double height = 520.h;
   @override
   void initState() {
     super.initState();
@@ -280,8 +280,10 @@ class _FeedShowModalWidgetState extends State<FeedShowModalWidget>
                               tabs: data,
                               controller: _tabController,
                               type: false,
-                              padding:
-                                  EdgeInsets.only(left: 16.0.w, right: 16.w),
+                              padding: EdgeInsets.only(
+                                left: 16.0.w,
+                                right: 16.w,
+                              ),
                               secondText: false,
                             ),
                           ],
@@ -303,6 +305,7 @@ class _FeedShowModalWidgetState extends State<FeedShowModalWidget>
                   children: [
                     ListView.builder(
                       shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
                       itemCount: 15,
                       itemBuilder: (context, index) {
                         return const PostWidget();
@@ -448,39 +451,6 @@ class MediaWidget extends StatelessWidget {
                   auto: true,
                   value: 0,
                 ),
-                // Container(
-                //   decoration: BoxDecoration(
-                //     image: DecorationImage(
-                //       fit: BoxFit.cover,
-                //       image: AssetImage(_items[index].image.first),
-                //     ),
-                //   ),
-                // ),
-                // _items[index].image.length == 1
-                //     ? const SizedBox()
-                //     : Positioned(
-                //         left: 110,
-                //         top: 120,
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.end,
-                //           crossAxisAlignment: CrossAxisAlignment.center,
-                //           children: [
-                //             SvgPicture.asset('assets/svg/more_images.svg'),
-                //             SizedBox(
-                //               width: 4.w,
-                //             ),
-                //             Text(
-                //               _items[index].image.length.toString(),
-                //               style: GoogleFonts.roboto(
-                //                 color: Colors.white,
-                //                 fontSize: 14,
-                //                 fontWeight: FontWeight.w500,
-                //                 height: 1.43,
-                //                 letterSpacing: 0.14,
-                //               ),
-                //             )
-                //           ],
-                //         ))
               ],
             ),
           );

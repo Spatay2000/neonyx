@@ -9,6 +9,7 @@ import 'package:neonyx/features/common/my_flutter_app_icons.dart';
 import 'package:neonyx/features/feed/feed_screen.dart';
 import 'package:neonyx/features/home/screen/home_screen.dart';
 import 'package:neonyx/features/index/first.dart';
+import 'package:neonyx/features/profile/profile_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 import '../../core/get_it/configurator.dart';
@@ -94,14 +95,13 @@ class _IndexNeoState extends State<IndexNeo> {
             return Scaffold(
                 backgroundColor: Colors.transparent,
                 body: PersistentTabView(
-                  
                   context,
                   controller: controller,
                   screens: const [
                     HomeScreen(),
                     FeedScreen(),
                     ChatScreen(),
-                    FirstScreen(),
+                    ProfileScreen(),
                   ],
                   items: navBarsItems(),
 

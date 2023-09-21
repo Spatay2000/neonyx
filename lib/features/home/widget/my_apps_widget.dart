@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/home/data/models/banner_local_model.dart';
@@ -76,177 +75,181 @@ class _MyAppsWidgetState extends State<MyAppsWidget> {
         physics: const BouncingScrollPhysics(),
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                decoration: ShapeDecoration(
-                  color: const Color(0xFF090F0B),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                padding: const EdgeInsets.only(
-                    left: 12, right: 15, top: 16, bottom: 19),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Opacity(
-                          opacity: 0.80,
-                          child: Text(
-                            'Your area',
-                            style: GoogleFonts.urbanist(
-                              color: NeoColors.primaryColor,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                              height: 1.40,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 6,
-                        ),
-                        Text(
-                          '24°C',
-                          style: GoogleFonts.urbanist(
-                            color: Colors.white,
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                            height: 1.40,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 48.w,
-                    ),
-                    Image.asset('assets/png/cloud sun.png')
-                  ],
-                ),
-              ),
-              SizedBox(
-                width: 156.w,
-                height: 80,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      child: Container(
-                        width: 166,
-                        height: 80,
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFF090F0B),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
+          SizedBox(
+            height: 80.r,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF090F0B),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.r),
                       ),
                     ),
-                    Positioned(
-                      left: 96,
-                      top: 42,
-                      child: SizedBox(
-                        width: 48,
-                        height: 20,
-                        child: Stack(
+                    padding: const EdgeInsets.only(
+                      left: 13,
+                      right: 13,
+                    ).r,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Positioned(
-                              left: 0,
-                              top: 0,
-                              child: Container(
-                                width: 48,
-                                height: 20,
-                                decoration: ShapeDecoration(
-                                  gradient: const LinearGradient(
-                                    begin: Alignment(-1.00, 0.00),
-                                    end: Alignment(1, 0),
-                                    colors: [
-                                      Color(0xFF3F6762),
-                                      Color(0xFF2F9096)
-                                    ],
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(13.95),
-                                  ),
+                            Opacity(
+                              opacity: 0.80,
+                              child: Text(
+                                'Your area',
+                                style: GoogleFonts.urbanist(
+                                  color: NeoColors.primaryColor,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.40.h,
                                 ),
                               ),
                             ),
-                            Positioned(
-                              left: 6.98,
-                              top: 1,
+                            SizedBox(
+                              height: 6.h,
+                            ),
+                            Text(
+                              '24°C',
+                              style: GoogleFonts.urbanist(
+                                color: Colors.white,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w400,
+                                height: 1.40.h,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Image.asset('assets/png/cloud sun.png')
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 17.r,
+                ),
+                Expanded(
+                  child: Container(
+                    // padding: const EdgeInsets.only(
+                    //   left: 12,
+                    //   right: 15,
+                    //   top: 16,
+                    //   bottom: 19,
+                    // ).r,
+                    padding: const EdgeInsets.only(
+                      left: 13,
+                      right: 13,
+                    ).r,
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF090F0B),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 1.sw,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Positioned(
+                                      child: Row(
+                                        children: [
+                                          Image.asset('assets/png/bit.png'),
+                                          SizedBox(
+                                            width: 3.r,
+                                          ),
+                                          Opacity(
+                                            opacity: 0.80,
+                                            child: Text(
+                                              'Bitcoin',
+                                              style: GoogleFonts.urbanist(
+                                                color: Colors.white,
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w400,
+                                                height: 1.40.h,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 0,
+                                      top: 3.r,
+                                      width: 100.r,
+                                      height: 22.r,
+                                      child: Image.asset(
+                                        'assets/png/statistics.png',
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 3.r,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '\$2,203,468',
+                              style: GoogleFonts.urbanist(
+                                color: Colors.white,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w400,
+                                height: 1.40.h,
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(7, 1, 9, 2).r,
+                              decoration: ShapeDecoration(
+                                gradient: const LinearGradient(
+                                  begin: Alignment(-1.00, 0.00),
+                                  end: Alignment(1, 0),
+                                  colors: [
+                                    Color(0xFF3F6762),
+                                    Color(0xFF2F9096)
+                                  ],
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(13.95),
+                                ),
+                              ),
                               child: Text(
                                 '+145.6',
                                 style: GoogleFonts.urbanist(
                                   color: Colors.white,
                                   fontSize: 12.sp,
+                                  height: 1.4.h,
                                   fontWeight: FontWeight.w400,
-                                  height: 1.40,
                                 ),
                               ),
                             ),
                           ],
                         ),
-                      ),
+                      ],
                     ),
-                    Positioned(
-                      left: 12,
-                      top: 42,
-                      child: Text(
-                        '\$2,203,468',
-                        style: GoogleFonts.urbanist(
-                          color: Colors.white,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          height: 1.40,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                        left: 42,
-                        top: 22,
-                        child: Image.asset('assets/png/statistics.png')),
-                    Positioned(
-                      left: 12,
-                      top: 19,
-                      child: SizedBox(
-                        width: 50,
-                        height: 17,
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              left: 0,
-                              top: 3,
-                              child: Image.asset('assets/png/bit.png'),
-                            ),
-                            Positioned(
-                              left: 15,
-                              top: 0,
-                              child: Opacity(
-                                opacity: 0.80,
-                                child: Text(
-                                  'Bitcoin',
-                                  style: GoogleFonts.urbanist(
-                                    color: Colors.white,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.40,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              )
-            ],
+              ],
+            ),
           ),
           SizedBox(
             height: 10.h,
