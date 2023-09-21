@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/core/get_it/configurator.dart';
 import 'package:neonyx/domain/entity/message_entity.dart';
+import 'package:neonyx/features/bottom_sheet_contents/add_photo_content/add_photo_content.dart';
 import 'package:neonyx/features/chat/bloc/chat_details_bloc/chat_details_bloc.dart';
 import 'package:neonyx/features/chat/bloc/chat_details_bloc/chat_details_event.dart';
 import 'package:neonyx/features/chat/bloc/chat_details_bloc/chat_details_state.dart';
@@ -17,6 +18,8 @@ import 'package:neonyx/features/common/neo_input_field.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
+import 'package:neonyx/features/core/neo_pop_up_retriever.dart';
+import 'package:photo_manager/photo_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatDetailsScreen extends StatefulWidget {
@@ -89,6 +92,8 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
     super.dispose();
     scrollController.dispose();
   }
+
+  List<AssetEntity> selectedAssetList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -204,106 +209,6 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
             ],
           ),
         ),
-        // floatingActionButton: Column(
-        //   mainAxisSize: MainAxisSize.min,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: [
-        //     //TODO uncomment when will be added other users type messages
-        //     // isTyping
-        //     //     ? Padding(
-        //     //         padding:
-        //     //             const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        //     //         child: Row(
-        //     //           children: [
-        //     //             JumpingDots(
-        //     //               color: NeoColors.soonColor,
-        //     //               radius: 8,
-        //     //               animationDuration: const Duration(milliseconds: 300),
-        //     //               innerPadding: 4,
-        //     //               verticalOffset: -4,
-        //     //             ),
-        //     //             const SizedBox(width: 8),
-        //     //             Text(
-        //     //               "user is typing",
-        //     //               style: GoogleFonts.urbanist(
-        //     //                 color: NeoColors.soonColor,
-        //     //                 fontSize: 12,
-        //     //                 fontWeight: FontWeight.w400,
-        //     //               ),
-        //     //             ),
-        //     //           ],
-        //     //         ),
-        //     //       )
-        //     //     : const SizedBox(),
-        //     Container(
-        //       width: double.maxFinite,
-        //       padding: const EdgeInsets.symmetric(
-        //         horizontal: 16,
-        //       ),
-        //       color: NeoColors.buttonBgColor,
-        //       child: Row(
-        //         children: [
-        //           SvgPicture.asset(
-        //             "assets/svg/chat_plus_icon.svg",
-        //             height: 16,
-        //             width: 16,
-        //           ),
-        //           const SizedBox(width: 8),
-        //           Expanded(
-        //             child: NeoInputField(
-        //               onEditingComplete: () {
-        //                 if (controller.text.isNotEmpty) {
-        //                   _chatDetailsBloc
-        //                       .add(SendMessage(message: controller.text));
-        //                   controller.clear();
-        //                   setState(() {
-        //                     isTyping = false;
-        //                   });
-        //                 }
-        //               },
-        //               type: NeoInputType.text,
-        //               controller: controller,
-        //               hint: 'Enter your message',
-        //               fillColor: NeoColors.buttonBgColor,
-        //               maxLines: 3,
-        //               onChanged: (text) {
-        //                 setState(() {
-        //                   isTyping = true;
-        //                 });
-        //               },
-        //             ),
-        //           ),
-        //           const SizedBox(width: 16),
-        //           SvgPicture.asset(
-        //             "assets/svg/file_icon.svg",
-        //             height: 16,
-        //             width: 16,
-        //           ),
-        //           const SizedBox(width: 16),
-        //           SendButton(
-        //             onStop: (path) {
-        //               _chatDetailsBloc.add(SendAudio(audioPath: path));
-        //             },
-        //             sendMessageTap: () {
-        //               if (controller.text.isNotEmpty) {
-        //                 _chatDetailsBloc
-        //                     .add(SendMessage(message: controller.text));
-        //                 controller.clear();
-        //                 setState(() {
-        //                   isTyping = false;
-        //                 });
-        //               }
-        //             },
-        //             controller: controller,
-        //           ),
-        //           const SizedBox(width: 8),
-        //         ],
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-
         body: BlocProvider.value(
           value: _chatDetailsBloc,
           child: Column(
@@ -451,10 +356,30 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                 color: NeoColors.buttonBgColor,
                 child: Row(
                   children: [
-                    SvgPicture.asset(
-                      "assets/svg/chat_plus_icon.svg",
-                      height: 16,
-                      width: 16,
+                    GestureDetector(
+                      onTap: () {
+                        // NeoPopUpRetriever.showBottomSheet(
+                        //   context,
+                        //   isDismissible: true,
+                        //   content: AddPhotoContent(10, RequestType.image, selectedAssetList),
+                        // );
+                        showModalBottomSheet(
+                          context: context,
+                          isDismissible: true,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (context) => AddPhotoContent(
+                            10,
+                            RequestType.image,
+                            selectedAssetList,
+                          ),
+                        );
+                      },
+                      child: SvgPicture.asset(
+                        "assets/svg/chat_plus_icon.svg",
+                        height: 16,
+                        width: 16,
+                      ),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
@@ -515,3 +440,106 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
     );
   }
 }
+
+
+
+
+// floatingActionButton: Column(
+        //   mainAxisSize: MainAxisSize.min,
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     //TODO uncomment when will be added other users type messages
+        //     // isTyping
+        //     //     ? Padding(
+        //     //         padding:
+        //     //             const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        //     //         child: Row(
+        //     //           children: [
+        //     //             JumpingDots(
+        //     //               color: NeoColors.soonColor,
+        //     //               radius: 8,
+        //     //               animationDuration: const Duration(milliseconds: 300),
+        //     //               innerPadding: 4,
+        //     //               verticalOffset: -4,
+        //     //             ),
+        //     //             const SizedBox(width: 8),
+        //     //             Text(
+        //     //               "user is typing",
+        //     //               style: GoogleFonts.urbanist(
+        //     //                 color: NeoColors.soonColor,
+        //     //                 fontSize: 12,
+        //     //                 fontWeight: FontWeight.w400,
+        //     //               ),
+        //     //             ),
+        //     //           ],
+        //     //         ),
+        //     //       )
+        //     //     : const SizedBox(),
+        //     Container(
+        //       width: double.maxFinite,
+        //       padding: const EdgeInsets.symmetric(
+        //         horizontal: 16,
+        //       ),
+        //       color: NeoColors.buttonBgColor,
+        //       child: Row(
+        //         children: [
+        //           SvgPicture.asset(
+        //             "assets/svg/chat_plus_icon.svg",
+        //             height: 16,
+        //             width: 16,
+        //           ),
+        //           const SizedBox(width: 8),
+        //           Expanded(
+        //             child: NeoInputField(
+        //               onEditingComplete: () {
+        //                 if (controller.text.isNotEmpty) {
+        //                   _chatDetailsBloc
+        //                       .add(SendMessage(message: controller.text));
+        //                   controller.clear();
+        //                   setState(() {
+        //                     isTyping = false;
+        //                   });
+        //                 }
+        //               },
+        //               type: NeoInputType.text,
+        //               controller: controller,
+        //               hint: 'Enter your message',
+        //               fillColor: NeoColors.buttonBgColor,
+        //               maxLines: 3,
+        //               onChanged: (text) {
+        //                 setState(() {
+        //                   isTyping = true;
+        //                 });
+        //               },
+        //             ),
+        //           ),
+        //           const SizedBox(width: 16),
+        //           SvgPicture.asset(
+        //             "assets/svg/file_icon.svg",
+        //             height: 16,
+        //             width: 16,
+        //           ),
+        //           const SizedBox(width: 16),
+        //           SendButton(
+        //             onStop: (path) {
+        //               _chatDetailsBloc.add(SendAudio(audioPath: path));
+        //             },
+        //             sendMessageTap: () {
+        //               if (controller.text.isNotEmpty) {
+        //                 _chatDetailsBloc
+        //                     .add(SendMessage(message: controller.text));
+        //                 controller.clear();
+        //                 setState(() {
+        //                   isTyping = false;
+        //                 });
+        //               }
+        //             },
+        //             controller: controller,
+        //           ),
+        //           const SizedBox(width: 8),
+        //         ],
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

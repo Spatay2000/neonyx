@@ -93,10 +93,11 @@ dependencies:
   record: ^4.4.4
   just_audio: ^0.9.35
   path_provider: ^2.0.5
+  #cube
   cube_transition_plus: ^2.0.1
   #image in gallery
   image_picker: ^1.0.4
-  #cube
+  photo_manager: ^2.7.1
 
 
 dependency_overrides:
