@@ -9,7 +9,7 @@ import 'package:neonyx/domain/entity/chat_entity.dart';
 import 'package:neonyx/domain/entity/message_entity.dart';
 import 'package:neonyx/features/chat/chat_details_screen.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 import '../../../core/get_it/configurator.dart';
 import '../bloc/chat_details_bloc/chat_details_bloc.dart';
@@ -134,7 +134,7 @@ class _ChatListWidgetState extends State<ChatListWidget> {
                           // chats[index].lastMessage!,
                           chats[index].lastMessageTime!,
                           chats[index].isPinned!, onTap: () {
-                        PersistentNavBarNavigator.pushNewScreen(
+                        pushNewScreen(
                           context,
                           screen: ChatDetailsScreen(
                             icon: chats[index].avatar!,
