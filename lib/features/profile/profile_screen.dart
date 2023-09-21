@@ -4,12 +4,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:neonyx/features/common/custom_tab_bar.dart';
-import 'package:neonyx/features/common/neo_button.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
-import 'package:neonyx/features/feed/data/models/media_item.dart';
-import 'package:neonyx/features/feed/posts_screen.dart';
-import 'package:neonyx/features/feed/widget/video_item.dart';
+import 'package:neonyx/features/feed/widget/articles_widget.dart';
+import 'package:neonyx/features/feed/widget/media_widget.dart';
+import 'package:neonyx/features/feed/widget/post_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
@@ -167,93 +166,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 12),
-                          decoration: ShapeDecoration(
-                            shape: RoundedRectangleBorder(
-                              side: const BorderSide(
-                                  width: 1, color: Color(0x192F9096)),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text.rich(
-                                TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: '7,468 ',
-                                      style: GoogleFonts.urbanist(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        height: 0,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: 'following',
-                                      style: GoogleFonts.urbanist(
-                                        color: NeoColors.primaryColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        height: 0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        followContainers('7,468 ', 'following'),
                         SizedBox(
                           width: 8.w,
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 12),
-                          decoration: ShapeDecoration(
-                            shape: RoundedRectangleBorder(
-                              side: const BorderSide(
-                                  width: 1, color: Color(0x192F9096)),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text.rich(
-                                TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: '13,2K ',
-                                      style: GoogleFonts.urbanist(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        height: 0,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: 'followers',
-                                      style: GoogleFonts.urbanist(
-                                        color: NeoColors.primaryColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        height: 0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
+                        followContainers('13,2K ', 'followers'),
                       ],
                     ),
                     SizedBox(
@@ -262,67 +179,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          decoration: ShapeDecoration(
-                            color: const Color(0x192F9096),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset('assets/svg/earth.svg'),
-                              const SizedBox(width: 4),
-                              Text(
-                                'bitcoin.org',
-                                style: GoogleFonts.urbanist(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
-                                  letterSpacing: -0.30,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        transparentContainer(
+                            'bitcoin.org', 'assets/svg/earth.svg'),
                         SizedBox(
                           width: 8.w,
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          decoration: ShapeDecoration(
-                            color: const Color(0x192F9096),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset('assets/svg/face.svg'),
-                              const SizedBox(width: 4),
-                              Text(
-                                '0xD15122E590...34ba',
-                                style: GoogleFonts.urbanist(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
-                                  letterSpacing: -0.30,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        transparentContainer(
+                            '0xD15122E590...34ba', 'assets/svg/face.svg'),
                       ],
                     ),
                     // SizedBox(
@@ -465,383 +328,79 @@ class _ProfileScreenState extends State<ProfileScreen>
       ),
     );
   }
-}
 
-class MediaWidget extends StatelessWidget {
-  MediaWidget({
-    super.key,
-  });
-  final List<MediaItem> _itemsPhoto = [
-    MediaItem(
-        ['assets/png/grid.png', 'assets/png/grid2.png', 'assets/png/grid3.png'],
-        "Stephan Seeber"),
-    MediaItem([
-      'assets/png/grid3.png',
-      'assets/png/grid.png',
-      'assets/png/grid2.png',
-    ], "Stephan Seeber"),
-    MediaItem([
-      'assets/png/grid2.png',
-    ], "Stephan Seeber"),
-    MediaItem([
-      'assets/png/grid2.png',
-      'assets/png/grid.png',
-      'assets/png/grid3.png',
-      'assets/png/grid2.png',
-      'assets/png/grid3.png',
-    ], "Stephan Seeber"),
-    MediaItem(
-        ['assets/png/grid.png', 'assets/png/grid2.png', 'assets/png/grid3.png'],
-        "Stephan Seeber"),
-  ];
-  final List<MediaItem> _items = [
-    MediaItem([
-      'assets/mp4/insta.mp4',
-    ], "Stephan Seeber"),
-  ];
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisSpacing: 0,
-        mainAxisSpacing: 0,
-        crossAxisCount: 3,
+  Container followContainers(
+    String text1,
+    String text2,
+  ) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      decoration: ShapeDecoration(
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(width: 1, color: Color(0x192F9096)),
+          borderRadius: BorderRadius.circular(12),
+        ),
       ),
-      itemCount: _items.length + _itemsPhoto.length,
-      itemBuilder: (context, index) {
-        if (index < _itemsPhoto.length) {
-          return InkWell(
-            onTap: () {
-              _itemsPhoto[index].image.length == 1
-                  ? null
-                  : Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PostsScreen()),
-                    );
-            },
-            child: Stack(
-              children: [
-                // VideoItem(
-                //   videoUrl: _items[index].image.first,
-                //   type: false,
-                //   auto: true,
-                // ),
-                Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(_itemsPhoto[index].image.first),
-                    ),
-                  ),
-                ),
-                _itemsPhoto[index].image.length == 1
-                    ? const SizedBox()
-                    : Positioned(
-                        left: 110,
-                        top: 120,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset('assets/svg/more_images.svg'),
-                            SizedBox(
-                              width: 4.w,
-                            ),
-                            Text(
-                              _itemsPhoto[index].image.length.toString(),
-                              style: GoogleFonts.roboto(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                height: 1.43,
-                                letterSpacing: 0.14,
-                              ),
-                            )
-                          ],
-                        ))
-              ],
-            ),
-          );
-        } else {
-          final int videoIndex = index - _itemsPhoto.length;
-          return InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const PostsScreen()),
-              );
-            },
-            child: Stack(
-              children: [
-                VideoItem(
-                  videoUrl: _items[videoIndex].image.first,
-                  type: false,
-                  auto: true,
-                  value: 0,
-                ),
-              ],
-            ),
-          );
-        }
-      },
-    );
-  }
-}
-
-class ArticlesWidget extends StatelessWidget {
-  const ArticlesWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const UserListTIleWidget(),
-        Container(
-          decoration: ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              side: const BorderSide(width: 0.50, color: Color(0x662F9096)),
-              borderRadius: BorderRadius.circular(16),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16).r,
-            child: Column(
-              children: [
-                Image.asset(
-                  'assets/png/media.png',
-                  width: 1.sw,
-                  fit: BoxFit.fill,
-                ),
-                SizedBox(
-                  height: 16.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        'How the tech magazines shaped the future of web',
-                        style: GoogleFonts.urbanist(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    SvgPicture.asset('assets/svg/left.svg')
-                  ],
-                ),
-                SizedBox(
-                  height: 16.h,
-                ),
-                Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text:
-                            'Just entered the #Web3 world and now my browser has more tabs open than my patience during software updates. ',
-                        style: GoogleFonts.urbanist(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          height: 1.50,
-                        ),
-                      ),
-                      TextSpan(
-                        text: '#WebTabOverflow',
-                        style: GoogleFonts.urbanist(
-                          color: NeoColors.primaryColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          height: 1.50,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class PostWidget extends StatelessWidget {
-  const PostWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const UserListTIleWidget(),
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16),
-          child: Column(
-            children: [
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text:
-                          'Just entered the #Web3 world and now my browser has more tabs open than my patience during software updates. ',
-                      style: GoogleFonts.urbanist(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        height: 1.50,
-                      ),
-                    ),
-                    TextSpan(
-                      text: '#WebTabOverflow',
-                      style: GoogleFonts.urbanist(
-                        color: NeoColors.primaryColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        height: 1.50,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 16.h,
-              ),
-              Image.asset(
-                'assets/png/media.png',
-                width: 1.sw,
-                fit: BoxFit.fill,
-              ),
-              SizedBox(
-                height: 16.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      SvgPicture.asset('assets/svg/comment_feed.svg'),
-                      SizedBox(
-                        width: 4.w,
-                      ),
-                      const Text(
-                        '28',
-                        style: TextStyle(
-                          color: NeoColors.primaryColor,
-                          fontSize: 12,
-                          fontFamily: 'SF Pro Text',
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: -0.30,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SvgPicture.asset('assets/svg/reetWeet.svg'),
-                      SizedBox(
-                        width: 4.w,
-                      ),
-                      const Text(
-                        '28',
-                        style: TextStyle(
-                          color: NeoColors.primaryColor,
-                          fontSize: 12,
-                          fontFamily: 'SF Pro Text',
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: -0.30,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SvgPicture.asset('assets/svg/heart.svg'),
-                      SizedBox(
-                        width: 4.w,
-                      ),
-                      const Text(
-                        '28',
-                        style: TextStyle(
-                          color: NeoColors.primaryColor,
-                          fontSize: 12,
-                          fontFamily: 'SF Pro Text',
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: -0.30,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SvgPicture.asset('assets/svg/share.svg'),
-                ],
-              )
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class UserListTIleWidget extends StatelessWidget {
-  const UserListTIleWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0).r,
       child: Row(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(
-            'assets/png/capibara.png',
-            width: 36.w,
-            height: 36.h,
-          ),
-          SizedBox(
-            width: 8.w,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          Text.rich(
+            TextSpan(
               children: [
-                Opacity(
-                  opacity: 0.40,
-                  child: Text(
-                    '40 minutes ago',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.urbanist(
-                      color: NeoColors.primaryColor,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      height: 1.40,
-                    ),
-                  ),
-                ),
-                Text(
-                  'EdNorton',
-                  textAlign: TextAlign.center,
+                TextSpan(
+                  text: text1,
                   style: GoogleFonts.urbanist(
                     color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    height: 1.40,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                ),
+                TextSpan(
+                  text: text2,
+                  style: GoogleFonts.urbanist(
+                    color: NeoColors.primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
                   ),
                 ),
               ],
             ),
           ),
-          SvgPicture.asset('assets/svg/dots_row.svg'),
+        ],
+      ),
+    );
+  }
+
+  Container transparentContainer(String text, String svg) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: ShapeDecoration(
+        color: const Color(0x192F9096),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SvgPicture.asset(svg),
+          const SizedBox(width: 4),
+          Text(
+            text,
+            style: GoogleFonts.urbanist(
+              color: Colors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              height: 0,
+              letterSpacing: -0.30,
+            ),
+          ),
         ],
       ),
     );

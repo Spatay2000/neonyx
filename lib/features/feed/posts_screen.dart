@@ -9,6 +9,7 @@ import 'package:neonyx/features/common/neo_scaffold.dart';
 import 'package:neonyx/features/feed/data/models/media_item.dart';
 import 'package:neonyx/features/feed/widget/carousel_slider_widget.dart';
 import 'package:neonyx/features/feed/widget/feed_show_modal_widget.dart';
+import 'package:neonyx/features/feed/widget/user_list_widget.dart';
 import 'package:neonyx/features/feed/widget/video_item.dart';
 
 class PostsScreen extends StatefulWidget {
