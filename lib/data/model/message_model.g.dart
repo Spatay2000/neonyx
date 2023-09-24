@@ -22,13 +22,14 @@ class MessageModelAdapter extends TypeAdapter<MessageModel> {
       message: fields[2] as String?,
       createdAt: fields[3] as DateTime?,
       audioPath: fields[4] as String?,
+      assetEntity: (fields[5] as List?)?.cast<AssetEntity>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, MessageModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class MessageModelAdapter extends TypeAdapter<MessageModel> {
       ..writeByte(3)
       ..write(obj.createdAt)
       ..writeByte(4)
-      ..write(obj.audioPath);
+      ..write(obj.audioPath)
+      ..writeByte(5)
+      ..write(obj.assetEntity);
   }
 
   @override

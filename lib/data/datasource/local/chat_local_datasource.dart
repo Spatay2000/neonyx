@@ -9,6 +9,7 @@ abstract class ChatLocalDataSource {
   Future<void> saveMessage(MessageEntity message);
   Future<void> saveAudio(MessageEntity audio);
   Future<void> saveChat(List<MessageEntity> chat);
+  Future<void> saveImage(MessageEntity image);
 }
 
 @LazySingleton(as: ChatLocalDataSource)
@@ -49,6 +50,16 @@ class ChatLocalDataSourceImpl implements ChatLocalDataSource {
       await box.add(MessageModel.fromEntity(audio));
     } else {
       await box.put(audio.id, MessageModel.fromEntity(audio));
+    }
+  }
+
+  @override
+  Future<void> saveImage(MessageEntity image) async {
+    final box = await _checkIsBoxOpen<MessageModel>(NeoHiveBoxNames.chat);
+    if (image.id == null) {
+      await box.add(MessageModel.fromEntity(image));
+    } else {
+      await box.put(image.id, MessageModel.fromEntity(image));
     }
   }
 

@@ -11,7 +11,8 @@ class CustomNavigationBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
 
-  CustomNavigationBar({
+  const CustomNavigationBar({
+    super.key,
     required this.items,
     required this.currentIndex,
     required this.onTap,
@@ -66,11 +67,13 @@ class CustomNavigationBar extends StatelessWidget {
                 }),
               ),
             ),
-             CircleAvatar(
+            CircleAvatar(
               radius: 3.r,
               backgroundColor: Color.fromRGBO(47, 145, 151, 1),
             ),
-            SizedBox(width: 4.w,),
+            SizedBox(
+              width: 4.w,
+            ),
             Text(
               'Synced',
               style: GoogleFonts.urbanist(

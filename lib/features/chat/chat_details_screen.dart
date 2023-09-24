@@ -1,11 +1,14 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/core/get_it/configurator.dart';
 import 'package:neonyx/domain/entity/message_entity.dart';
+import 'package:neonyx/features/bottom_sheet_contents/add_photo_content/add_photo_content.dart';
 import 'package:neonyx/features/chat/bloc/chat_details_bloc/chat_details_bloc.dart';
 import 'package:neonyx/features/chat/bloc/chat_details_bloc/chat_details_event.dart';
 import 'package:neonyx/features/chat/bloc/chat_details_bloc/chat_details_state.dart';
@@ -17,6 +20,7 @@ import 'package:neonyx/features/common/neo_input_field.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
+import 'package:photo_manager/photo_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatDetailsScreen extends StatefulWidget {
@@ -89,6 +93,8 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
     super.dispose();
     scrollController.dispose();
   }
+
+  List<AssetEntity> selectedAssetList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +189,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                       Positioned(
                         // right: 0.w,
                         child: Padding(
-                          padding: EdgeInsets.only(top: 4, left: 4),
+                          padding: const EdgeInsets.only(top: 4, left: 4),
                           child: ClipOval(
                             child: Container(
                               color: NeoColors.grayColor,
@@ -204,106 +210,6 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
             ],
           ),
         ),
-        // floatingActionButton: Column(
-        //   mainAxisSize: MainAxisSize.min,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: [
-        //     //TODO uncomment when will be added other users type messages
-        //     // isTyping
-        //     //     ? Padding(
-        //     //         padding:
-        //     //             const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        //     //         child: Row(
-        //     //           children: [
-        //     //             JumpingDots(
-        //     //               color: NeoColors.soonColor,
-        //     //               radius: 8,
-        //     //               animationDuration: const Duration(milliseconds: 300),
-        //     //               innerPadding: 4,
-        //     //               verticalOffset: -4,
-        //     //             ),
-        //     //             const SizedBox(width: 8),
-        //     //             Text(
-        //     //               "user is typing",
-        //     //               style: GoogleFonts.urbanist(
-        //     //                 color: NeoColors.soonColor,
-        //     //                 fontSize: 12,
-        //     //                 fontWeight: FontWeight.w400,
-        //     //               ),
-        //     //             ),
-        //     //           ],
-        //     //         ),
-        //     //       )
-        //     //     : const SizedBox(),
-        //     Container(
-        //       width: double.maxFinite,
-        //       padding: const EdgeInsets.symmetric(
-        //         horizontal: 16,
-        //       ),
-        //       color: NeoColors.buttonBgColor,
-        //       child: Row(
-        //         children: [
-        //           SvgPicture.asset(
-        //             "assets/svg/chat_plus_icon.svg",
-        //             height: 16,
-        //             width: 16,
-        //           ),
-        //           const SizedBox(width: 8),
-        //           Expanded(
-        //             child: NeoInputField(
-        //               onEditingComplete: () {
-        //                 if (controller.text.isNotEmpty) {
-        //                   _chatDetailsBloc
-        //                       .add(SendMessage(message: controller.text));
-        //                   controller.clear();
-        //                   setState(() {
-        //                     isTyping = false;
-        //                   });
-        //                 }
-        //               },
-        //               type: NeoInputType.text,
-        //               controller: controller,
-        //               hint: 'Enter your message',
-        //               fillColor: NeoColors.buttonBgColor,
-        //               maxLines: 3,
-        //               onChanged: (text) {
-        //                 setState(() {
-        //                   isTyping = true;
-        //                 });
-        //               },
-        //             ),
-        //           ),
-        //           const SizedBox(width: 16),
-        //           SvgPicture.asset(
-        //             "assets/svg/file_icon.svg",
-        //             height: 16,
-        //             width: 16,
-        //           ),
-        //           const SizedBox(width: 16),
-        //           SendButton(
-        //             onStop: (path) {
-        //               _chatDetailsBloc.add(SendAudio(audioPath: path));
-        //             },
-        //             sendMessageTap: () {
-        //               if (controller.text.isNotEmpty) {
-        //                 _chatDetailsBloc
-        //                     .add(SendMessage(message: controller.text));
-        //                 controller.clear();
-        //                 setState(() {
-        //                   isTyping = false;
-        //                 });
-        //               }
-        //             },
-        //             controller: controller,
-        //           ),
-        //           const SizedBox(width: 8),
-        //         ],
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-
         body: BlocProvider.value(
           value: _chatDetailsBloc,
           child: Column(
@@ -389,48 +295,104 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                                         filepath: message.audioPath!,
                                         isChatPartner: message.isChatMan,
                                       )
-                                    : Padding(
-                                        padding: const EdgeInsets.only(top: 6),
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 8,
-                                            horizontal: 16,
-                                          ),
-                                          constraints: const BoxConstraints(
-                                              minWidth: 0.0),
-                                          decoration: BoxDecoration(
-                                            color: message.isChatMan == false
-                                                ? NeoColors.black
-                                                : NeoColors.primaryColor
-                                                    .withOpacity(.1),
-                                            borderRadius: BorderRadius.only(
-                                              topLeft:
-                                                  const Radius.circular(16),
-                                              topRight:
-                                                  const Radius.circular(16),
-                                              bottomLeft: Radius.circular(
-                                                message.isChatMan != false
-                                                    ? 4
-                                                    : 16,
+                                    : message.assetEntity != null
+                                        ? SizedBox(
+                                            height: 600,
+                                            child: Column(
+                                              children: [
+                                                GridView.builder(
+                                                  physics:
+                                                      const BouncingScrollPhysics(),
+                                                  itemCount:
+                                                      message.assetEntity!.length,
+                                                  gridDelegate:
+                                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: 2,
+                                                  ),
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    AssetEntity assetEntity =
+                                                        message.assetEntity![
+                                                            index];
+                                                    return Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              2),
+                                                      child: AssetEntityImage(
+                                                        assetEntity,
+                                                        isOriginal: false,
+                                                        width: 150,
+                                                        height: 150,
+                                                        thumbnailSize:
+                                                            const ThumbnailSize
+                                                                .square(1000),
+                                                        fit: BoxFit.cover,
+                                                        errorBuilder: (context,
+                                                            error, stackTrace) {
+                                                          return const Center(
+                                                            child: Icon(
+                                                              Icons.error,
+                                                              color: Colors.red,
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                                Text(
+                                                  "${message.message}",
+                                                  style: const TextStyle(
+                                                      color: NeoColors.white),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 6),
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 8,
+                                                horizontal: 16,
                                               ),
-                                              bottomRight: Radius.circular(
-                                                message.isChatMan == false
-                                                    ? 4
-                                                    : 16,
+                                              constraints: const BoxConstraints(
+                                                  minWidth: 0.0),
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    message.isChatMan == false
+                                                        ? NeoColors.black
+                                                        : NeoColors.primaryColor
+                                                            .withOpacity(.1),
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft:
+                                                      const Radius.circular(16),
+                                                  topRight:
+                                                      const Radius.circular(16),
+                                                  bottomLeft: Radius.circular(
+                                                    message.isChatMan != false
+                                                        ? 4
+                                                        : 16,
+                                                  ),
+                                                  bottomRight: Radius.circular(
+                                                    message.isChatMan == false
+                                                        ? 4
+                                                        : 16,
+                                                  ),
+                                                ),
+                                              ),
+                                              child: Text(
+                                                message.message ?? '',
+                                                textWidthBasis:
+                                                    TextWidthBasis.longestLine,
+                                                style: GoogleFonts.urbanist(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 14,
+                                                    color: NeoColors.white),
                                               ),
                                             ),
                                           ),
-                                          child: Text(
-                                            message.message ?? '',
-                                            textWidthBasis:
-                                                TextWidthBasis.longestLine,
-                                            style: GoogleFonts.urbanist(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 14,
-                                                color: NeoColors.white),
-                                          ),
-                                        ),
-                                      ),
                               ),
                             ],
                           );
@@ -451,14 +413,51 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                 color: NeoColors.buttonBgColor,
                 child: Row(
                   children: [
-                    SvgPicture.asset(
-                      "assets/svg/chat_plus_icon.svg",
-                      height: 16,
-                      width: 16,
+                    GestureDetector(
+                      onTap: () {
+                        // NeoPopUpRetriever.showBottomSheet(
+                        //   context,
+                        //   isDismissible: true,
+                        //   content: AddPhotoContent(10, RequestType.image, selectedAssetList),
+                        // );
+                        showModalBottomSheet(
+                          context: context,
+                          isDismissible: true,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (context) => AddPhotoContent(
+                            10,
+                            RequestType.image,
+                            selectedAssetList,
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 36.h,
+                        width: 36.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: NeoColors.soonColor.withOpacity(.4),
+                          ),
+                          color: Colors.transparent,
+                        ),
+                        child: const Icon(
+                          CupertinoIcons.plus,
+                          color: NeoColors.soonColor,
+                        ),
+                      ),
+
+                      // SvgPicture.asset(
+                      //   "assets/svg/chat_plus_icon.svg",
+                      //   height: 16,
+                      //   width: 16,
+                      // ),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: NeoInputField(
+                        isNeedBorder: true,
                         onEditingComplete: () {
                           if (controller.text.isNotEmpty) {
                             _chatDetailsBloc
@@ -479,14 +478,27 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                             isTyping = true;
                           });
                         },
+                        suffixIcon: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: 12.w),
+                              child: SvgPicture.asset(
+                                "assets/svg/file_icon.svg",
+                                height: 16,
+                                width: 16,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    const SizedBox(width: 16),
-                    SvgPicture.asset(
-                      "assets/svg/file_icon.svg",
-                      height: 16,
-                      width: 16,
-                    ),
+                    // const SizedBox(width: 16),
+                    // SvgPicture.asset(
+                    //   "assets/svg/file_icon.svg",
+                    //   height: 16,
+                    //   width: 16,
+                    // ),
                     const SizedBox(width: 16),
                     SendButton(
                       onStop: (path) {
@@ -503,6 +515,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                         }
                       },
                       controller: controller,
+                      isSendMessageWithImage: false,
                     ),
                     const SizedBox(width: 8),
                   ],
@@ -515,3 +528,103 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
     );
   }
 }
+
+// floatingActionButton: Column(
+//   mainAxisSize: MainAxisSize.min,
+//   crossAxisAlignment: CrossAxisAlignment.start,
+//   children: [
+//     //TODO uncomment when will be added other users type messages
+//     // isTyping
+//     //     ? Padding(
+//     //         padding:
+//     //             const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+//     //         child: Row(
+//     //           children: [
+//     //             JumpingDots(
+//     //               color: NeoColors.soonColor,
+//     //               radius: 8,
+//     //               animationDuration: const Duration(milliseconds: 300),
+//     //               innerPadding: 4,
+//     //               verticalOffset: -4,
+//     //             ),
+//     //             const SizedBox(width: 8),
+//     //             Text(
+//     //               "user is typing",
+//     //               style: GoogleFonts.urbanist(
+//     //                 color: NeoColors.soonColor,
+//     //                 fontSize: 12,
+//     //                 fontWeight: FontWeight.w400,
+//     //               ),
+//     //             ),
+//     //           ],
+//     //         ),
+//     //       )
+//     //     : const SizedBox(),
+//     Container(
+//       width: double.maxFinite,
+//       padding: const EdgeInsets.symmetric(
+//         horizontal: 16,
+//       ),
+//       color: NeoColors.buttonBgColor,
+//       child: Row(
+//         children: [
+//           SvgPicture.asset(
+//             "assets/svg/chat_plus_icon.svg",
+//             height: 16,
+//             width: 16,
+//           ),
+//           const SizedBox(width: 8),
+//           Expanded(
+//             child: NeoInputField(
+//               onEditingComplete: () {
+//                 if (controller.text.isNotEmpty) {
+//                   _chatDetailsBloc
+//                       .add(SendMessage(message: controller.text));
+//                   controller.clear();
+//                   setState(() {
+//                     isTyping = false;
+//                   });
+//                 }
+//               },
+//               type: NeoInputType.text,
+//               controller: controller,
+//               hint: 'Enter your message',
+//               fillColor: NeoColors.buttonBgColor,
+//               maxLines: 3,
+//               onChanged: (text) {
+//                 setState(() {
+//                   isTyping = true;
+//                 });
+//               },
+//             ),
+//           ),
+//           const SizedBox(width: 16),
+//           SvgPicture.asset(
+//             "assets/svg/file_icon.svg",
+//             height: 16,
+//             width: 16,
+//           ),
+//           const SizedBox(width: 16),
+//           SendButton(
+//             onStop: (path) {
+//               _chatDetailsBloc.add(SendAudio(audioPath: path));
+//             },
+//             sendMessageTap: () {
+//               if (controller.text.isNotEmpty) {
+//                 _chatDetailsBloc
+//                     .add(SendMessage(message: controller.text));
+//                 controller.clear();
+//                 setState(() {
+//                   isTyping = false;
+//                 });
+//               }
+//             },
+//             controller: controller,
+//           ),
+//           const SizedBox(width: 8),
+//         ],
+//       ),
+//     ),
+//   ],
+// ),
+// floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

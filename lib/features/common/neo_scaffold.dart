@@ -76,21 +76,21 @@ class _NeoScaffoldState extends State<NeoScaffold> {
         ),
         child: Stack(
           children: [
-            Wrap(
-              children: List.generate(
-                count,
-                (index) => Container(
-                  width: width,
-                  height: height,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color.fromRGBO(124, 213, 162, 0.02),
-                      width: 0.1,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // Wrap(
+            //   children: List.generate(
+            //     count,
+            //     (index) => Container(
+            //       width: width,
+            //       height: height,
+            //       decoration: BoxDecoration(
+            //         border: Border.all(
+            //           color: const Color.fromRGBO(124, 213, 162, 0.02),
+            //           width: 0.1,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             widget.body,
           ],
         ),

@@ -16,6 +16,7 @@ class NeoInputField extends StatelessWidget {
   final bool readOnly;
   final FocusNode? focusNode;
   final Widget? suffix;
+  final Widget? suffixIcon;
   final TextInputAction? textInputAction;
   final Function()? onEditingComplete;
   final String? Function(String?)? validator;
@@ -30,6 +31,7 @@ class NeoInputField extends StatelessWidget {
   final int? maxLines;
   final bool autofocus;
   final Color? fillColor;
+  final bool isChatField;
 
   const NeoInputField(
       {Key? key,
@@ -42,6 +44,7 @@ class NeoInputField extends StatelessWidget {
       this.readOnly = false,
       this.focusNode,
       this.suffix,
+      this.suffixIcon,
       this.onEditingComplete,
       this.textInputAction,
       this.onChanged,
@@ -54,10 +57,11 @@ class NeoInputField extends StatelessWidget {
       this.fillColor,
       this.maxLines,
       this.isWithSearchIcon = false,
+      this.isChatField = false,
       this.hintStyle = const TextStyle(
         fontSize: 14.0,
-        fontWeight: FontWeight.w500,
-        color: Colors.grey,
+        fontWeight: FontWeight.w400,
+        color: NeoColors.soonColor,
       ),
       this.autofocus = false})
       : super(key: key);
@@ -138,7 +142,8 @@ class NeoInputField extends StatelessWidget {
                   ),
                 ),
           suffix: suffix,
-          suffixIcon: suffix == null ? const SizedBox(height: 34) : null,
+          // suffixIcon: suffix == null ? const SizedBox(height: 34) : null,
+          suffixIcon: suffixIcon,
           suffixIconConstraints: const BoxConstraints(minHeight: 34),
           contentPadding: enableContentPadding
               ? const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12)

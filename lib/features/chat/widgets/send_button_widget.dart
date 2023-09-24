@@ -5,18 +5,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
+import 'package:photo_manager/photo_manager.dart';
 import 'package:record/record.dart';
 
 class SendButton extends StatefulWidget {
   final TextEditingController controller;
   final void Function(String path) onStop;
   final void Function() sendMessageTap;
+  final bool isSendMessageWithImage;
 
   const SendButton({
     super.key,
     required this.onStop,
     required this.controller,
     required this.sendMessageTap,
+    required this.isSendMessageWithImage,
   });
 
   @override
@@ -29,6 +32,7 @@ class _SendButtonState extends State<SendButton> {
   final _audioRecorder = Record();
   StreamSubscription<RecordState>? _recordSub;
   RecordState _recordState = RecordState.stop;
+  List<AssetEntity> selectedAssetList = [];
 
   Future<void> _start() async {
     try {
@@ -93,10 +97,14 @@ class _SendButtonState extends State<SendButton> {
           ),
         ),
         onPressed: () {
-          if (widget.controller.text.isNotEmpty) {
+          if (widget.isSendMessageWithImage) {
             widget.sendMessageTap();
           } else {
-            (_recordState != RecordState.stop) ? _stop() : _start();
+            if (widget.controller.text.isNotEmpty) {
+              widget.sendMessageTap();
+            } else {
+              (_recordState != RecordState.stop) ? _stop() : _start();
+            }
           }
         },
         child: Row(
@@ -116,7 +124,11 @@ class _SendButtonState extends State<SendButton> {
     if (_recordState != RecordState.stop) {
       icon = Icons.stop;
       color = Colors.red;
-    } else if (widget.controller.text.isNotEmpty) {
+    } else if (widget.isSendMessageWithImage) {
+      icon = CupertinoIcons.arrow_up;
+      color = NeoColors.white;
+    } else if (widget.controller.text.isNotEmpty &&
+        !widget.isSendMessageWithImage) {
       setState(() {
         icon = CupertinoIcons.arrow_up;
       });
