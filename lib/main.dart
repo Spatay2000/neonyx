@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:neonyx/features/auth/screen/claim_username.dart';
-import 'package:neonyx/features/auth/screen/login.dart';
-import 'package:neonyx/features/cloud/cloud.dart';
 import 'package:neonyx/features/index/index.dart';
 import 'package:neonyx/core/shared/hive_initializer.dart' as hive;
 

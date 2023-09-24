@@ -28,9 +28,11 @@ class _CustomTabBarState extends State<CustomTabBar> {
   void initState() {
     super.initState();
     widget.controller?.addListener(() {
-      setState(() {
-        _currentIndex = widget.controller!.index;
-      });
+      if (mounted) {
+        setState(() {
+          _currentIndex = widget.controller!.index;
+        });
+      }
     });
   }
 
