@@ -4,8 +4,10 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:neonyx/features/index/index.dart';
 import 'package:neonyx/core/shared/hive_initializer.dart' as hive;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/get_it/configurator.dart';
+import 'features/auth/screen/account_details.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();

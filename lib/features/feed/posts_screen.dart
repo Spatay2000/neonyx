@@ -74,7 +74,7 @@ class _PostsScreenState extends State<PostsScreen> {
             ),
             leading: IconButton(
               onPressed: () =>
-                  Navigator.popUntil(context, (route) => route.isFirst),
+                  Navigator.pop(context),
               icon: const Icon(
                 Icons.arrow_back_ios,
                 color: NeoColors.soonColor,

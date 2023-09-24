@@ -35,7 +35,7 @@ class _IndexNeoState extends State<IndexNeo> {
     return [
       PersistentBottomNavBarItem(
         icon: const Icon(MyFlutterApp.hub),
-        title: "Home",
+        title: "Hub",
         textStyle: GoogleFonts.urbanist(
           fontSize: 12.sp,
           fontWeight: FontWeight.w500,
@@ -113,7 +113,7 @@ class _IndexNeoState extends State<IndexNeo> {
                   handleAndroidBackButtonPress: true, // Default is true.
                   resizeToAvoidBottomInset:
                       true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-                  stateManagement: false,
+                  stateManagement: true,
                   hideNavigationBar: false,
                   hideNavigationBarWhenKeyboardShows:
                       true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
@@ -133,7 +133,7 @@ class _IndexNeoState extends State<IndexNeo> {
                     curve: Curves.ease,
                   ),
                   screenTransitionAnimation: const ScreenTransitionAnimation(
-                    animateTabTransition: true,
+                    animateTabTransition: true, 
                     curve: Curves.ease,
                     duration: Duration(milliseconds: 200),
                   ),

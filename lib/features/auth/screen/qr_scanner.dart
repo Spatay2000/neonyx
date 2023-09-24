@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:neonyx/features/common/neo_button.dart';
 
 import '../../common/neo_colors.dart';
 import '../widget/barcode_overlay.dart';
@@ -21,6 +22,16 @@ class _MobilScannerState extends State<MobilScanner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Padding(
+        padding:  EdgeInsets.symmetric(horizontal: 16.w),
+        child: CustomButton(
+          height: 60.h,
+          backgroundStatus: false,
+          title: 'Import gallery image',
+          onPressed: () => null,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
           centerTitle: true,
           iconTheme: const IconThemeData(color: NeoColors.soonColor),
@@ -63,6 +74,17 @@ class _MobilScannerState extends State<MobilScanner> {
                 log("sake");
               }),
           QRScannerOverlay(overlayColour: Colors.black.withOpacity(0.5)),
+          Padding(
+            padding: EdgeInsets.only(left: 58.w, right: 58.w, top: 500.h),
+            child: Text(
+              'Hold your device so that the QR code appears in the square viewfinder in the middle',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.urbanist(
+                  color: Colors.white,
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w400),
+            ),
+          )
         ],
       ),
     );

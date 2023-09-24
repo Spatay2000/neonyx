@@ -93,9 +93,10 @@ dependencies:
   record: ^4.4.4
   just_audio: ^0.9.35
   path_provider: ^2.0.5
-  #swipe story
   cube_transition_plus: ^2.0.1
-  convex_bottom_bar: ^3.2.0
+  #image in gallery
+  image_picker: ^1.0.4
+  #cube
 
 
 dependency_overrides:

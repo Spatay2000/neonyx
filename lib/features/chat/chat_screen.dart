@@ -21,6 +21,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final _searchController = TextEditingController();
   final _focusNode = FocusNode();
   bool focusOn = false;
+  int currentIndex = 0;
 
   List<String> chatFolders = [
     'All chat',
@@ -42,6 +43,12 @@ class _ChatScreenState extends State<ChatScreen> {
         focusOn = _focusNode.hasFocus;
       });
       log("FOCUS: $focusOn");
+    });
+    _tabController?.addListener(() {
+      setState(() {
+        currentIndex = _tabController!.index;
+        log(_tabController!.index.toString() + 'tab');
+      });
     });
     super.initState();
   }
@@ -147,7 +154,12 @@ class _ChatScreenState extends State<ChatScreen> {
                 alignment: Alignment.centerLeft,
                 child: TabBar(
                     isScrollable: true,
-                    onTap: (int index) {},
+                    onTap: (int index) {
+                      setState(() {
+                        currentIndex =
+                            index; // Update the currentIndex when a tab is tapped
+                      });
+                    },
                     controller: _tabController,
                     indicatorColor: Colors.transparent,
                     indicator: const UnderlineTabIndicator(
@@ -160,8 +172,13 @@ class _ChatScreenState extends State<ChatScreen> {
                           child: Container(
                             padding: const EdgeInsets.all(12),
                             decoration: ShapeDecoration(
-                              color: const Color(0x192F9096),
+                              color: i != currentIndex
+                                  ? Colors
+                                      .transparent // Измените цвет для активной вкладки
+                                  : const Color(0x192F9096),
                               shape: RoundedRectangleBorder(
+                                side:
+                                    const BorderSide(color: Color(0x182F9197)),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),

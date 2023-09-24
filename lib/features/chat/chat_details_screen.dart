@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,16 +17,18 @@ import 'package:neonyx/features/common/neo_input_field.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatDetailsScreen extends StatefulWidget {
   final String icon;
+  final String? groupAva;
   final String groupName;
-  final String userName;
-  const ChatDetailsScreen(
-      {super.key,
-      required this.icon,
-      required this.groupName,
-      required this.userName});
+  const ChatDetailsScreen({
+    super.key,
+    required this.icon,
+    required this.groupName,
+    required this.groupAva,
+  });
 
   @override
   State<ChatDetailsScreen> createState() => _ChatDetailsScreenState();
@@ -32,8 +36,10 @@ class ChatDetailsScreen extends StatefulWidget {
 
 class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
   final controller = TextEditingController();
-
+  ScrollController scrollController = ScrollController();
   final _chatDetailsBloc = getIt<ChatDetailsBloc>()..add(LoadChat());
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  String? userName;
 
   List<MessageEntity> messages = [
     const MessageEntity(
@@ -68,11 +74,20 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
   @override
   void initState() {
     super.initState();
+    getUsername();
+  }
+
+  getUsername() async {
+    final SharedPreferences prefs = await _prefs;
+    userName = prefs.getString('username');
+    log(userName!);
+    setState(() {});
   }
 
   @override
   void dispose() {
     super.dispose();
+    scrollController.dispose();
   }
 
   @override
@@ -85,6 +100,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
         });
       },
       child: NeoScaffold(
+        resizeToAvoidBottomInset: true,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(61),
           child: AppBar(
@@ -102,8 +118,9 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
               ),
             ),
             leading: IconButton(
-              onPressed: () =>
-                  Navigator.popUntil(context, (route) => route.isFirst),
+              onPressed: () => Navigator.pop(
+                context,
+              ),
               icon: const Icon(
                 Icons.arrow_back_ios,
                 color: NeoColors.soonColor,
@@ -130,7 +147,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                     ],
                   )
                 : Text(
-                    widget.userName,
+                    userName!,
                     style: GoogleFonts.urbanist(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
@@ -147,229 +164,351 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                 child: Padding(
                   padding:
                       const EdgeInsets.only(right: 16, top: 12, bottom: 12),
-                  child: ClipOval(
-                    child: Container(
-                      color: NeoColors.grayColor,
-                      child: Image.asset(
-                        widget.icon,
-                        width: 32,
-                        height: 32,
-                        fit: BoxFit.cover,
+                  child: Stack(
+                    // alignment: Alignment.topLeft,
+                    children: [
+                      widget.groupAva != null
+                          ? ClipOval(
+                              child: Container(
+                                color: NeoColors.grayColor,
+                                child: Image.asset(
+                                  widget.groupAva!,
+                                  width: 32,
+                                  height: 32,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
+                      Positioned(
+                        // right: 0.w,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 4, left: 4),
+                          child: ClipOval(
+                            child: Container(
+                              color: NeoColors.grayColor,
+                              child: Image.asset(
+                                widget.icon,
+                                width: 32,
+                                height: 32,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),
             ],
           ),
         ),
-        floatingActionButton: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //TODO uncomment when will be added other users type messages
-            // isTyping
-            //     ? Padding(
-            //         padding:
-            //             const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            //         child: Row(
-            //           children: [
-            //             JumpingDots(
-            //               color: NeoColors.soonColor,
-            //               radius: 8,
-            //               animationDuration: const Duration(milliseconds: 300),
-            //               innerPadding: 4,
-            //               verticalOffset: -4,
-            //             ),
-            //             const SizedBox(width: 8),
-            //             Text(
-            //               "user is typing",
-            //               style: GoogleFonts.urbanist(
-            //                 color: NeoColors.soonColor,
-            //                 fontSize: 12,
-            //                 fontWeight: FontWeight.w400,
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       )
-            //     : const SizedBox(),
-            Container(
-              width: double.maxFinite,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              ),
-              color: NeoColors.buttonBgColor,
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    "assets/svg/chat_plus_icon.svg",
-                    height: 16,
-                    width: 16,
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: NeoInputField(
-                      type: NeoInputType.text,
-                      controller: controller,
-                      hint: 'Enter your message',
-                      fillColor: NeoColors.buttonBgColor,
-                      maxLines: 3,
-                      onChanged: (text) {
-                        setState(() {
-                          isTyping = true;
-                        });
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  SvgPicture.asset(
-                    "assets/svg/file_icon.svg",
-                    height: 16,
-                    width: 16,
-                  ),
-                  const SizedBox(width: 16),
-                  SendButton(
-                    onStop: (path) {
-                      _chatDetailsBloc.add(SendAudio(audioPath: path));
-                    },
-                    sendMessageTap: () {
-                      if (controller.text.isNotEmpty) {
-                        _chatDetailsBloc
-                            .add(SendMessage(message: controller.text));
-                        controller.clear();
-                        setState(() {
-                          isTyping = false;
-                        });
-                      }
-                    },
-                    controller: controller,
-                  ),
-                  const SizedBox(width: 8),
-                ],
-              ),
-            ),
-          ],
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        // floatingActionButton: Column(
+        //   mainAxisSize: MainAxisSize.min,
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     //TODO uncomment when will be added other users type messages
+        //     // isTyping
+        //     //     ? Padding(
+        //     //         padding:
+        //     //             const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        //     //         child: Row(
+        //     //           children: [
+        //     //             JumpingDots(
+        //     //               color: NeoColors.soonColor,
+        //     //               radius: 8,
+        //     //               animationDuration: const Duration(milliseconds: 300),
+        //     //               innerPadding: 4,
+        //     //               verticalOffset: -4,
+        //     //             ),
+        //     //             const SizedBox(width: 8),
+        //     //             Text(
+        //     //               "user is typing",
+        //     //               style: GoogleFonts.urbanist(
+        //     //                 color: NeoColors.soonColor,
+        //     //                 fontSize: 12,
+        //     //                 fontWeight: FontWeight.w400,
+        //     //               ),
+        //     //             ),
+        //     //           ],
+        //     //         ),
+        //     //       )
+        //     //     : const SizedBox(),
+        //     Container(
+        //       width: double.maxFinite,
+        //       padding: const EdgeInsets.symmetric(
+        //         horizontal: 16,
+        //       ),
+        //       color: NeoColors.buttonBgColor,
+        //       child: Row(
+        //         children: [
+        //           SvgPicture.asset(
+        //             "assets/svg/chat_plus_icon.svg",
+        //             height: 16,
+        //             width: 16,
+        //           ),
+        //           const SizedBox(width: 8),
+        //           Expanded(
+        //             child: NeoInputField(
+        //               onEditingComplete: () {
+        //                 if (controller.text.isNotEmpty) {
+        //                   _chatDetailsBloc
+        //                       .add(SendMessage(message: controller.text));
+        //                   controller.clear();
+        //                   setState(() {
+        //                     isTyping = false;
+        //                   });
+        //                 }
+        //               },
+        //               type: NeoInputType.text,
+        //               controller: controller,
+        //               hint: 'Enter your message',
+        //               fillColor: NeoColors.buttonBgColor,
+        //               maxLines: 3,
+        //               onChanged: (text) {
+        //                 setState(() {
+        //                   isTyping = true;
+        //                 });
+        //               },
+        //             ),
+        //           ),
+        //           const SizedBox(width: 16),
+        //           SvgPicture.asset(
+        //             "assets/svg/file_icon.svg",
+        //             height: 16,
+        //             width: 16,
+        //           ),
+        //           const SizedBox(width: 16),
+        //           SendButton(
+        //             onStop: (path) {
+        //               _chatDetailsBloc.add(SendAudio(audioPath: path));
+        //             },
+        //             sendMessageTap: () {
+        //               if (controller.text.isNotEmpty) {
+        //                 _chatDetailsBloc
+        //                     .add(SendMessage(message: controller.text));
+        //                 controller.clear();
+        //                 setState(() {
+        //                   isTyping = false;
+        //                 });
+        //               }
+        //             },
+        //             controller: controller,
+        //           ),
+        //           const SizedBox(width: 8),
+        //         ],
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
         body: BlocProvider.value(
           value: _chatDetailsBloc,
-          child: BlocBuilder<ChatDetailsBloc, ChatDetailsState>(
-            builder: (context, state) {
-              if (state is ChatLoaded) {
-                return ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 16,
-                    horizontal: 16,
-                  ),
-                  itemCount: state.chat.length,
-                  separatorBuilder: (context, index) {
-                    return const Divider(
-                      height: 1,
-                    );
-                  },
-                  itemBuilder: (context, index) {
-                    final message = state.chat[index];
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: message.isChatMan == false
-                          ? CrossAxisAlignment.end
-                          : CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 28,
-                          child: Row(
+          child: Column(
+            children: [
+              Expanded(
+                child: BlocBuilder<ChatDetailsBloc, ChatDetailsState>(
+                  builder: (context, state) {
+                    if (state is ChatLoaded) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        scrollController.animateTo(
+                          scrollController.position.maxScrollExtent,
+                          duration: const Duration(
+                              milliseconds:
+                                  500), // Adjust the duration as needed
+                          curve: Curves.easeInOut, // Adjust the curve as needed
+                        );
+                      });
+                      return ListView.separated(
+                        controller: scrollController,
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.only(
+                            left: 16, right: 16, bottom: 90, top: 20),
+                        itemCount: state.chat.length,
+                        separatorBuilder: (context, index) {
+                          return const Divider(
+                            height: 1,
+                          );
+                        },
+                        itemBuilder: (context, index) {
+                          final message = state.chat[index];
+                          return Column(
                             mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: message.isChatMan == false
+                                ? CrossAxisAlignment.end
+                                : CrossAxisAlignment.start,
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(28),
-                                child: Container(
-                                  color: NeoColors.grayColor,
-                                  child: Image.asset(
-                                    message.icon ??
-                                        "assets/png/avatar_1_4x_icon.png",
-                                    width: 28,
-                                    height: 28,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                message.name ?? "Ed Norton",
-                                style: GoogleFonts.urbanist(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: NeoColors.white,
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                DateFormat('hh:mm').format(message.createdAt!),
-                                style: GoogleFonts.urbanist(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: NeoColors.soonColor.withOpacity(.4),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 4),
-                        Flexible(
-                          child: message.audioPath != null
-                              ? AudioPlayerWidget(
-                                  filepath: message.audioPath!,
-                                  isChatPartner: message.isChatMan,
-                                )
-                              : Padding(
-                                  padding: const EdgeInsets.only(top: 6),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 8,
-                                      horizontal: 16,
-                                    ),
-                                    constraints:
-                                        const BoxConstraints(minWidth: 0.0),
-                                    decoration: BoxDecoration(
-                                      color: message.isChatMan == false
-                                          ? NeoColors.black
-                                          : NeoColors.primaryColor
-                                              .withOpacity(.1),
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: const Radius.circular(16),
-                                        topRight: const Radius.circular(16),
-                                        bottomLeft: Radius.circular(
-                                          message.isChatMan != false ? 4 : 16,
-                                        ),
-                                        bottomRight: Radius.circular(
-                                          message.isChatMan == false ? 4 : 16,
+                              SizedBox(
+                                height: 28,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(28),
+                                      child: Container(
+                                        color: NeoColors.grayColor,
+                                        child: Image.asset(
+                                          message.icon ??
+                                              "assets/png/avatar_1_4x_icon.png",
+                                          width: 28,
+                                          height: 28,
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
                                     ),
-                                    child: Text(
-                                      message.message ?? '',
-                                      textWidthBasis:
-                                          TextWidthBasis.longestLine,
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      message.name ?? userName!,
                                       style: GoogleFonts.urbanist(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14,
-                                          color: NeoColors.white),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        color: NeoColors.white,
+                                      ),
                                     ),
-                                  ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      DateFormat('hh:mm')
+                                          .format(message.createdAt!),
+                                      style: GoogleFonts.urbanist(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        color:
+                                            NeoColors.soonColor.withOpacity(.4),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                        ),
-                      ],
+                              ),
+                              const SizedBox(width: 4),
+                              Flexible(
+                                child: message.audioPath != null
+                                    ? AudioPlayerWidget(
+                                        filepath: message.audioPath!,
+                                        isChatPartner: message.isChatMan,
+                                      )
+                                    : Padding(
+                                        padding: const EdgeInsets.only(top: 6),
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 8,
+                                            horizontal: 16,
+                                          ),
+                                          constraints: const BoxConstraints(
+                                              minWidth: 0.0),
+                                          decoration: BoxDecoration(
+                                            color: message.isChatMan == false
+                                                ? NeoColors.black
+                                                : NeoColors.primaryColor
+                                                    .withOpacity(.1),
+                                            borderRadius: BorderRadius.only(
+                                              topLeft:
+                                                  const Radius.circular(16),
+                                              topRight:
+                                                  const Radius.circular(16),
+                                              bottomLeft: Radius.circular(
+                                                message.isChatMan != false
+                                                    ? 4
+                                                    : 16,
+                                              ),
+                                              bottomRight: Radius.circular(
+                                                message.isChatMan == false
+                                                    ? 4
+                                                    : 16,
+                                              ),
+                                            ),
+                                          ),
+                                          child: Text(
+                                            message.message ?? '',
+                                            textWidthBasis:
+                                                TextWidthBasis.longestLine,
+                                            style: GoogleFonts.urbanist(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14,
+                                                color: NeoColors.white),
+                                          ),
+                                        ),
+                                      ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
                     );
                   },
-                );
-              }
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
+                ),
+              ),
+              Container(
+                width: double.maxFinite,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                ),
+                color: NeoColors.buttonBgColor,
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      "assets/svg/chat_plus_icon.svg",
+                      height: 16,
+                      width: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: NeoInputField(
+                        onEditingComplete: () {
+                          if (controller.text.isNotEmpty) {
+                            _chatDetailsBloc
+                                .add(SendMessage(message: controller.text));
+                            controller.clear();
+                            setState(() {
+                              isTyping = false;
+                            });
+                          }
+                        },
+                        type: NeoInputType.text,
+                        controller: controller,
+                        hint: 'Enter your message',
+                        fillColor: NeoColors.buttonBgColor,
+                        maxLines: 3,
+                        onChanged: (text) {
+                          setState(() {
+                            isTyping = true;
+                          });
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    SvgPicture.asset(
+                      "assets/svg/file_icon.svg",
+                      height: 16,
+                      width: 16,
+                    ),
+                    const SizedBox(width: 16),
+                    SendButton(
+                      onStop: (path) {
+                        _chatDetailsBloc.add(SendAudio(audioPath: path));
+                      },
+                      sendMessageTap: () {
+                        if (controller.text.isNotEmpty) {
+                          _chatDetailsBloc
+                              .add(SendMessage(message: controller.text));
+                          controller.clear();
+                          setState(() {
+                            isTyping = false;
+                          });
+                        }
+                      },
+                      controller: controller,
+                    ),
+                    const SizedBox(width: 8),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
