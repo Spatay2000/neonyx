@@ -28,4 +28,9 @@ class ChatRepositoryImpl implements ChatRepository {
   Future<void> sendAudio(MessageEntity audio) async {
     await localDataSource.saveAudio(audio);
   }
+
+  @override
+  Future<void> sendImage(MessageEntity image) async {
+    await localDataSource.saveImage(image);
+  }
 }
