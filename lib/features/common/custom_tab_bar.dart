@@ -11,12 +11,12 @@ class CustomTabBar extends StatefulWidget {
   final EdgeInsetsGeometry padding;
   final bool? type;
   const CustomTabBar(
-      
       {super.key,
       required this.tabs,
       required this.controller,
       required this.padding,
-      required this.secondText, this.type});
+      required this.secondText,
+      this.type});
 
   @override
   _CustomTabBarState createState() => _CustomTabBarState();
@@ -29,9 +29,11 @@ class _CustomTabBarState extends State<CustomTabBar> {
   void initState() {
     super.initState();
     widget.controller?.addListener(() {
-      setState(() {
-        _currentIndex = widget.controller!.index;
-      });
+      if (mounted) {
+        setState(() {
+          _currentIndex = widget.controller!.index;
+        });
+      }
     });
   }
 
@@ -88,21 +90,23 @@ class _CustomTabBarState extends State<CustomTabBar> {
                                   height: 1.40.h,
                                 ),
                               ),
-                        widget.secondText == true ?
-                              SizedBox(width: 4.w) : const SizedBox(),
-                         widget.secondText == true ?
-                              Opacity(
-                                opacity: 0.40,
-                                child: Text(
-                                  '2',
-                                  style: TextStyle(
-                                    color: NeoColors.primaryColor,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.40.h,
-                                  ),
-                                ),
-                              ) : const SizedBox(),
+                              widget.secondText == true
+                                  ? SizedBox(width: 4.w)
+                                  : const SizedBox(),
+                              widget.secondText == true
+                                  ? Opacity(
+                                      opacity: 0.40,
+                                      child: Text(
+                                        '2',
+                                        style: TextStyle(
+                                          color: NeoColors.primaryColor,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.40.h,
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox(),
                             ],
                           ),
                   ),

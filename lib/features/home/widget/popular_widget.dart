@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/home/data/models/banner_local_model.dart';
@@ -58,12 +59,13 @@ class _PopularWidgetState extends State<PopularWidget> {
     imgList.length == 1 ? scroll = false : scroll = true;
     return Padding(
         padding: const EdgeInsets.only(
-          left: 16.0,
-          right: 16,
+          // left: 16.0,
+          // right: 16,
           top: 24,
         ),
         child: ListView(
           padding: EdgeInsets.zero,
+          physics: const BouncingScrollPhysics(),
           children: [
             SizedBox(
               height: 100.h,
@@ -83,59 +85,62 @@ class _PopularWidgetState extends State<PopularWidget> {
                 items: imgList.map((i) {
                   return Builder(
                     builder: (BuildContext context) {
-                      return Stack(
-                        clipBehavior: Clip.none,
-                        alignment: AlignmentDirectional.bottomCenter,
-                        children: [
-                          Container(
-                            width: 1.sw,
-                            decoration: ShapeDecoration(
-                              color: const Color(0xFF090F0B),
-                              // color: Colors.red,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                            padding: const EdgeInsets.only(
-                              left: 16,
-                              top: 27,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Marketplace',
-                                  style: GoogleFonts.urbanist(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.40,
-                                  ),
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          alignment: AlignmentDirectional.bottomCenter,
+                          children: [
+                            Container(
+                              width: 1.sw,
+                              decoration: ShapeDecoration(
+                                color: const Color(0xFF090F0B),
+                                // color: Colors.red,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
-                                Opacity(
-                                  opacity: 0.80,
-                                  child: Text(
-                                    'Buy any goods directly with your crypto',
-                                    textAlign: TextAlign.center,
+                              ),
+                              padding: const EdgeInsets.only(
+                                left: 16,
+                                top: 27,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Marketplace',
                                     style: GoogleFonts.urbanist(
-                                      color: NeoColors.primaryColor,
-                                      fontSize: 12,
+                                      color: Colors.white,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.w400,
                                       height: 1.40,
                                     ),
                                   ),
-                                ),
-                              ],
+                                  Opacity(
+                                    opacity: 0.80,
+                                    child: Text(
+                                      'Buy any goods directly with your crypto',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.urbanist(
+                                        color: NeoColors.primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.40,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          Positioned(
-                              left: 250,
-                              top: -10,
-                              child: Image.asset(
-                                'assets/png/330.png',
-                                fit: BoxFit.cover,
-                              )),
-                        ],
+                            Positioned(
+                                left: 250,
+                                top: -10,
+                                child: Image.asset(
+                                  'assets/png/330.png',
+                                  fit: BoxFit.cover,
+                                )),
+                          ],
+                        ),
                       );
                     },
                   );
@@ -164,53 +169,60 @@ class _PopularWidgetState extends State<PopularWidget> {
             SizedBox(
               height: 20.h,
             ),
-            Container(
-                padding: const EdgeInsets.all(16),
-                decoration: ShapeDecoration(
-                  color: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16),
+              child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: ShapeDecoration(
+                    color: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
                   ),
-                ),
-                child: ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: list.length,
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            useRootNavigator: true,
-                            isDismissible: true,
-                            backgroundColor: const Color(0xFF090F0B),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                            builder: (context) {
-                              // return const FeedShowModalWidget();
-                              return FractionallySizedBox(
-                                heightFactor: 0.87,
-                                child: PopularShowModalWidget(
-                                  url: list[index].url,
-                                  title: list[index].title,
-                                ),
-                              );
-                            });
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 8.0, bottom: 8),
-                        child: BlackContainerWidget(
-                          image: list[index].url,
-                          title: list[index].title,
-                          subTitle: list[index].subtitle ?? '',
+                  child: ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: list.length,
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    separatorBuilder: (context, index) {
+                      return Divider(
+                            color: NeoColors.soonColor.withOpacity(0.3));
+                    },
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              useRootNavigator: true,
+                              isDismissible: true,
+                              backgroundColor: const Color(0xFF090F0B),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              builder: (context) {
+                                // return const FeedShowModalWidget();
+                                return FractionallySizedBox(
+                                  heightFactor: 0.87,
+                                  child: PopularShowModalWidget(
+                                    url: list[index].url,
+                                    title: list[index].title,
+                                  ),
+                                );
+                              });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 8.0, bottom: 8),
+                          child: BlackContainerWidget(
+                            image: list[index].url,
+                            title: list[index].title,
+                            subTitle: list[index].subtitle ?? '',
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                )),
+                      );
+                    },
+                  )),
+            ),
             SizedBox(
               height: 26.h,
             ),
@@ -325,6 +337,7 @@ class BlackContainerWidget extends StatelessWidget {
             ],
           ),
         ),
+        SvgPicture.asset('assets/svg/arrow_right.svg'),
         const SizedBox(width: 16),
       ],
     );
