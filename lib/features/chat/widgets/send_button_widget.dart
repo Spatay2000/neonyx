@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
-import 'package:photo_manager/photo_manager.dart';
+// import 'package:photo_manager/photo_manager.dart';
 import 'package:record/record.dart';
 
 class SendButton extends StatefulWidget {
@@ -32,7 +32,6 @@ class _SendButtonState extends State<SendButton> {
   final _audioRecorder = Record();
   StreamSubscription<RecordState>? _recordSub;
   RecordState _recordState = RecordState.stop;
-  List<AssetEntity> selectedAssetList = [];
 
   Future<void> _start() async {
     try {

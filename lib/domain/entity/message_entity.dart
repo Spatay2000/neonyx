@@ -7,7 +7,7 @@ class MessageEntity {
   final String? message;
   final String? audioPath;
   final DateTime? createdAt;
-  final List<AssetEntity>? assetEntity;
+  final List<String>? imagesPath;
   // temporary field
   final String? name;
   // temporary field
@@ -22,7 +22,7 @@ class MessageEntity {
     this.createdAt,
     this.name,
     this.isChatMan = false,
-    this.assetEntity,
+    this.imagesPath,
   });
 
   MessageEntity copyWith({
@@ -32,6 +32,7 @@ class MessageEntity {
     String? audioPath,
     DateTime? createdAt,
     List<AssetEntity>? assetEntity,
+    List<String>? imagesPath,
   }) =>
       MessageEntity(
         id: id ?? this.id,
@@ -39,6 +40,6 @@ class MessageEntity {
         message: message ?? this.message,
         audioPath: audioPath ?? this.audioPath,
         createdAt: createdAt ?? this.createdAt,
-        assetEntity: assetEntity ?? this.assetEntity,
+        imagesPath: imagesPath ?? this.imagesPath,
       );
 }

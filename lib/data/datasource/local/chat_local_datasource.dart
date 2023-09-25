@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:neonyx/core/constants/hive_box_names.dart';
@@ -38,6 +40,7 @@ class ChatLocalDataSourceImpl implements ChatLocalDataSource {
     final box = await _checkIsBoxOpen<MessageModel>(NeoHiveBoxNames.chat);
     if (message.id == null) {
       await box.add(MessageModel.fromEntity(message));
+      log("SAVED MESSAGE");
     } else {
       await box.put(message.id, MessageModel.fromEntity(message));
     }
@@ -48,6 +51,7 @@ class ChatLocalDataSourceImpl implements ChatLocalDataSource {
     final box = await _checkIsBoxOpen<MessageModel>(NeoHiveBoxNames.chat);
     if (audio.id == null) {
       await box.add(MessageModel.fromEntity(audio));
+      log("SAVED AUDIO");
     } else {
       await box.put(audio.id, MessageModel.fromEntity(audio));
     }
@@ -58,8 +62,10 @@ class ChatLocalDataSourceImpl implements ChatLocalDataSource {
     final box = await _checkIsBoxOpen<MessageModel>(NeoHiveBoxNames.chat);
     if (image.id == null) {
       await box.add(MessageModel.fromEntity(image));
+      log("SAVED IMAGE");
     } else {
       await box.put(image.id, MessageModel.fromEntity(image));
+      log("SAVED IMAGE (ELSE)");
     }
   }
 

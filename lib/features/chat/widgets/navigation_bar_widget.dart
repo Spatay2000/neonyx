@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -12,14 +14,14 @@ import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/common/neo_input_field.dart';
 import 'package:photo_manager/photo_manager.dart';
 
-class NavigationBarWidget extends StatelessWidget {
+class NavigationBarWidget extends StatefulWidget {
   final List<NavigationBarItem> items;
   final int currentIndex;
   final Function(int) onTap;
   final List<AssetEntity> selectedAssetList;
   final TextEditingController controller;
 
-  NavigationBarWidget({
+  const NavigationBarWidget({
     Key? key,
     required this.items,
     required this.currentIndex,
@@ -28,7 +30,32 @@ class NavigationBarWidget extends StatelessWidget {
     required this.controller,
   }) : super(key: key);
 
+  @override
+  State<NavigationBarWidget> createState() => _NavigationBarWidgetState();
+}
+
+class _NavigationBarWidgetState extends State<NavigationBarWidget> {
   final _chatDetailsBloc = getIt<ChatDetailsBloc>()..add(LoadChat());
+
+  List<File> selectedFiles = [];
+
+  Future convertAssetsToFiles(List<AssetEntity> assetEntities) async {
+    for (var i = 0; i < assetEntities.length; i++) {
+      final File? file = await assetEntities[i].originFile;
+
+      if (selectedFiles.contains(file)) {
+        setState(() {
+          selectedFiles.remove(file!);
+        });
+      } else {
+        setState(() {
+          selectedFiles.add(file!);
+        });
+      }
+      log("FILES: ${selectedFiles.length}");
+    }
+    return selectedFiles;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,21 +69,26 @@ class NavigationBarWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-        child: selectedAssetList.isNotEmpty
+        child: widget.selectedAssetList.isNotEmpty
             ? Row(
                 children: [
                   Expanded(
                     child: NeoInputField(
                       isNeedBorder: true,
-                      onEditingComplete: () {
-                        if (controller.text.isNotEmpty) {
-                          // _chatDetailsBloc
-                          //     .add(SendMessage(message: controller.text));
-                          // controller.clear();
-                        }
+                      onEditingComplete: () async {
+                        // if (widget.selectedImageFiles.isNotEmpty) {
+                        //   List<File> files = await convertAssetsToFiles(
+                        //       widget.selectedImageFiles);
+                        //   log("NEW FILES: ${files.length}");
+                        //   _chatDetailsBloc.add(SendPhoto(
+                        //       imagesPath: encodeUrlImg(files),
+                        //       message: widget.controller.text));
+                        //   widget.controller.clear();
+                        //   Navigator.pop(context);
+                        // }
                       },
                       type: NeoInputType.text,
-                      controller: controller,
+                      controller: widget.controller,
                       hint: 'Add a caption...',
                       fillColor: NeoColors.buttonBgColor,
                       maxLines: 3,
@@ -78,19 +110,20 @@ class NavigationBarWidget extends StatelessWidget {
                   const SizedBox(width: 16),
                   SendButton(
                     onStop: (path) {},
-                    sendMessageTap: () {
-                      if (selectedAssetList.isNotEmpty) {
-                        log("selectedAssetList is NOT EMPTY");
-                        if (controller.text.isNotEmpty) {
-                          log("qwe: $selectedAssetList");
-                          _chatDetailsBloc.add(SendPhoto(
-                              listAsset: selectedAssetList,
-                              message: controller.text));
-                          controller.clear();
-                        }
+                    sendMessageTap: () async {
+                      if (widget.selectedAssetList.isNotEmpty) {
+                        List<File> files = await convertAssetsToFiles(
+                            widget.selectedAssetList);
+                        log("NEW FILES: ${files.length}");
+                        _chatDetailsBloc.add(SendPhoto(
+                            imagesPath: encodeUrlImg(files),
+                            message: widget.controller.text));
+                        widget.controller.clear();
+                        _chatDetailsBloc.add(LoadChat());
+                        Navigator.pop(context);
                       }
                     },
-                    controller: controller,
+                    controller: widget.controller,
                     isSendMessageWithImage: true,
                   ),
                 ],
@@ -104,31 +137,21 @@ class NavigationBarWidget extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: List.generate(
-                        items.length,
+                        widget.items.length,
                         (index) {
                           return InkWell(
-                            onTap: () => onTap(index),
+                            onTap: () => widget.onTap(index),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                SvgPicture.asset(items[index].icon,
-                                    color: Colors.white),
-                                Container(
-                                  margin: const EdgeInsets.only(top: 6),
-                                  width: 36,
-                                  height: 4,
-                                  decoration: BoxDecoration(
-                                      color: index == currentIndex
-                                          ? NeoColors.primaryColor
-                                          : Colors.transparent,
-                                      borderRadius: BorderRadius.circular(2)),
-                                )
-                                // Text(
-                                //   items[index].title,
-                                //   style: TextStyle(
-                                //     color: index == currentIndex ? Colors.white : Colors.grey,
-                                //   ),
-                                // ),
+                                SvgPicture.asset(
+                                  widget.items[index].icon,
+                                  colorFilter: ColorFilter.mode(
+                                      index == widget.currentIndex
+                                          ? NeoColors.white
+                                          : NeoColors.primaryColor,
+                                      BlendMode.srcIn),
+                                ),
                               ],
                             ),
                           );
@@ -140,6 +163,18 @@ class NavigationBarWidget extends StatelessWidget {
               ),
       ),
     );
+  }
+
+  List<String> encodeUrlImg(List<File> imageFiles) {
+    List<String> images = [];
+
+    for (int i = 0; i < imageFiles.length; i++) {
+      List<int> imageBytes = imageFiles[i].readAsBytesSync();
+      String base64Image = base64Encode(imageBytes);
+      images.add(base64Image);
+    }
+
+    return images;
   }
 }
 

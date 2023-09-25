@@ -1,6 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:neonyx/domain/entity/message_entity.dart';
-import 'package:photo_manager/photo_manager.dart';
 
 part 'message_model.g.dart';
 
@@ -17,7 +16,7 @@ class MessageModel {
   @HiveField(4)
   String? audioPath;
   @HiveField(5)
-  List<AssetEntity>? assetEntity;
+  List<String>? imagesPath;
 
   MessageModel({
     this.id,
@@ -25,7 +24,7 @@ class MessageModel {
     this.message,
     this.createdAt,
     this.audioPath,
-    this.assetEntity,
+    this.imagesPath,
   });
 
   factory MessageModel.fromEntity(MessageEntity entity) => MessageModel(
@@ -34,7 +33,7 @@ class MessageModel {
         message: entity.message,
         createdAt: entity.createdAt,
         audioPath: entity.audioPath,
-        assetEntity: entity.assetEntity,
+        imagesPath: entity.imagesPath,
       );
 
   MessageEntity toEntity() => MessageEntity(
@@ -43,6 +42,6 @@ class MessageModel {
         from: from,
         createdAt: createdAt,
         audioPath: audioPath,
-        assetEntity: assetEntity,
+        imagesPath: imagesPath,
       );
 }
