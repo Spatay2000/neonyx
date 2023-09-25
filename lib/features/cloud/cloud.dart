@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/index/first.dart';
 import 'package:neonyx/features/index/second.dart';
-import 'package:neonyx/features/index/third.dart';
 
 import '../../core/get_it/configurator.dart';
 import '../common/custom_nav_bar.dart';

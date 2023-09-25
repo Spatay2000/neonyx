@@ -99,6 +99,8 @@ dependencies:
   image_picker: ^1.0.4
   photo_manager: ^2.7.1
   flutter_staggered_grid_view: ^0.4.0
+  #webview 
+  webview_flutter: ^4.2.4
 
 
 dependency_overrides:

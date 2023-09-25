@@ -14,6 +14,7 @@ import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 import '../../core/get_it/configurator.dart';
 import '../common/neo_colors.dart';
+import '../community/communtity.dart';
 import 'bloc/bloc/index_bloc.dart';
 
 class IndexNeo extends StatefulWidget {
@@ -35,7 +36,7 @@ class _IndexNeoState extends State<IndexNeo> {
     return [
       PersistentBottomNavBarItem(
         icon: const Icon(MyFlutterApp.hub),
-        title: "Hub",
+        // title: "Hub",
         textStyle: GoogleFonts.urbanist(
           fontSize: 12.sp,
           fontWeight: FontWeight.w500,
@@ -44,8 +45,8 @@ class _IndexNeoState extends State<IndexNeo> {
         inactiveColorPrimary: NeoColors.navBarInActiveColor,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(MyFlutterApp.feed),
-        title: "Feed",
+        icon: const Icon(MyFlutterApp.vector_13),
+        // title: "Feed",
         textStyle: GoogleFonts.urbanist(
             fontSize: 12.sp,
             fontWeight: FontWeight.w500,
@@ -54,8 +55,18 @@ class _IndexNeoState extends State<IndexNeo> {
         inactiveColorPrimary: NeoColors.navBarInActiveColor,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(MyFlutterApp.chat),
-        title: "Chats",
+        icon: const Icon(MyFlutterApp.vector__stroke__3),
+        // title: "Community",
+        textStyle: GoogleFonts.urbanist(
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w500,
+            color: NeoColors.primaryColor),
+        activeColorPrimary: Colors.white,
+        inactiveColorPrimary: NeoColors.navBarInActiveColor,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(MyFlutterApp.vector__stroke__4),
+        // title: "Chats",
         textStyle: GoogleFonts.urbanist(
             fontSize: 12.sp,
             fontWeight: FontWeight.w500,
@@ -65,7 +76,7 @@ class _IndexNeoState extends State<IndexNeo> {
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(MyFlutterApp.try5),
-        title: "Profile",
+        // title: "Profile",
         textStyle: GoogleFonts.urbanist(
             fontSize: 12.sp,
             fontWeight: FontWeight.w500,
@@ -100,15 +111,16 @@ class _IndexNeoState extends State<IndexNeo> {
                   screens: const [
                     HomeScreen(),
                     FeedScreen(),
+                    Community(),
                     ChatScreen(),
-                    ProfileScreen(),
+                    ProfileScreen()
                   ],
                   items: navBarsItems(),
 
                   onItemSelected: (value) {
                     indexNavBloc.add(IndexNavChangedPage(index: value));
                   },
-                  navBarHeight: 80.h,
+                  navBarHeight: 70.h,
                   backgroundColor: Colors.black,
                   handleAndroidBackButtonPress: true, // Default is true.
                   resizeToAvoidBottomInset:
@@ -133,7 +145,7 @@ class _IndexNeoState extends State<IndexNeo> {
                     curve: Curves.ease,
                   ),
                   screenTransitionAnimation: const ScreenTransitionAnimation(
-                    animateTabTransition: true, 
+                    animateTabTransition: true,
                     curve: Curves.ease,
                     duration: Duration(milliseconds: 200),
                   ),

@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,7 +7,6 @@ import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
 import 'package:neonyx/features/feed/data/models/media_item.dart';
 import 'package:neonyx/features/feed/widget/carousel_slider_widget.dart';
-import 'package:neonyx/features/feed/widget/feed_show_modal_widget.dart';
 import 'package:neonyx/features/feed/widget/user_list_widget.dart';
 import 'package:neonyx/features/feed/widget/video_item.dart';
 
@@ -22,8 +20,8 @@ class PostsScreen extends StatefulWidget {
 }
 
 class _PostsScreenState extends State<PostsScreen> {
-  int _currentIndex = 0;
-  final CarouselController _controller = CarouselController();
+  final int currentIndex = 0;
+  final CarouselController controller = CarouselController();
   final List<MediaItem> _itemsPhoto = [
     MediaItem(
         ['assets/png/grid.png', 'assets/png/grid2.png', 'assets/png/grid3.png'],
@@ -52,7 +50,7 @@ class _PostsScreenState extends State<PostsScreen> {
       'assets/mp4/insta.mp4',
     ], "Stephan Seeber"),
   ];
-  int _current = 0;
+  int current = 0;
   @override
   Widget build(BuildContext context) {
     return NeoScaffold(

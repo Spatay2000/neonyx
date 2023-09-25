@@ -44,10 +44,9 @@ class _FeedScreenState extends State<FeedScreen> with TickerProviderStateMixin {
               actions: InkWell(
                 onTap: () => showModalBottomSheet(
                     context: context,
-                    isScrollControlled: false,
+                    isScrollControlled: true,
                     useRootNavigator: true,
                     isDismissible: true,
-                    
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
@@ -64,12 +63,9 @@ class _FeedScreenState extends State<FeedScreen> with TickerProviderStateMixin {
             ),
             CustomTabBar(
               secondText: true,
-              
               tabs: data!,
-             
               controller: tabController,
               padding: EdgeInsets.only(left: 16.0.w, right: 16.w),
-            
             ),
             Expanded(
               child: TabBarView(
