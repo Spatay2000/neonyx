@@ -86,7 +86,6 @@ class _FeedListWidgetState extends State<FeedListWidget> {
     return Column(
       children: [
         FeedStoryWidget(
-          profile: true,
           feedStory: feedList,
         ),
         Expanded(
