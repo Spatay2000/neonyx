@@ -424,6 +424,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                           context: context,
                           isDismissible: true,
                           isScrollControlled: true,
+                          
                           backgroundColor: Colors.transparent,
                           builder: (context) => AddPhotoContent(
                             10,

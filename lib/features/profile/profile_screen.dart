@@ -10,6 +10,9 @@ import 'package:neonyx/features/feed/widget/articles_widget.dart';
 import 'package:neonyx/features/feed/widget/media_widget.dart';
 import 'package:neonyx/features/feed/widget/post_widget.dart';
 
+import '../../domain/entity/feed_entity.dart';
+import '../feed/widget/feed_strory.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
     super.key,
@@ -30,6 +33,76 @@ class _ProfileScreenState extends State<ProfileScreen>
     'Reposts',
     'Articles',
     'Reposts',
+  ];
+
+  List<FeedEntity> feedList = [
+    FeedEntity(
+        id: 1,
+        avatar: "assets/png/Avatar_group.png",
+        groupAva: 'assets/png/group_ava.png',
+        username: 'MemeStream',
+        storyImage: 'assets/png/story.png',
+        postTime: 8,
+        commentTotal: 10,
+        likeTotal: 15,
+        shareTotal: 12),
+    FeedEntity(
+        id: 2,
+        avatar: "assets/png/avatar_2_4x_icon.png",
+        storyImage: 'assets/png/story.png',
+        username: 'Team General Chat',
+        postTime: 8,
+        commentTotal: 10,
+        likeTotal: 15,
+        shareTotal: 12),
+    FeedEntity(
+        id: 3,
+        avatar: "assets/png/avatar_3_4x_icon.png",
+        username: 'Go dev',
+        postTime: 8,
+        commentTotal: 10,
+        likeTotal: 15,
+        shareTotal: 12),
+    FeedEntity(
+        id: 4,
+        avatar: "assets/png/avatar_4_4x_icon.png",
+        username: 'MemeStream',
+        postTime: 8,
+        commentTotal: 10,
+        likeTotal: 15,
+        shareTotal: 12),
+    FeedEntity(
+        id: 5,
+        avatar: "assets/png/avatar_1_4x_icon.png",
+        username: 'Team General Chat',
+        postTime: 8,
+        commentTotal: 10,
+        likeTotal: 15,
+        shareTotal: 12),
+    FeedEntity(
+        id: 6,
+        avatar: "assets/png/avatar_2_4x_icon.png",
+        username: 'Go dev',
+        postTime: 8,
+        commentTotal: 10,
+        likeTotal: 15,
+        shareTotal: 12),
+    FeedEntity(
+        id: 7,
+        avatar: "assets/png/avatar_3_4x_icon.png",
+        username: 'Team General Chat',
+        postTime: 8,
+        commentTotal: 10,
+        likeTotal: 15,
+        shareTotal: 12),
+    FeedEntity(
+        id: 8,
+        avatar: "assets/png/avatar_4_4x_icon.png",
+        username: 'Go dev',
+        postTime: 8,
+        commentTotal: 10,
+        likeTotal: 15,
+        shareTotal: 12),
   ];
 
   @override
@@ -239,6 +312,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                           ],
                         ),
                       ),
+                    ),
+                    FeedStoryWidget(
+                      profile: false,
+                      feedStory: feedList,
+                    ),
+                    SizedBox(
+                      height: 15.h,
                     ),
                     CustomTabBar(
                       tabs: data,
