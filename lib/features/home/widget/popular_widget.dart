@@ -186,7 +186,7 @@ class _PopularWidgetState extends State<PopularWidget> {
                     shrinkWrap: true,
                     separatorBuilder: (context, index) {
                       return Divider(
-                            color: NeoColors.soonColor.withOpacity(0.3));
+                          color: NeoColors.soonColor.withOpacity(0.3));
                     },
                     itemBuilder: (context, index) {
                       return InkWell(
@@ -201,13 +201,9 @@ class _PopularWidgetState extends State<PopularWidget> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               builder: (context) {
-                                // return const FeedShowModalWidget();
-                                return FractionallySizedBox(
-                                  heightFactor: 0.87,
-                                  child: PopularShowModalWidget(
-                                    url: list[index].url,
-                                    title: list[index].title,
-                                  ),
+                                return PopularShowModalWidget(
+                                  url: list[index].url,
+                                  title: list[index].title,
                                 );
                               });
                         },

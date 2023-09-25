@@ -55,7 +55,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
                 Padding(
                   padding: EdgeInsets.only(right: 8.0.w),
                   child: Container(
-                    padding: const EdgeInsets.all(12),
+                    padding:  EdgeInsets.symmetric(vertical: 12.w, horizontal: 12.w),
                     decoration: ShapeDecoration(
                       color: i != _currentIndex
                           ? Colors
@@ -63,7 +63,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
                           : const Color(0x192F9096),
                       shape: RoundedRectangleBorder(
                         side: const BorderSide(color: Color(0x182F9197)),
-                        borderRadius: BorderRadius.circular(12.r),
+                        borderRadius: BorderRadius.circular(14.r),
                       ),
                     ),
                     child: widget.type == false
