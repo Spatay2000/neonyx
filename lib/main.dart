@@ -42,8 +42,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 800),
       builder: (context, child) => const MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: IndexNeo(
-            screenIndex: 0,
+          home: AccountDetails(
           )),
     );
   }
