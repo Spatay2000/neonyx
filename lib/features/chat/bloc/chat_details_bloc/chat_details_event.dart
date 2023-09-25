@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:photo_manager/photo_manager.dart';
 
 abstract class ChatDetailsEvent extends Equatable {
   const ChatDetailsEvent();
@@ -27,13 +26,16 @@ class SendAudio extends ChatDetailsEvent {
 }
 
 class SendPhoto extends ChatDetailsEvent {
-  final List<AssetEntity> listAsset;
+  final List<String> imagesPath;
   final String message;
   const SendPhoto({
-    required this.listAsset,
+    required this.imagesPath,
     required this.message,
   });
 
   @override
-  List<Object> get props => [listAsset, message];
+  List<Object> get props => [
+        imagesPath,
+        message,
+      ];
 }

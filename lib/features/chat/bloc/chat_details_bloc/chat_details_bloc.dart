@@ -62,8 +62,9 @@ class ChatDetailsBloc extends Bloc<ChatDetailsEvent, ChatDetailsState> {
         await sendImageUseCase.call(
           SendImageUseCaseParams(
             MessageEntity(
-              assetEntity: event.listAsset,
+              imagesPath: event.imagesPath,
               message: event.message,
+              createdAt: DateTime.now(),
             ),
           ),
         );

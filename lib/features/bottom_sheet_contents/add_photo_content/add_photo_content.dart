@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:neonyx/core/get_it/configurator.dart';
@@ -15,13 +13,9 @@ import 'package:photo_manager/photo_manager.dart';
 class AddPhotoContent extends StatefulWidget {
   final int maxCount;
   final RequestType requestType;
-  final List<AssetEntity> selectedAssetList;
-  // final TextEditingController controller;
   const AddPhotoContent(
     this.maxCount,
-    this.requestType,
-    // this.controller,
-    this.selectedAssetList, {
+    this.requestType, {
     Key? key,
   }) : super(key: key);
 
@@ -40,16 +34,16 @@ class _AddPhotoContentState extends State<AddPhotoContent> {
 
   final List<NavigationBarItem> navItems = [
     NavigationBarItem(
-      icon: 'assets/svg/first.svg',
+      icon: 'assets/svg/gallery_icon.svg',
     ),
     NavigationBarItem(
-      icon: 'assets/svg/sec.svg',
+      icon: 'assets/svg/attach_file_icon.svg',
     ),
     NavigationBarItem(
-      icon: 'assets/svg/third.svg',
+      icon: 'assets/svg/cloud_icon.svg',
     ),
     NavigationBarItem(
-      icon: 'assets/svg/four.svg',
+      icon: 'assets/svg/wallet_icon.svg',
     ),
   ];
 
@@ -65,18 +59,12 @@ class _AddPhotoContentState extends State<AddPhotoContent> {
   @override
   void initState() {
     addPhotoBloc.add(AddPhotoIndexChangedPage(index: currentIndex));
-    setState(() {
-      selectedAssetList = widget.selectedAssetList;
-    });
-    log("QWE selectedAssetList: $selectedAssetList");
-    log("QWE widget.selectedAssetList: ${widget.selectedAssetList}");
     MediaServices().loadAlbums(widget.requestType).then(
       (value) {
         setState(() {
           albumList = value;
-          selectedAlbum = value[3];
+          selectedAlbum = value[0];
         });
-        //LOAD RECENT ASSETS
         MediaServices().loadAssets(selectedAlbum!).then(
           (value) {
             setState(() {
@@ -87,6 +75,41 @@ class _AddPhotoContentState extends State<AddPhotoContent> {
       },
     );
     super.initState();
+  }
+
+  // List<File> selectedFiles = [];
+
+  // Future convertAssetsToFiles(List<AssetEntity> assetEntities) async {
+  //   for (var i = 0; i < assetEntities.length; i++) {
+  //     final File? file = await assetEntities[i].originFile;
+
+  //     if (selectedFiles.contains(file)) {
+  //       setState(() {
+  //         selectedFiles.remove(file!);
+  //       });
+  //     } else {
+  //       setState(() {
+  //         selectedFiles.add(file!);
+  //       });
+  //     }
+
+  //     log("FILES: ${selectedFiles.length}");
+  //   }
+  // }
+
+  void selectAsset({
+    required AssetEntity assetEntity,
+  }) {
+    if (selectedAssetList.contains(assetEntity)) {
+      setState(() {
+        selectedAssetList.remove(assetEntity);
+      });
+      // convertAssetsToFiles(selectedAssetList);
+    } else if (selectedAssetList.length < widget.maxCount) {
+      setState(() {
+        selectedAssetList.add(assetEntity);
+      });
+    }
   }
 
   @override
@@ -144,9 +167,11 @@ class _AddPhotoContentState extends State<AddPhotoContent> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 15,
+                            ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 InkWell(
                                   onTap: () {
@@ -162,52 +187,106 @@ class _AddPhotoContentState extends State<AddPhotoContent> {
                                       Navigator.pop(context);
                                     }
                                   },
-                                  child: const Text(
-                                    "Back",
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      color: NeoColors.white,
+                                  child: const Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "Back",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: NeoColors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const Text(
+                                  "lect",
+                                  style: TextStyle(color: Colors.transparent),
+                                ),
+                                // const Spacer(),
+                                Expanded(
+                                  child: Text(
+                                    selectedAssetList.isNotEmpty
+                                        ? "${selectedAssetList.length} photo selected"
+                                        : "Add Photo",
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      color: NeoColors.primaryColor,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                 ),
-                                // const Text(
-                                //   "Add Photo",
-                                //   style: TextStyle(
-                                //     color: NeoColors.primaryColor,
-                                //     fontSize: 16,
-                                //     fontWeight: FontWeight.w400,
+                                // const Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    if (selectedAssetList.isNotEmpty) {
+                                      setState(() {
+                                        selectedAssetList.clear();
+                                      });
+                                    }
+                                  },
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      "Unselect",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: selectedAssetList.isNotEmpty
+                                            ? NeoColors.white
+                                            : Colors.transparent,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                // const SizedBox(width: 33),
+                                // Flexible(
+                                //   child: SizedBox(
+                                //     width: 40,
+                                //     child: DropdownButton<AssetPathEntity>(
+                                //       value: selectedAlbum,
+                                //       isExpanded: true,
+                                //       style: const TextStyle(
+                                //           color: NeoColors.white),
+                                //       iconEnabledColor: NeoColors.white,
+                                //       dropdownColor: NeoColors.grayColor,
+                                //       underline: const SizedBox(),
+                                //       onChanged: (AssetPathEntity? value) {
+                                //         setState(() {
+                                //           selectedAlbum = value;
+                                //         });
+                                //         MediaServices()
+                                //             .loadAssets(selectedAlbum!)
+                                //             .then(
+                                //           (value) {
+                                //             setState(() {
+                                //               assetList = value;
+                                //             });
+                                //           },
+                                //         );
+                                //       },
+                                //       items: albumList.map<
+                                //               DropdownMenuItem<
+                                //                   AssetPathEntity>>(
+                                //           (AssetPathEntity album) {
+                                //         return DropdownMenuItem<
+                                //             AssetPathEntity>(
+                                //           value: album,
+                                //           child: Text(
+                                //             "${album.name} (${album.assetCount})",
+                                //             overflow: TextOverflow.ellipsis,
+                                //             style: const TextStyle(
+                                //               color: NeoColors.white,
+                                //             ),
+                                //           ),
+                                //         );
+                                //       }).toList(),
+                                //     ),
                                 //   ),
                                 // ),
-                                // const SizedBox(width: 33),
-                                DropdownButton<AssetPathEntity>(
-                                  value: selectedAlbum,
-                                  onChanged: (AssetPathEntity? value) {
-                                    setState(() {
-                                      selectedAlbum = value;
-                                    });
-                                    MediaServices()
-                                        .loadAssets(selectedAlbum!)
-                                        .then(
-                                      (value) {
-                                        setState(() {
-                                          assetList = value;
-                                        });
-                                      },
-                                    );
-                                  },
-                                  items: albumList
-                                      .map<DropdownMenuItem<AssetPathEntity>>(
-                                          (AssetPathEntity album) {
-                                    return DropdownMenuItem<AssetPathEntity>(
-                                      value: album,
-                                      // ignore: deprecated_member_use
-                                      child: Text(
-                                          "${album.name} (${album.assetCount})"),
-                                    );
-                                  }).toList(),
-                                ),
                               ],
                             ),
                           ),
@@ -328,18 +407,4 @@ class _AddPhotoContentState extends State<AddPhotoContent> {
           ),
         ],
       );
-
-  void selectAsset({
-    required AssetEntity assetEntity,
-  }) {
-    if (selectedAssetList.contains(assetEntity)) {
-      setState(() {
-        selectedAssetList.remove(assetEntity);
-      });
-    } else if (selectedAssetList.length < widget.maxCount) {
-      setState(() {
-        selectedAssetList.add(assetEntity);
-      });
-    }
-  }
 }

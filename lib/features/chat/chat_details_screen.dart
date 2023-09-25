@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neonyx/core/get_it/configurator.dart';
@@ -94,7 +97,24 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
     scrollController.dispose();
   }
 
-  List<AssetEntity> selectedAssetList = [];
+  decoderBase64ToImage(List<String> base64) {
+    if (base64.isEmpty) {
+      return Container();
+    }
+    for (int i = 0; i < base64.length;) {
+      Uint8List bytes = const Base64Codec().decode(base64[i]);
+      return ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        child: Image.memory(
+          bytes,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return const Center(child: CircularProgressIndicator());
+          },
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +173,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                     ],
                   )
                 : Text(
-                    userName!,
+                    userName ?? "Username",
                     style: GoogleFonts.urbanist(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
@@ -171,7 +191,6 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                   padding:
                       const EdgeInsets.only(right: 16, top: 12, bottom: 12),
                   child: Stack(
-                    // alignment: Alignment.topLeft,
                     children: [
                       widget.groupAva != null
                           ? ClipOval(
@@ -187,7 +206,6 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                             )
                           : const SizedBox(),
                       Positioned(
-                        // right: 0.w,
                         child: Padding(
                           padding: const EdgeInsets.only(top: 4, left: 4),
                           child: ClipOval(
@@ -235,8 +253,8 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                             left: 16, right: 16, bottom: 90, top: 20),
                         itemCount: state.chat.length,
                         separatorBuilder: (context, index) {
-                          return const Divider(
-                            height: 1,
+                          return const SizedBox(
+                            height: 10,
                           );
                         },
                         itemBuilder: (context, index) {
@@ -267,7 +285,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                                     ),
                                     const SizedBox(width: 8),
                                     Text(
-                                      message.name ?? userName!,
+                                      message.name ?? userName ?? "Username",
                                       style: GoogleFonts.urbanist(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w400,
@@ -288,63 +306,86 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                                   ],
                                 ),
                               ),
-                              const SizedBox(width: 4),
+                              const SizedBox(height: 16),
                               Flexible(
                                 child: message.audioPath != null
                                     ? AudioPlayerWidget(
                                         filepath: message.audioPath!,
                                         isChatPartner: message.isChatMan,
                                       )
-                                    : message.assetEntity != null
-                                        ? SizedBox(
-                                            height: 600,
+                                    : message.imagesPath != null
+                                        ? Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width -
+                                                80,
+                                            decoration: BoxDecoration(
+                                                color: NeoColors.primaryColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(8)),
                                             child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
                                               children: [
-                                                GridView.builder(
+                                                StaggeredGridView.countBuilder(
                                                   physics:
                                                       const BouncingScrollPhysics(),
-                                                  itemCount:
-                                                      message.assetEntity!.length,
-                                                  gridDelegate:
-                                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                                    crossAxisCount: 2,
-                                                  ),
+                                                  crossAxisCount:
+                                                      _crossAxisCount(message
+                                                          .imagesPath!.length),
+                                                  shrinkWrap: true,
+                                                  itemCount: message
+                                                      .imagesPath!.length,
                                                   itemBuilder:
                                                       (context, index) {
-                                                    AssetEntity assetEntity =
-                                                        message.assetEntity![
-                                                            index];
                                                     return Padding(
                                                       padding:
                                                           const EdgeInsets.all(
                                                               2),
-                                                      child: AssetEntityImage(
-                                                        assetEntity,
-                                                        isOriginal: false,
-                                                        width: 150,
-                                                        height: 150,
-                                                        thumbnailSize:
-                                                            const ThumbnailSize
-                                                                .square(1000),
-                                                        fit: BoxFit.cover,
-                                                        errorBuilder: (context,
-                                                            error, stackTrace) {
-                                                          return const Center(
-                                                            child: Icon(
-                                                              Icons.error,
-                                                              color: Colors.red,
-                                                            ),
-                                                          );
-                                                        },
+                                                      child:
+                                                          decoderBase64ToImage(
+                                                        message.imagesPath!,
                                                       ),
                                                     );
                                                   },
+                                                  staggeredTileBuilder:
+                                                      (index) {
+                                                    return StaggeredTile.count(
+                                                      1,
+                                                      index.isEven ? 1.2 : 1.8,
+                                                    );
+                                                  },
+                                                  // children:
+                                                  //     message.imagesPath!.map(
+                                                  //   (e) {
+                                                  //     return Padding(
+                                                  //       padding:
+                                                  //           const EdgeInsets
+                                                  //               .all(2),
+                                                  //       child:
+                                                  //           decoderBase64ToImage(
+                                                  //         message.imagesPath!,
+                                                  //       ),
+                                                  //     );
+                                                  //   },
+                                                  // ).toList(),
                                                 ),
-                                                Text(
-                                                  "${message.message}",
-                                                  style: const TextStyle(
-                                                      color: NeoColors.white),
-                                                ),
+                                                message.message!.isNotEmpty
+                                                    ? Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                          horizontal: 10,
+                                                          vertical: 8,
+                                                        ),
+                                                        child: Text(
+                                                          "${message.message}",
+                                                          style: const TextStyle(
+                                                              color: NeoColors
+                                                                  .white),
+                                                        ),
+                                                      )
+                                                    : const SizedBox(),
                                               ],
                                             ),
                                           )
@@ -415,22 +456,17 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        // NeoPopUpRetriever.showBottomSheet(
-                        //   context,
-                        //   isDismissible: true,
-                        //   content: AddPhotoContent(10, RequestType.image, selectedAssetList),
-                        // );
                         showModalBottomSheet(
                           context: context,
                           isDismissible: true,
                           isScrollControlled: true,
+                          //TODO height of SizedBox
                           backgroundColor: Colors.transparent,
-                          builder: (context) => AddPhotoContent(
+                          builder: (context) => const AddPhotoContent(
                             10,
                             RequestType.image,
-                            selectedAssetList,
                           ),
-                        );
+                        ).then((value) => _chatDetailsBloc.add(LoadChat()));
                       },
                       child: Container(
                         height: 36.h,
@@ -447,12 +483,6 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                           color: NeoColors.soonColor,
                         ),
                       ),
-
-                      // SvgPicture.asset(
-                      //   "assets/svg/chat_plus_icon.svg",
-                      //   height: 16,
-                      //   width: 16,
-                      // ),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
@@ -493,12 +523,6 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                         ),
                       ),
                     ),
-                    // const SizedBox(width: 16),
-                    // SvgPicture.asset(
-                    //   "assets/svg/file_icon.svg",
-                    //   height: 16,
-                    //   width: 16,
-                    // ),
                     const SizedBox(width: 16),
                     SendButton(
                       onStop: (path) {
@@ -527,104 +551,14 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
       ),
     );
   }
-}
 
-// floatingActionButton: Column(
-//   mainAxisSize: MainAxisSize.min,
-//   crossAxisAlignment: CrossAxisAlignment.start,
-//   children: [
-//     //TODO uncomment when will be added other users type messages
-//     // isTyping
-//     //     ? Padding(
-//     //         padding:
-//     //             const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-//     //         child: Row(
-//     //           children: [
-//     //             JumpingDots(
-//     //               color: NeoColors.soonColor,
-//     //               radius: 8,
-//     //               animationDuration: const Duration(milliseconds: 300),
-//     //               innerPadding: 4,
-//     //               verticalOffset: -4,
-//     //             ),
-//     //             const SizedBox(width: 8),
-//     //             Text(
-//     //               "user is typing",
-//     //               style: GoogleFonts.urbanist(
-//     //                 color: NeoColors.soonColor,
-//     //                 fontSize: 12,
-//     //                 fontWeight: FontWeight.w400,
-//     //               ),
-//     //             ),
-//     //           ],
-//     //         ),
-//     //       )
-//     //     : const SizedBox(),
-//     Container(
-//       width: double.maxFinite,
-//       padding: const EdgeInsets.symmetric(
-//         horizontal: 16,
-//       ),
-//       color: NeoColors.buttonBgColor,
-//       child: Row(
-//         children: [
-//           SvgPicture.asset(
-//             "assets/svg/chat_plus_icon.svg",
-//             height: 16,
-//             width: 16,
-//           ),
-//           const SizedBox(width: 8),
-//           Expanded(
-//             child: NeoInputField(
-//               onEditingComplete: () {
-//                 if (controller.text.isNotEmpty) {
-//                   _chatDetailsBloc
-//                       .add(SendMessage(message: controller.text));
-//                   controller.clear();
-//                   setState(() {
-//                     isTyping = false;
-//                   });
-//                 }
-//               },
-//               type: NeoInputType.text,
-//               controller: controller,
-//               hint: 'Enter your message',
-//               fillColor: NeoColors.buttonBgColor,
-//               maxLines: 3,
-//               onChanged: (text) {
-//                 setState(() {
-//                   isTyping = true;
-//                 });
-//               },
-//             ),
-//           ),
-//           const SizedBox(width: 16),
-//           SvgPicture.asset(
-//             "assets/svg/file_icon.svg",
-//             height: 16,
-//             width: 16,
-//           ),
-//           const SizedBox(width: 16),
-//           SendButton(
-//             onStop: (path) {
-//               _chatDetailsBloc.add(SendAudio(audioPath: path));
-//             },
-//             sendMessageTap: () {
-//               if (controller.text.isNotEmpty) {
-//                 _chatDetailsBloc
-//                     .add(SendMessage(message: controller.text));
-//                 controller.clear();
-//                 setState(() {
-//                   isTyping = false;
-//                 });
-//               }
-//             },
-//             controller: controller,
-//           ),
-//           const SizedBox(width: 8),
-//         ],
-//       ),
-//     ),
-//   ],
-// ),
-// floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+  int _crossAxisCount(int imgLength) {
+    if (imgLength == 2 || imgLength == 3) {
+      return 2;
+    } else if (imgLength == 1) {
+      return 1;
+    } else {
+      return 3;
+    }
+  }
+}
