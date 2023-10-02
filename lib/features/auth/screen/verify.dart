@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:neonyx/features/auth/screen/account_details.dart';
 import 'package:neonyx/features/auth/screen/claim_username.dart';
 import 'package:neonyx/features/common/neo_button.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
@@ -92,7 +93,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
 
     if (areListsEqual) {
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const ClaimUsername()));
+          MaterialPageRoute(builder: (context) => const AccountDetails()));
     } else {
       clearStatus = true;
       setState(() {});

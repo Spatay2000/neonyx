@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,16 +11,17 @@ class CustomButton extends StatelessWidget {
   final bool backgroundStatus;
   final double? height;
   final double? width;
+  final bool notGradient;
 
-  const CustomButton({
-    super.key,
-    this.onPressed,
-    this.title,
-    this.subtitle,
-    required this.backgroundStatus,
-    this.height,
-    this.width,
-  });
+  const CustomButton(
+      {super.key,
+      this.onPressed,
+      this.title,
+      this.subtitle,
+      required this.backgroundStatus,
+      this.height,
+      this.width,
+      this.notGradient = false});
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +30,13 @@ class CustomButton extends StatelessWidget {
       width: width,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14.0.r),
-          border: const GradientBoxBorder(
-              gradient: LinearGradient(colors: [
-            Color.fromRGBO(47, 145, 151, 1),
-            Color.fromRGBO(183, 175, 107, 1),
-          ]))),
+          border: notGradient == false
+              ? const GradientBoxBorder(
+                  gradient: LinearGradient(colors: [
+                  Color.fromRGBO(47, 145, 151, 1),
+                  Color.fromRGBO(183, 175, 107, 1),
+                ]))
+              : Border.all(color: NeoColors.soonColor)),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(

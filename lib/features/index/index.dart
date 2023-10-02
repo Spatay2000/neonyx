@@ -8,7 +8,6 @@ import 'package:neonyx/features/chat/chat_screen.dart';
 import 'package:neonyx/features/common/my_flutter_app_icons.dart';
 import 'package:neonyx/features/feed/feed_screen.dart';
 import 'package:neonyx/features/home/screen/home_screen.dart';
-import 'package:neonyx/features/index/first.dart';
 import 'package:neonyx/features/profile/profile_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
@@ -45,7 +44,7 @@ class _IndexNeoState extends State<IndexNeo> {
         inactiveColorPrimary: NeoColors.navBarInActiveColor,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(MyFlutterApp.vector_13),
+        icon: const Icon(MyFlutterApp.vector_14),
         // title: "Feed",
         textStyle: GoogleFonts.urbanist(
             fontSize: 12.sp,
@@ -55,7 +54,7 @@ class _IndexNeoState extends State<IndexNeo> {
         inactiveColorPrimary: NeoColors.navBarInActiveColor,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(MyFlutterApp.vector__stroke__3),
+        icon: const Icon(MyFlutterApp.vector__stroke__5),
         // title: "Community",
         textStyle: GoogleFonts.urbanist(
             fontSize: 12.sp,

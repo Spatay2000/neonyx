@@ -59,6 +59,7 @@ class _AddPhotoContentState extends State<AddPhotoContent> {
   @override
   void initState() {
     addPhotoBloc.add(AddPhotoIndexChangedPage(index: currentIndex));
+  
     MediaServices().loadAlbums(widget.requestType).then(
       (value) {
         setState(() {
@@ -114,237 +115,234 @@ class _AddPhotoContentState extends State<AddPhotoContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.95,
-        child: NotificationListener<DraggableScrollableNotification>(
-          onNotification: (notification) {
-            if (notification.extent < .4) {
-              Navigator.pop(context);
-            }
-            return true;
-          },
-          child: DraggableScrollableSheet(
-            maxChildSize: 1,
-            initialChildSize: .6,
-            minChildSize: .5,
-            // expand: false,
-            builder: ((context, scrollController) {
-              return GestureDetector(
-                onTap: () => FocusScope.of(context).unfocus(),
-                child: Stack(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(top: 8),
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(24.0),
-                          topRight: Radius.circular(24.0),
-                        ),
-                        color: NeoColors.soonColor,
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Color.fromRGBO(47, 145, 151, 0.2),
-                              Color.fromRGBO(121, 214, 152, 0),
-                            ]),
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.95,
+      child: NotificationListener<DraggableScrollableNotification>(
+        onNotification: (notification) {
+          if (notification.extent < .4) {
+            Navigator.pop(context);
+          }
+          return true;
+        },
+        child: DraggableScrollableSheet(
+          maxChildSize: 1,
+          initialChildSize: .6,
+          minChildSize: .5,
+          // expand: false,
+          builder: ((context, scrollController) {
+            return GestureDetector(
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: Stack(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(top: 8),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(24.0),
+                        topRight: Radius.circular(24.0),
                       ),
-                      child: SafeArea(
-                          child: SingleChildScrollView(
-                        physics: const NeverScrollableScrollPhysics(),
-                        controller: scrollController,
-                        child: Column(
-                          children: [
-                            Container(
-                              width: 60.0,
-                              height: 4.0,
-                              margin: const EdgeInsets.only(bottom: 8.0),
-                              decoration: const BoxDecoration(
-                                color: Color(0xFF7CA7AA),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(8.0),
-                                ),
+                      color: NeoColors.soonColor,
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color.fromRGBO(47, 145, 151, 0.2),
+                            Color.fromRGBO(121, 214, 152, 0),
+                          ]),
+                    ),
+                    child: SafeArea(
+                        child: SingleChildScrollView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      controller: scrollController,
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 60.0,
+                            height: 4.0,
+                            margin: const EdgeInsets.only(bottom: 8.0),
+                            decoration: const BoxDecoration(
+                              color: Color(0xFF7CA7AA),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(8.0),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 15,
-                              ),
-                              child: Row(
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      if (selectedAssetList.isNotEmpty) {
-                                        NeoAlertDialog.showTTAlertDialog(
-                                          context: context,
-                                          content: CancelPhotoSelectionContent(
-                                            selectedAssetList: selectedAssetList,
-                                          ),
-                                          isDismissible: false,
-                                        );
-                                      } else {
-                                        Navigator.pop(context);
-                                      }
-                                    },
-                                    child: const Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "Back",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          color: NeoColors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 15,
+                            ),
+                            child: Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    if (selectedAssetList.isNotEmpty) {
+                                      NeoAlertDialog.showTTAlertDialog(
+                                        context: context,
+                                        content: CancelPhotoSelectionContent(
+                                          selectedAssetList: selectedAssetList,
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                  const Text(
-                                    "lect",
-                                    style: TextStyle(color: Colors.transparent),
-                                  ),
-                                  // const Spacer(),
-                                  Expanded(
+                                        isDismissible: false,
+                                      );
+                                    } else {
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                                  child: const Align(
+                                    alignment: Alignment.centerLeft,
                                     child: Text(
-                                      selectedAssetList.isNotEmpty
-                                          ? "${selectedAssetList.length} photo selected"
-                                          : "Add Photo",
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        color: NeoColors.primaryColor,
+                                      "Back",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: NeoColors.white,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
                                   ),
-                                  // const Spacer(),
-                                  GestureDetector(
-                                    onTap: () {
-                                      if (selectedAssetList.isNotEmpty) {
-                                        setState(() {
-                                          selectedAssetList.clear();
-                                        });
-                                      }
-                                    },
-                                    child: Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Text(
-                                        "Unselect",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          color: selectedAssetList.isNotEmpty
-                                              ? NeoColors.white
-                                              : Colors.transparent,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400,
-                                        ),
+                                ),
+                                const Text(
+                                  "lect",
+                                  style: TextStyle(color: Colors.transparent),
+                                ),
+                                // const Spacer(),
+                                Expanded(
+                                  child: Text(
+                                    selectedAssetList.isNotEmpty
+                                        ? "${selectedAssetList.length} photo selected"
+                                        : "Add Photo",
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      color: NeoColors.primaryColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                                // const Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    if (selectedAssetList.isNotEmpty) {
+                                      setState(() {
+                                        selectedAssetList.clear();
+                                      });
+                                    }
+                                  },
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      "Unselect",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        color: selectedAssetList.isNotEmpty
+                                            ? NeoColors.white
+                                            : Colors.transparent,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
                                       ),
                                     ),
                                   ),
-                                  // const SizedBox(width: 33),
-                                  // Flexible(
-                                  //   child: SizedBox(
-                                  //     width: 40,
-                                  //     child: DropdownButton<AssetPathEntity>(
-                                  //       value: selectedAlbum,
-                                  //       isExpanded: true,
-                                  //       style: const TextStyle(
-                                  //           color: NeoColors.white),
-                                  //       iconEnabledColor: NeoColors.white,
-                                  //       dropdownColor: NeoColors.grayColor,
-                                  //       underline: const SizedBox(),
-                                  //       onChanged: (AssetPathEntity? value) {
-                                  //         setState(() {
-                                  //           selectedAlbum = value;
-                                  //         });
-                                  //         MediaServices()
-                                  //             .loadAssets(selectedAlbum!)
-                                  //             .then(
-                                  //           (value) {
-                                  //             setState(() {
-                                  //               assetList = value;
-                                  //             });
-                                  //           },
-                                  //         );
-                                  //       },
-                                  //       items: albumList.map<
-                                  //               DropdownMenuItem<
-                                  //                   AssetPathEntity>>(
-                                  //           (AssetPathEntity album) {
-                                  //         return DropdownMenuItem<
-                                  //             AssetPathEntity>(
-                                  //           value: album,
-                                  //           child: Text(
-                                  //             "${album.name} (${album.assetCount})",
-                                  //             overflow: TextOverflow.ellipsis,
-                                  //             style: const TextStyle(
-                                  //               color: NeoColors.white,
-                                  //             ),
-                                  //           ),
-                                  //         );
-                                  //       }).toList(),
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                ],
-                              ),
+                                ),
+                                // const SizedBox(width: 33),
+                                // Flexible(
+                                //   child: SizedBox(
+                                //     width: 40,
+                                //     child: DropdownButton<AssetPathEntity>(
+                                //       value: selectedAlbum,
+                                //       isExpanded: true,
+                                //       style: const TextStyle(
+                                //           color: NeoColors.white),
+                                //       iconEnabledColor: NeoColors.white,
+                                //       dropdownColor: NeoColors.grayColor,
+                                //       underline: const SizedBox(),
+                                //       onChanged: (AssetPathEntity? value) {
+                                //         setState(() {
+                                //           selectedAlbum = value;
+                                //         });
+                                //         MediaServices()
+                                //             .loadAssets(selectedAlbum!)
+                                //             .then(
+                                //           (value) {
+                                //             setState(() {
+                                //               assetList = value;
+                                //             });
+                                //           },
+                                //         );
+                                //       },
+                                //       items: albumList.map<
+                                //               DropdownMenuItem<
+                                //                   AssetPathEntity>>(
+                                //           (AssetPathEntity album) {
+                                //         return DropdownMenuItem<
+                                //             AssetPathEntity>(
+                                //           value: album,
+                                //           child: Text(
+                                //             "${album.name} (${album.assetCount})",
+                                //             overflow: TextOverflow.ellipsis,
+                                //             style: const TextStyle(
+                                //               color: NeoColors.white,
+                                //             ),
+                                //           ),
+                                //         );
+                                //       }).toList(),
+                                //     ),
+                                //   ),
+                                // ),
+                              ],
                             ),
-                            assetList.isEmpty
-                                ? const Center(
-                                    child: CircularProgressIndicator(),
-                                  )
-                                : GestureDetector(
-                                    onPanUpdate: (details) {
-                                      if (details.delta.dy < -20) {
-                                        setState(() {});
-                                      }
-                                    },
-                                    child: AnimatedContainer(
-                                      duration: const Duration(milliseconds: 600),
-                                      height: MediaQuery.of(context).size.height *
-                                          0.9,
-                                      child: GridView.builder(
-                                        physics: const BouncingScrollPhysics(),
-                                        itemCount: assetList.length,
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 3,
-                                        ),
-                                        itemBuilder: (context, index) {
-                                          AssetEntity assetEntity =
-                                              assetList[index];
-                                          return Padding(
-                                            padding: const EdgeInsets.all(2),
-                                            child: assetWidget(assetEntity),
-                                          );
-                                        },
+                          ),
+                          assetList.isEmpty
+                              ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : GestureDetector(
+                                  onPanUpdate: (details) {
+                                    if (details.delta.dy < -20) {
+                                      setState(() {});
+                                    }
+                                  },
+                                  child: AnimatedContainer(
+                                    duration: const Duration(milliseconds: 600),
+                                    height: MediaQuery.of(context).size.height *
+                                        0.9,
+                                    child: GridView.builder(
+                                      physics: const BouncingScrollPhysics(),
+                                      itemCount: assetList.length,
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
                                       ),
+                                      itemBuilder: (context, index) {
+                                        AssetEntity assetEntity =
+                                            assetList[index];
+                                        return Padding(
+                                          padding: const EdgeInsets.all(2),
+                                          child: assetWidget(assetEntity),
+                                        );
+                                      },
                                     ),
                                   ),
-                          ],
-                        ),
-                      )),
-                    ),
-                    Positioned.fill(
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: NavigationBarWidget(
-                          onTap: (value) {},
-                          items: navItems,
-                          currentIndex: 0,
-                          controller: controller,
-                          selectedAssetList: selectedAssetList,
-                        ),
+                                ),
+                        ],
+                      ),
+                    )),
+                  ),
+                  Positioned.fill(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: NavigationBarWidget(
+                        onTap: (value) {},
+                        items: navItems,
+                        currentIndex: 0,
+                        controller: controller,
+                        selectedAssetList: selectedAssetList,
                       ),
                     ),
-                  ],
-                ),
-              );
-            }),
-          ),
+                  ),
+                ],
+              ),
+            );
+          }),
         ),
       ),
     );

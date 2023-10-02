@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:neonyx/features/auth/screen/claim_username.dart';
+import 'package:neonyx/features/auth/widget/pick_photo_bottom.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,6 +32,21 @@ class _AccountDetailsState extends State<AccountDetails> {
   void initState() {
     super.initState();
     usernameController.addListener(_updateButtonState);
+  }
+
+  void selectImage(ImageSource source) async {
+    try {
+      final pickedImage = await ImagePicker().pickImage(source: source);
+      if (pickedImage != null) {
+        setState(() {
+          image = pickedImage;
+          imageAva = File(pickedImage.path);
+        });
+      }
+    } catch (e) {
+      // Handle any exceptions that might occur when selecting an image.
+      print("Error selecting image: $e");
+    }
   }
 
   void _updateButtonState() {
@@ -69,6 +85,9 @@ class _AccountDetailsState extends State<AccountDetails> {
                     fontSize: 24.sp,
                     fontWeight: FontWeight.w400),
               ),
+            ),
+            SizedBox(
+              height: 5.h,
             ),
             Center(
               child: Text(
@@ -161,119 +180,9 @@ class _AccountDetailsState extends State<AccountDetails> {
                         )),
                         context: context,
                         builder: (context) {
-                          return SafeArea(
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                  top: 10.h, left: 16.w, right: 16.w),
-                              height: 200.h,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  gradient: const LinearGradient(
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      colors: [
-                                        Color.fromRGBO(47, 145, 151, 0.2),
-                                        Color.fromRGBO(121, 214, 152, 0)
-                                      ])),
-                              child: Column(
-                                children: [
-                                  Opacity(
-                                    opacity: 0.4,
-                                    child: Container(
-                                      width: 60.w,
-                                      height: 4.h,
-                                      decoration: BoxDecoration(
-                                          color: const Color.fromRGBO(
-                                              124, 167, 170, 1),
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 8.h,
-                                  ),
-                                  Text(
-                                    "Add profile image",
-                                    style: GoogleFonts.urbanist(
-                                      color: NeoColors.primaryColor,
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 15.h,
-                                  ),
-                                  Container(
-                                    width: double.infinity,
-                                    height: 104.h,
-                                    padding: const EdgeInsets.all(16).r,
-                                    decoration: BoxDecoration(
-                                      color: NeoColors.black,
-                                      borderRadius: BorderRadius.circular(14.r),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Expanded(
-                                          child: InkWell(
-                                            onTap: () async {
-                                              Navigator.pop(context);
-                                              image = await ImagePicker()
-                                                  .pickImage(
-                                                      source:
-                                                          ImageSource.camera);
-                                              if (image != null) {
-                                                setState(() {
-                                                  imageAva = File(image!.path);
-                                                });
-                                              }
-                                              // Use the selected image (image.path) as needed.
-                                            },
-                                            child: _buildRow('Take a photo'),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 12.h,
-                                        ),
-                                        Opacity(
-                                          opacity: 0.1,
-                                          child: Container(
-                                            width: double.infinity,
-                                            color: const Color.fromRGBO(
-                                                47, 145, 151, 1),
-                                            height: 1.h,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 12.h,
-                                        ),
-                                        Expanded(
-                                          child: InkWell(
-                                            child: _buildRow(
-                                                'Select from gallery'),
-                                            onTap: () async {
-                                              Navigator.pop(context);
-                                              image = await ImagePicker()
-                                                  .pickImage(
-                                                      source:
-                                                          ImageSource.gallery);
-                                              if (image != null) {
-                                                setState(() {
-                                                  imageAva = File(image!.path);
-                                                });
-                                              }
-                                              // Use the selected image (image.path) as needed.
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                          return PickPhotoBottom(
+                            selectedImage: image,
+                            onSelectImage: selectImage,
                           );
                         }),
                     child: Container(
@@ -301,22 +210,38 @@ class _AccountDetailsState extends State<AccountDetails> {
                 Positioned(
                   right: 104.w,
                   top: 58.h,
-                  child: Container(
-                    width: 140.w,
-                    height: 140.h,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          width: 5,
-                          color: const Color.fromRGBO(47, 145, 151, 1),
+                  child: GestureDetector(
+                    onTap: () async => showModalBottomSheet(
+                        backgroundColor: const Color(0xFF090F0B),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(24.r),
+                          topLeft: Radius.circular(24.r),
                         )),
-                    child: ClipOval(
-                      child: imageAva != null
-                          ? Image.file(
-                              imageAva!,
-                              fit: BoxFit.cover,
-                            )
-                          : Image.asset('assets/png/default.png'),
+                        context: context,
+                        builder: (context) {
+                          return PickPhotoBottom(
+                            selectedImage: image,
+                            onSelectImage: selectImage,
+                          );
+                        }),
+                    child: Container(
+                      width: 140.w,
+                      height: 140.h,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            width: 5,
+                            color: const Color.fromRGBO(47, 145, 151, 1),
+                          )),
+                      child: ClipOval(
+                        child: imageAva != null
+                            ? Image.file(
+                                imageAva!,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset('assets/png/default.png'),
+                      ),
                     ),
                   ),
                 ),
@@ -342,19 +267,4 @@ class _AccountDetailsState extends State<AccountDetails> {
       ),
     );
   }
-}
-
-_buildRow(String text) {
-  return Row(
-    children: [
-      Text(
-        text,
-        style: GoogleFonts.urbanist(
-          color: NeoColors.white,
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-    ],
-  );
 }
