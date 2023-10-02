@@ -8,9 +8,10 @@ import '../../common/neo_colors.dart';
 
 class FeedStoryWidget extends StatelessWidget {
   final List<FeedEntity>? feedStory;
+  final bool profile;
   const FeedStoryWidget({
     super.key,
-    this.feedStory,
+    this.feedStory, required this.profile,
   });
 
   @override
@@ -18,13 +19,15 @@ class FeedStoryWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.h),
-          child: Divider(
-            color: NeoColors.soonColor.withOpacity(0.1),
-            thickness: 1.0,
-          ),
-        ),
+         profile == false
+             ? const SizedBox()
+             : Padding(
+                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.h),
+                 child: Divider(
+                   color: NeoColors.soonColor.withOpacity(0.1),
+                   thickness: 1.0,
+                 ),
+               ),
         SizedBox(
           height: 44.h,
           child: ListView.separated(
@@ -114,13 +117,15 @@ class FeedStoryWidget extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.h),
-          child: Divider(
-            color: NeoColors.soonColor.withOpacity(0.1),
-            thickness: 1.0,
-          ),
-        ),
+       profile == false
+             ? const SizedBox()
+             : Padding(
+                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.h),
+                 child: Divider(
+                   color: NeoColors.soonColor.withOpacity(0.1),
+                   thickness: 1.0,
+                 ),
+               ),
       ],
     );
   }

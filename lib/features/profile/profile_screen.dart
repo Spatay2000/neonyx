@@ -4,11 +4,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:neonyx/features/common/custom_tab_bar.dart';
+import 'package:neonyx/features/common/neo_button.dart';
 import 'package:neonyx/features/common/neo_colors.dart';
 import 'package:neonyx/features/common/neo_scaffold.dart';
 import 'package:neonyx/features/feed/widget/articles_widget.dart';
 import 'package:neonyx/features/feed/widget/media_widget.dart';
 import 'package:neonyx/features/feed/widget/post_widget.dart';
+import 'package:neonyx/features/profile/profile_settings.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
+
+import '../../domain/entity/feed_entity.dart';
+import '../feed/widget/feed_strory.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
@@ -30,6 +36,76 @@ class _ProfileScreenState extends State<ProfileScreen>
     'Reposts',
     'Articles',
     'Reposts',
+  ];
+
+  List<FeedEntity> feedList = [
+    FeedEntity(
+        id: 1,
+        avatar: "assets/png/Avatar_group.png",
+        groupAva: 'assets/png/group_ava.png',
+        username: 'MemeStream',
+        storyImage: 'assets/png/story.png',
+        postTime: 8,
+        commentTotal: 10,
+        likeTotal: 15,
+        shareTotal: 12),
+    FeedEntity(
+        id: 2,
+        avatar: "assets/png/avatar_2_4x_icon.png",
+        storyImage: 'assets/png/story.png',
+        username: 'Team General Chat',
+        postTime: 8,
+        commentTotal: 10,
+        likeTotal: 15,
+        shareTotal: 12),
+    FeedEntity(
+        id: 3,
+        avatar: "assets/png/avatar_3_4x_icon.png",
+        username: 'Go dev',
+        postTime: 8,
+        commentTotal: 10,
+        likeTotal: 15,
+        shareTotal: 12),
+    FeedEntity(
+        id: 4,
+        avatar: "assets/png/avatar_4_4x_icon.png",
+        username: 'MemeStream',
+        postTime: 8,
+        commentTotal: 10,
+        likeTotal: 15,
+        shareTotal: 12),
+    FeedEntity(
+        id: 5,
+        avatar: "assets/png/avatar_1_4x_icon.png",
+        username: 'Team General Chat',
+        postTime: 8,
+        commentTotal: 10,
+        likeTotal: 15,
+        shareTotal: 12),
+    FeedEntity(
+        id: 6,
+        avatar: "assets/png/avatar_2_4x_icon.png",
+        username: 'Go dev',
+        postTime: 8,
+        commentTotal: 10,
+        likeTotal: 15,
+        shareTotal: 12),
+    FeedEntity(
+        id: 7,
+        avatar: "assets/png/avatar_3_4x_icon.png",
+        username: 'Team General Chat',
+        postTime: 8,
+        commentTotal: 10,
+        likeTotal: 15,
+        shareTotal: 12),
+    FeedEntity(
+        id: 8,
+        avatar: "assets/png/avatar_4_4x_icon.png",
+        username: 'Go dev',
+        postTime: 8,
+        commentTotal: 10,
+        likeTotal: 15,
+        shareTotal: 12),
   ];
 
   @override
@@ -74,13 +150,18 @@ class _ProfileScreenState extends State<ProfileScreen>
                 Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 72.0, bottom: 12).r,
+                      padding: const EdgeInsets.only(
+                              top: 70.0, bottom: 12, right: 17)
+                          .r,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           // const BackButton(
                           //   color: NeoColors.white,
                           // ),
+                          const Spacer(
+                            flex: 3,
+                          ),
                           Container(
                             width: 88.w,
                             height: 88.h,
@@ -97,6 +178,10 @@ class _ProfileScreenState extends State<ProfileScreen>
                               'assets/png/capibara.png',
                             ),
                           ),
+                          const Spacer(
+                            flex: 2,
+                          ),
+                          SvgPicture.asset('assets/svg/add.svg'),
                           // Row(
                           //   mainAxisAlignment: MainAxisAlignment.center,
                           //   children: [
@@ -192,53 +277,45 @@ class _ProfileScreenState extends State<ProfileScreen>
                     //   height: 24.h,
                     // ),
                     Padding(
-                      padding: const EdgeInsets.only(
-                              left: 16.0, right: 16, top: 24, bottom: 13)
-                          .r,
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 16),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(14.0.r),
-                            color: const Color(0xFF040404),
-                            border: const GradientBoxBorder(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Color.fromRGBO(47, 145, 151, 1),
-                                  Color.fromRGBO(183, 175, 107, 1),
-                                ],
-                              ),
-                            )),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Follow user',
-                                  style: GoogleFonts.urbanist(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    color: NeoColors.white,
-                                  ),
-                                ),
-                              ],
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16.w, vertical: 23.h),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: CustomButton(
+                              notGradient: true,
+                              height: 42.h,
+                              backgroundStatus: true,
+                              onPressed: () => pushNewScreen(context,
+                                  screen: const ProfileSettings(),
+                                  pageTransitionAnimation:
+                                      PageTransitionAnimation.cupertino,
+                                  withNavBar: false),
+                              title: 'Profile settings',
                             ),
-                            Row(
-                              children: [
-                                VerticalDivider(
-                                  color: NeoColors.soonColor.withOpacity(.1),
-                                  thickness: 2,
-                                ),
-                                const SizedBox(width: 12),
-                                SvgPicture.asset('assets/svg/dots_row.svg'),
-                              ],
-                            )
-                          ],
-                        ),
+                          ),
+                          SizedBox(
+                            width: 16.w,
+                          ),
+                          Expanded(
+                            child: CustomButton(
+                              notGradient: true,
+                              height: 42.h,
+                              backgroundStatus: true,
+                              onPressed: () => null,
+                              title: 'Share profile',
+                            ),
+                          )
+                        ],
                       ),
+                    ),
+                    FeedStoryWidget(
+                      profile: false,
+                      feedStory: feedList,
+                    ),
+                    SizedBox(
+                      height: 15.h,
                     ),
                     CustomTabBar(
                       tabs: data,
